@@ -4,6 +4,7 @@ import DEX from "./pages/DEX";
 import Assets from "./pages/Assets";
 import P2P from "./pages/P2P";
 import Launchpad from "./pages/Launchpad";
+import XReturn from "./pages/XReturn";
 import FAQ from "./pages/FAQ";
 
 import { Web3Modal } from "@web3modal/react";
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/assets" element={<Assets />} />
           <Route path="/p2p" element={<P2P />} />
           <Route path="/launchpad" element={<Launchpad />} />
+          <Route path="/xreturn" element={<XReturn />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </WagmiConfig>

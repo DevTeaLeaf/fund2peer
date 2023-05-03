@@ -93,6 +93,14 @@ const Header = ({ page }) => {
             </Link>
             <Link
               className={`hover:opacity-100 ${
+                page === "xreturn" ? "opacity-100" : "opacity-70"
+              }`}
+              to="/xreturn"
+            >
+              XReturn
+            </Link>
+            <Link
+              className={`hover:opacity-100 ${
                 page === "faq" ? "opacity-100" : "opacity-70"
               }`}
               to="/faq"
