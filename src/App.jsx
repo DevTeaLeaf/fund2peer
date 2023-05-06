@@ -6,6 +6,7 @@ import P2P from "./pages/P2P";
 import Launchpad from "./pages/Launchpad";
 import XReturn from "./pages/XReturn";
 import FAQ from "./pages/FAQ";
+import SocialModal from "./components/SocialModal";
 
 import { Web3Modal } from "@web3modal/react";
 import { WagmiConfig } from "wagmi";
@@ -34,6 +35,7 @@ const App = () => {
         </Routes>
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+      {/*<SocialModal />*/}
     </>
   );
 };
