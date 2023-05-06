@@ -4,5 +4,14 @@ import Header from "./Header";
 import LanguagesModal from "./LanguagesModal";
 import SocialModal from "./SocialModal";
 import StatisticsBox from "./StatisticsBox";
+import Slider from "./Slider";
 
-export { Button, Footer, Header, LanguagesModal, SocialModal, StatisticsBox };
+export {
+  Button,
+  Footer,
+  Header,
+  LanguagesModal,
+  SocialModal,
+  StatisticsBox,
+  Slider,
+};

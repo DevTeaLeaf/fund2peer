@@ -8,6 +8,8 @@ import launchpadPolygon from "./launchpadPolygon.png";
 import blocks from "./blocks.png";
 import info from "./info.png";
 import rocket from "./rocket.png";
+import sliderArrow from "./sliderArrow.png";
+import slider from "./slider.png";
 
 export {
   arrow,
@@ -20,4 +22,6 @@ export {
   blocks,
   info,
   rocket,
+  sliderArrow,
+  slider,
 };

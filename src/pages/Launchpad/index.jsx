@@ -5,6 +5,7 @@ import {
   Button,
   StatisticsBox,
   SocialModal,
+  Slider,
 } from "../../components";
 import { launchpadPolygon, blocks, info, rocket } from "../../assets/img";
 
@@ -50,7 +51,7 @@ const Launchpad = ({ t }) => {
             <p className="inter-700 mb-[100px] nav-shadow">
               {t("launchpad_active")}
             </p>
-            {/*slider(*/}
+            <Slider />
           </div>
           <div className="mt-[100px]">
             <p className="inter-700 mb-[50px] nav-shadow">
