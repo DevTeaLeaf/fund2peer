@@ -23,7 +23,7 @@ const Launchpad = ({ t }) => {
   return (
     <>
       <Header page="launchpad" />
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto overflow-hidden md:overflow-visible">
         <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[112px] text-[#fff]">
           <div className="flex items-start mb-[100px] relative">
             <div className="flex items-start justify-between flex-col">
@@ -54,12 +54,12 @@ const Launchpad = ({ t }) => {
             <img
               src={launchpadBg}
               alt="launchpad"
-              className="absolute max-w-[200%] top-[-50%] md:top-[-200%] lg:top-[-250%]   xl:top-[-300%] left-[-60%] z-[-1]"
+              className="absolute max-w-[200%] top-[-50%] md:top-[-200%] lg:top-[-250%]   xl:top-[-300%] left-[-30%] z-[-1] rotate"
             />
             <img
               src={launchpadToken}
               alt="token"
-              className="absolute w-[288px] h-[288px] md:w-[450px] md:h-[450px] right-[-20%] md:right-[-10%] xl:right-[252px] top-[40%] md:top-[20%] z-[-1]"
+              className="absolute w-[288px] h-[288px] md:w-[450px] md:h-[450px] right-[-20%] md:right-[-10%] xl:right-[252px] top-[40%] md:top-[20%] z-[-1] levitating"
             />
           </div>
           <div>

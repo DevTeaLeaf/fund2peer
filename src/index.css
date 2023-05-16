@@ -107,6 +107,34 @@ body {
 .header-shadow {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+@keyframes levitate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.levitating {
+  animation: levitate 5s infinite;
+}
+.rotate {
+  animation: rotate 4s ease;
+}
+
 @media screen and (max-width: 767px) {
   .socialModalTransorm {
     transform: translate(-50%, -50%);
