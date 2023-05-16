@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <>
       <div className="text-[#fff]">
-        <div className="flex items-start justify-between px-[200px] py-[50px]">
+        <div className="lg:flex md:items-start md:justify-between md:px-[200px] md:py-[50px] hidden flex-wrap gap-5">
           <div>
             <Link to="/">
               <h1 className="footerH">Home</h1>

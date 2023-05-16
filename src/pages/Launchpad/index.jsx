@@ -7,7 +7,13 @@ import {
   SocialModal,
   Slider,
 } from "../../components";
-import { launchpadPolygon, blocks, info, rocket } from "../../assets/img";
+import {
+  blocks,
+  info,
+  rocket,
+  launchpadBg,
+  launchpadToken,
+} from "../../assets/img";
 
 import { Link } from "react-router-dom";
 
@@ -18,11 +24,13 @@ const Launchpad = ({ t }) => {
     <>
       <Header page="launchpad" />
       <div className="max-w-[1440px] mx-auto">
-        <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[65px] md:pt-[112px] text-[#fff]">
-          <div className="flex items-start mb-[100px]">
+        <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[112px] text-[#fff]">
+          <div className="flex items-start mb-[100px] relative">
             <div className="flex items-start justify-between flex-col">
-              <h1 className="inter-700 max-w-[463px]">{t("launchpad_h1")}</h1>
-              <p className="inter-400 max-w-[411px] mt-4">
+              <h1 className="inter-bold text-[36px] leading-[44px]  md:inter-700 max-w-[274px] md:max-w-[463px]">
+                {t("launchpad_h1")}
+              </h1>
+              <p className="inter-400 text-[18px] leading-[22px] md:inter-400 max-w-[268px] md:max-w-[411px] mt-4">
                 {t("launchpad_h2")}
               </p>
               <div className="flex flex-col gap-6 mt-11">
@@ -43,21 +51,31 @@ const Launchpad = ({ t }) => {
                 />
               </div>
             </div>
-            <div className="mt-[-180px]">
-              <img src={launchpadPolygon} alt="launchpad" />
-            </div>
+            <img
+              src={launchpadBg}
+              alt="launchpad"
+              className="absolute max-w-[200%] top-[-50%] md:top-[-200%] lg:top-[-250%]   xl:top-[-300%] left-[-60%] z-[-1]"
+            />
+            <img
+              src={launchpadToken}
+              alt="token"
+              className="absolute w-[288px] h-[288px] md:w-[450px] md:h-[450px] right-[-20%] md:right-[-10%] xl:right-[252px] top-[40%] md:top-[20%] z-[-1]"
+            />
           </div>
           <div>
-            <p className="inter-700 mb-[100px] nav-shadow">
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[100px] nav-shadow">
               {t("launchpad_active")}
             </p>
             <Slider />
+            <div className="text-center mt-[50px]">
+              <Button filled={true} text={t("launchpad_list")} to="launchpad" />
+            </div>
           </div>
           <div className="mt-[100px]">
-            <p className="inter-700 mb-[50px] nav-shadow">
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[50px] max-w-[300px]  md:max-w-full nav-shadow">
               {t("launchpad_recently")}
             </p>
-            <div className="flex items-center justify-around">
+            <div className="flex items-center justify-around flex-wrap gap-8 mb-[100px] md:mb-0">
               <StatisticsBox
                 text={t("launchpad_funded")}
                 img={rocket}
@@ -72,13 +90,6 @@ const Launchpad = ({ t }) => {
                 text={t("launchpad_avg")}
                 img={blocks}
                 info="111$"
-              />
-            </div>
-            <div className="text-center mt-[50px]">
-              <Button
-                filled={false}
-                text={t("launchpad_list")}
-                to="launchpad"
               />
             </div>
           </div>

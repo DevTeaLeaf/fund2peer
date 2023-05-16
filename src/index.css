@@ -10,13 +10,17 @@ body {
   overflow-x: hidden;
 }
 .nav-shadow {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 40px 40px 20px rgba(0, 0, 0, 0.4);
 }
 .inter-400 {
   font-family: "Inter";
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+}
+.inter-500 {
+  font-family: "Inter";
+  font-weight: 500;
 }
 .inter-700 {
   font-family: "Inter";
@@ -46,7 +50,7 @@ body {
 .button-fill:hover {
   transform: translateY(-10px);
 
-  box-shadow: 20px 20px 10px rgba(1, 1, 2, 0.25);
+  box-shadow: 40px 40px 10px rgba(1, 1, 2, 0.25);
 }
 .button-transparent:hover {
   border: 5px solid #89c6b9;
@@ -90,5 +94,21 @@ body {
 }
 .hoverEffect:hover {
   transform: translateY(-10px);
-  box-shadow: 20px 20px 10px rgba(1, 1, 2, 0.25);
+  box-shadow: 40px 40px 20px rgba(0, 0, 0, 0.1);
+}
+.bg-box {
+  background: linear-gradient(
+    127.99deg,
+    #1c1d2d 0%,
+    #1b1c2c 8.85%,
+    #13141f 100%
+  );
+}
+.header-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+@media screen and (max-width: 767px) {
+  .socialModalTransorm {
+    transform: translate(-50%, -50%);
+  }
 }
