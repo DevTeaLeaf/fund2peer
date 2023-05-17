@@ -12,6 +12,14 @@ body {
 .nav-shadow {
   text-shadow: 40px 40px 20px rgba(0, 0, 0, 0.4);
 }
+.inter-300 {
+  font-family: "Inter";
+  font-weight: 300;
+}
+.inter-normal {
+  font-family: "Inter";
+  font-weight: 400;
+}
 .inter-400 {
   font-family: "Inter";
   font-weight: 400;

@@ -6,7 +6,6 @@ import P2P from "./pages/P2P";
 import Launchpad from "./pages/Launchpad";
 import XReturn from "./pages/XReturn";
 import FAQ from "./pages/FAQ";
-import SocialModal from "./components/SocialModal";
 
 import { Web3Modal } from "@web3modal/react";
 import { WagmiConfig } from "wagmi";
@@ -15,6 +14,7 @@ import { useWeb3ModalTheme } from "@web3modal/react";
 import { projectId } from "./web3/constants";
 
 import { wagmiClient, ethereumClient } from "./web3/connector";
+import Project from "./pages/Project";
 
 const App = () => {
   const { setTheme } = useWeb3ModalTheme();
@@ -30,12 +30,12 @@ const App = () => {
           <Route path="/assets" element={<Assets />} />
           <Route path="/p2p" element={<P2P />} />
           <Route path="/launchpad" element={<Launchpad />} />
+          <Route path="/project" element={<Project />} />
           <Route path="/xreturn" element={<XReturn />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
-      {/*<SocialModal />*/}
     </>
   );
 };

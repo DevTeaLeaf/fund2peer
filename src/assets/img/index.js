@@ -11,6 +11,8 @@ import sliderArrow from "./sliderArrow.png";
 import slider from "./slider.png";
 import launchpadToken from "./launchpadToken.png";
 import launchpadBg from "./launchpadBg.png";
+import projectBg from "./projectBg.png";
+import youtube from "./youtube.png";
 
 export {
   arrow,
@@ -26,4 +28,6 @@ export {
   slider,
   launchpadToken,
   launchpadBg,
+  projectBg,
+  youtube,
 };
