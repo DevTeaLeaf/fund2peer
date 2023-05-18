@@ -5,6 +5,7 @@ import LanguagesModal from "./LanguagesModal";
 import SocialModal from "./SocialModal";
 import StatisticsBox from "./StatisticsBox";
 import Slider from "./Slider";
+import InvestorBox from "./InvestorBox";
 
 export {
   Button,
@@ -14,4 +15,5 @@ export {
   SocialModal,
   StatisticsBox,
   Slider,
+  InvestorBox,
 };

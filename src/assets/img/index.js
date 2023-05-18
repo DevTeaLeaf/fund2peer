@@ -12,6 +12,7 @@ import slider from "./slider.png";
 import launchpadToken from "./launchpadToken.png";
 import launchpadBg from "./launchpadBg.png";
 import projectBg from "./projectBg.png";
+import polygon from "./polygon.png";
 import youtube from "./youtube.png";
 
 export {
@@ -30,4 +31,5 @@ export {
   launchpadBg,
   projectBg,
   youtube,
+  polygon,
 };

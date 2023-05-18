@@ -71,7 +71,7 @@ const Launchpad = ({ t }) => {
               <Button filled={true} text={t("launchpad_list")} to="launchpad" />
             </div>
           </div>
-          <div className="mt-[100px]">
+          <div className="mt-[100px] mb-5">
             <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[50px] max-w-[300px]  md:max-w-full nav-shadow">
               {t("launchpad_recently")}
             </p>

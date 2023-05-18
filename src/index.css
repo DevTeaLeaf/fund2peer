@@ -9,6 +9,9 @@ body {
   user-select: none;
   overflow-x: hidden;
 }
+.tab-shadow {
+  box-shadow: 40px 40px 10px rgba(1, 1, 2, 0.25);
+}
 .nav-shadow {
   text-shadow: 40px 40px 20px rgba(0, 0, 0, 0.4);
 }
@@ -29,6 +32,10 @@ body {
 .inter-500 {
   font-family: "Inter";
   font-weight: 500;
+}
+.inter-600 {
+  font-family: "Inter";
+  font-weight: 600;
 }
 .inter-700 {
   font-family: "Inter";
