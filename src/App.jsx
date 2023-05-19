@@ -6,6 +6,10 @@ import P2P from "./pages/P2P";
 import Launchpad from "./pages/Launchpad";
 import XReturn from "./pages/XReturn";
 import FAQ from "./pages/FAQ";
+import CurrentPresales from "./pages/CurrentPresales";
+import Project from "./pages/Project";
+
+import { ScrollToTop } from "./components";
 
 import { Web3Modal } from "@web3modal/react";
 import { WagmiConfig } from "wagmi";
@@ -14,7 +18,6 @@ import { useWeb3ModalTheme } from "@web3modal/react";
 import { projectId } from "./web3/constants";
 
 import { wagmiClient, ethereumClient } from "./web3/connector";
-import Project from "./pages/Project";
 
 const App = () => {
   const { setTheme } = useWeb3ModalTheme();
@@ -24,6 +27,7 @@ const App = () => {
   return (
     <>
       <WagmiConfig client={wagmiClient}>
+        <ScrollToTop />
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/dex" element={<DEX />} />
@@ -32,6 +36,7 @@ const App = () => {
           <Route path="/launchpad" element={<Launchpad />} />
           <Route path="/project" element={<Project />} />
           <Route path="/xreturn" element={<XReturn />} />
+          <Route path="/currentPresales" element={<CurrentPresales />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </WagmiConfig>

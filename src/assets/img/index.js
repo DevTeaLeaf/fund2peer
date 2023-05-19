@@ -14,6 +14,8 @@ import launchpadBg from "./launchpadBg.png";
 import projectBg from "./projectBg.png";
 import polygon from "./polygon.png";
 import youtube from "./youtube.png";
+import favorite from "./favorite.png";
+import projectLogo from "./projectLogo.png";
 
 export {
   arrow,
@@ -32,4 +34,6 @@ export {
   projectBg,
   youtube,
   polygon,
+  favorite,
+  projectLogo,
 };

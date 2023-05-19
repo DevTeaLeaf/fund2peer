@@ -9,11 +9,64 @@ body {
   user-select: none;
   overflow-x: hidden;
 }
+/**********Effects && Animations**********/
+.transition300 {
+  transition: all 300ms ease-out;
+}
+.transition500 {
+  transition: all 500ms ease-out;
+}
+.hoverEffect {
+  transition: all 500ms ease-out;
+}
+.hoverEffect:hover {
+  transform: translateY(-10px);
+  box-shadow: 40px 40px 20px rgba(0, 0, 0, 0.1);
+}
+@keyframes levitate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.levitating {
+  animation: levitate 5s infinite;
+}
+.rotate {
+  animation: rotate 4s ease;
+}
+
+/********************/
+/**********Shadows**********/
 .tab-shadow {
   box-shadow: 40px 40px 10px rgba(1, 1, 2, 0.25);
 }
 .nav-shadow {
   text-shadow: 40px 40px 20px rgba(0, 0, 0, 0.4);
+}
+.header-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+/********************/
+/**********Text**********/
+.inter-100 {
+  font-family: "Inter";
+  font-weight: 100;
 }
 .inter-300 {
   font-family: "Inter";
@@ -47,6 +100,8 @@ body {
   font-family: "Inter";
   font-weight: 700;
 }
+/********************/
+/**********Styles**********/
 .button-transparent {
   border: 1px solid #89c6b9;
   filter: drop-shadow(40px 40px 10px rgba(1, 1, 2, 0.9));
@@ -64,7 +119,6 @@ body {
 }
 .button-fill:hover {
   transform: translateY(-10px);
-
   box-shadow: 40px 40px 10px rgba(1, 1, 2, 0.25);
 }
 .button-transparent:hover {
@@ -104,13 +158,6 @@ body {
   border-top: 1px solid #89c6b9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.hoverEffect {
-  transition: all 500ms ease-out;
-}
-.hoverEffect:hover {
-  transform: translateY(-10px);
-  box-shadow: 40px 40px 20px rgba(0, 0, 0, 0.1);
-}
 .bg-box {
   background: linear-gradient(
     127.99deg,
@@ -119,39 +166,30 @@ body {
     #13141f 100%
   );
 }
-.header-shadow {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.search {
+  border-bottom: 1px solid #8d8e96;
+  outline: none;
+  background-color: transparent;
+  padding: 10px 0px;
+  font-size: 14px;
+  width: 500px;
 }
-@keyframes levitate {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-50px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.projectLineBack {
+  background: rgba(217, 217, 217, 0.2);
+  box-shadow: inset 4px 0px 4px rgba(255, 255, 255, 0.25),
+    inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
 }
-@keyframes rotate {
-  0% {
-    transform: rotate(180deg);
-  }
-
-  100% {
-    transform: rotate(0);
-  }
+.projectLineFront {
+  background: #89c6b9;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
 }
-
-.levitating {
-  animation: levitate 5s infinite;
-}
-.rotate {
-  animation: rotate 4s ease;
-}
-
+/********************/
+/**********Media**********/
 @media screen and (max-width: 767px) {
   .socialModalTransorm {
     transform: translate(-50%, -50%);
   }
 }
+/********************/

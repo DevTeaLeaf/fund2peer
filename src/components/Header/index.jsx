@@ -5,6 +5,7 @@ import { logo, arrow } from "../../assets/img";
 import "./header.css";
 
 import LanguagesModal from "../LanguagesModal";
+import { ScrollToTop } from "../";
 import i18n from "../../translate/i18n";
 import { withTranslation } from "react-i18next";
 
@@ -26,11 +27,13 @@ const Header = ({ page }) => {
       <nav className="sticky w-full bg-[#13141F] text-[#fff] header-shadow">
         <div className="w-full flex items-center justify-between px-[10px] md:px-[30px] h-[80px]">
           <div className="flex items-center justify-center">
-            <img
-              className="w-[50px] md:w-full cursor-pointer"
-              src={logo}
-              alt="logo"
-            />
+            <Link onClick={ScrollToTop} to="/">
+              <img
+                className="w-[50px] md:w-full cursor-pointer"
+                src={logo}
+                alt="logo"
+              />
+            </Link>
             <div className="ml-2 md:ml-10">
               <div
                 onClick={

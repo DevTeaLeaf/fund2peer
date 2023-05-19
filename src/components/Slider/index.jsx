@@ -89,13 +89,13 @@ const Slider = ({ t }) => {
                     <Button
                       filled={false}
                       text={t("launchpad_explore")}
-                      to="project"
+                      to="currentPresales"
                     />
                   </div>
                   <Button
                     filled={true}
                     text={t("launchpad_invest")}
-                    to="launchpad"
+                    to="project"
                   />
                 </div>
                 <div className="arrows">

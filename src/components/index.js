@@ -6,6 +6,7 @@ import SocialModal from "./SocialModal";
 import StatisticsBox from "./StatisticsBox";
 import Slider from "./Slider";
 import InvestorBox from "./InvestorBox";
+import ScrollToTop from "./ScrollToTop";
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   StatisticsBox,
   Slider,
   InvestorBox,
+  ScrollToTop,
 };
