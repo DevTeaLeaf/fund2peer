@@ -7,6 +7,7 @@ import StatisticsBox from "./StatisticsBox";
 import Slider from "./Slider";
 import InvestorBox from "./InvestorBox";
 import ScrollToTop from "./ScrollToTop";
+import PresaleBox from "./PresaleBox";
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   Slider,
   InvestorBox,
   ScrollToTop,
+  PresaleBox,
 };

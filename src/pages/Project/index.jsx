@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Header, Footer, Button, InvestorBox, Slider } from "../../components";
+import { projectTabsData } from "../../constants";
 
 import {
   projectBg,
@@ -13,25 +14,6 @@ import {
 } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
-
-const tabsData = [
-  {
-    label: "Overview",
-    content: "test",
-  },
-  {
-    label: "Roadmap",
-    content: "test",
-  },
-  {
-    label: "Team",
-    content: "test",
-  },
-  {
-    label: "Investors",
-    content: "test",
-  },
-];
 
 const Project = ({ t }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -79,7 +61,7 @@ const Project = ({ t }) => {
               </div>
               <div className="max-w-[332px]">
                 <h3 className="mb-[32px] inter-bold text-[24px] leading-7">
-                  Highlights
+                  {t("highlights")}
                 </h3>
                 <p className="inter-400">
                   Lorem Ipsum is simply dummy text of the printing and
@@ -90,52 +72,60 @@ const Project = ({ t }) => {
                   also the leap...
                 </p>
                 <div className="flex items-center justify-between mt-5 inter-400">
-                  <p>Lockup time</p> <p>180 days</p>
+                  <p>{t("lockup_time")}</p> <p>180 {t("days")}</p>
                 </div>
                 <div className="flex items-center justify-between mt-5 inter-400">
-                  <p>Reward </p> <p>10 %</p>
+                  <p>{t("reward")} </p> <p>10 %</p>
                 </div>
                 <div className="flex flex-col items-center gap-4 mt-[30px]">
-                  <Button filled={false} text={"White paper"} to="launchpad" />
-                  <Button filled={true} text={"Invest"} to="launchpad" />
+                  <Button
+                    filled={false}
+                    text={t("white_paper")}
+                    to="launchpad"
+                  />
+                  <Button
+                    filled={true}
+                    text={t("launchpad_invest")}
+                    to="launchpad"
+                  />
                 </div>
               </div>
             </div>
             <div className="w-[40%] mt-10">
               <div className="text-[24px] leading-[29px]">
                 <div className="flex items-center justify-between">
-                  <p className="inter-300 text-[#C7C7C7]">Soft cap</p>
+                  <p className="inter-300 text-[#C7C7C7]">{t("soft_cap")}</p>
                   <p className="inter-normal">890 900$</p>
                 </div>
                 <div className="flex items-center justify-between mt-[17px]">
-                  <p className="inter-300 text-[#C7C7C7]">Hard cap</p>
+                  <p className="inter-300 text-[#C7C7C7]">{t("hard_cap")}</p>
                   <p className="inter-normal">890 900$</p>
                 </div>
               </div>
               <div className="mt-[60px] bg-[#1C1D2D] rounded-[10px] hoverEffect">
                 <div className="py-5 px-[15px] flex flex-col items-center">
                   <div className="flex inter-bold text-[32px] leading-[39px] mb-[30px] gap-4">
-                    <p className="text-[#89C6B9] ">Start</p>
-                    <p>in</p>
+                    <p className="text-[#89C6B9] ">{t("start")}</p>
+                    <p>{t("in")}</p>
                     <p>
-                      10 <sup>days</sup>
+                      10 <sup>{t("clock_days")}</sup>
                     </p>
                     <p>
-                      22 <sup>hours</sup>
+                      22 <sup>{t("clock_hours")}</sup>
                     </p>
                     <p>
-                      59 <sup>min</sup>
+                      59 <sup>{t("clock_min")}</sup>
                     </p>
                   </div>
                   <Button
                     filled={false}
-                    text={"Add to Favorites"}
+                    text={t("add_favorites")}
                     to="launchpad"
                   />
                 </div>
               </div>
               <div className="flex items-center mt-[100px]">
-                <div className="mr-5 inter-400">Follow Sequoia.game</div>
+                <div className="mr-5 inter-400">{t("follow")} Sequoia.game</div>
                 <div className="flex items-center justify-between gap-[50px]">
                   <a className="social cursor-pointer" href="">
                     <Telegram className="w-6 h-6 md:w-9 md:h-9" />
@@ -158,7 +148,7 @@ const Project = ({ t }) => {
           </div>
           <div className="relative">
             <div className="flex items-center justify-center gap-[80px] border-b border-[#000] border-opacity-25">
-              {tabsData.map((tab, idx) => {
+              {projectTabsData.map((tab, idx) => {
                 return (
                   <button
                     key={idx}
@@ -170,7 +160,7 @@ const Project = ({ t }) => {
                     }
                     onClick={() => setActiveTabIndex(idx)}
                   >
-                    {tab.label}
+                    {t(tab.label)}
                   </button>
                 );
               })}
@@ -181,12 +171,12 @@ const Project = ({ t }) => {
             />
           </div>
           <div className="mt-[70px]">
-            {tabsData[activeTabIndex].label === "Overview" ? (
+            {projectTabsData[activeTabIndex].label === "overview" ? (
               <div className="flex items-start justify-between">
                 <div className="flex flex-col gap-[25px] w-[302px] mt-[42px]">
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("project_name")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -194,7 +184,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("short_desc")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -202,7 +192,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("website")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -210,7 +200,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("country")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -218,7 +208,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("category")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -226,7 +216,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("token")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -234,7 +224,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("soft_cap")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -242,7 +232,7 @@ const Project = ({ t }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
-                      Project Name{" "}
+                      {t("hard_cap")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
                       MyCompany
@@ -327,12 +317,12 @@ const Project = ({ t }) => {
                 </div>
               </div>
             ) : (
-              tabsData[activeTabIndex].content
+              <div>test</div>
             )}
           </div>
           <div className="mt-[100px]">
-            <h1 className="inter-normal text-[24px] leading-[29px] mb-[74px]">
-              INVESTORS
+            <h1 className="inter-normal text-[24px] leading-[29px] mb-[74px] uppercase">
+              {t("investors")}
             </h1>
             <div className="flex items-center justify-between">
               <InvestorBox
@@ -359,7 +349,7 @@ const Project = ({ t }) => {
           </div>
           <div className="mt-[90px] mb-[40px]">
             <p className="inter-bold text-[48px] leading-[58px] mb-[100px] nav-shadow">
-              Explore more
+              {t("explore_more")}
             </p>
             <Slider />
           </div>
