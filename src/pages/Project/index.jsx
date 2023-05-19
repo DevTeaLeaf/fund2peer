@@ -23,12 +23,12 @@ const Project = ({ t }) => {
   const tabsRef = useRef([]);
 
   useEffect(() => {
-    function setTabPosition() {
+    const setTabPosition = () => {
       const currentTab = tabsRef.current[activeTabIndex];
       console.log(currentTab?.offsetLeft, currentTab?.clientWidth);
       setTabUnderlineLeft(currentTab?.offsetLeft ?? 0);
       setTabUnderlineWidth(currentTab?.clientWidth ?? 0);
-    }
+    };
 
     setTabPosition();
     window.addEventListener("resize", setTabPosition);
@@ -41,18 +41,18 @@ const Project = ({ t }) => {
       <div className="max-w-[1440px] mx-auto overflow-hidden md:overflow-visible">
         <img src={projectBg} alt="projectBg" />
         <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[70px] text-[#fff]">
-          <p className="inter-bold text-[48px] leading-[58px] nav-shadow mb-[50px]">
+          <p className="inter-bold  text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow mb-[50px]">
             Sequoia.game
           </p>
-          <div className="flex items-start justify-between mb-[70px]">
-            <div className="flex">
-              <div className=" relative mr-[50px]">
+          <div className="flex items-start justify-between mb-[70px] flex-wrap">
+            <div className="flex flex-wrap justify-center gap-5">
+              <div className=" relative mr-0 md:mr-[50px]">
                 <img src={slider} alt="projectImg" className="project-img" />
-                <div className="absolute left-[31.1px] bottom-[57.34px]">
+                <div className="absolute bottom-[57.34px] projectLeft">
                   <div className="main-div">
                     <div className="main-1"></div>
                     <div className="main-2"></div>
-                    <div className="main-3 gap-14">
+                    <div className="main-3 gap-5 md:gap-14">
                       <p>Total Raise</p>
                       <p>$520,000/$800,000</p>
                     </div>
@@ -91,7 +91,7 @@ const Project = ({ t }) => {
                 </div>
               </div>
             </div>
-            <div className="w-[40%] mt-10">
+            <div className="w-[100%] xl:w-[40%] mt-10">
               <div className="text-[24px] leading-[29px]">
                 <div className="flex items-center justify-between">
                   <p className="inter-300 text-[#C7C7C7]">{t("soft_cap")}</p>
@@ -104,7 +104,7 @@ const Project = ({ t }) => {
               </div>
               <div className="mt-[60px] bg-[#1C1D2D] rounded-[10px] hoverEffect">
                 <div className="py-5 px-[15px] flex flex-col items-center">
-                  <div className="flex inter-bold text-[32px] leading-[39px] mb-[30px] gap-4">
+                  <div className="flex inter-bold text-[24px] leading-7 md:text-[32px] md:leading-[39px] mb-[30px] gap-4">
                     <p className="text-[#89C6B9] ">{t("start")}</p>
                     <p>{t("in")}</p>
                     <p>
@@ -124,7 +124,7 @@ const Project = ({ t }) => {
                   />
                 </div>
               </div>
-              <div className="flex items-center mt-[100px]">
+              <div className="flex items-center justify-center flex-wrap mt-[100px] gap-6 md:gap-0">
                 <div className="mr-5 inter-400">{t("follow")} Sequoia.game</div>
                 <div className="flex items-center justify-between gap-[50px]">
                   <a className="social cursor-pointer" href="">
@@ -147,7 +147,7 @@ const Project = ({ t }) => {
             <img src={youtube} alt="youtube" />
           </div>
           <div className="relative">
-            <div className="flex items-center justify-center gap-[80px] border-b border-[#000] border-opacity-25">
+            <div className="flex items-center justify-center gap-[20px] md:gap-[80px] border-b border-[#000] border-opacity-25">
               {projectTabsData.map((tab, idx) => {
                 return (
                   <button
@@ -155,8 +155,8 @@ const Project = ({ t }) => {
                     ref={(el) => (tabsRef.current[idx] = el)}
                     className={
                       activeTabIndex === idx
-                        ? "pb-[25px] text-[#fff] transition-all duration-1000 inter-normal text-[24px] leading-[29px]"
-                        : "pb-[25px] text-[#515151] text-[24px] leading-[29px] "
+                        ? "pb-[25px] text-[#fff] transition-all duration-1000 inter-normal text-[16px] leading-[10px] md:text-[24px] md:leading-[29px]"
+                        : "pb-[25px] text-[#515151] text-[16px] leading-[10px] md:text-[24px] md:leading-[29px] "
                     }
                     onClick={() => setActiveTabIndex(idx)}
                   >
@@ -172,7 +172,7 @@ const Project = ({ t }) => {
           </div>
           <div className="mt-[70px]">
             {projectTabsData[activeTabIndex].label === "overview" ? (
-              <div className="flex items-start justify-between">
+              <div className="flex items-start justify-center flex-wrap gap-10 md:gap-5">
                 <div className="flex flex-col gap-[25px] w-[302px] mt-[42px]">
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
@@ -239,7 +239,7 @@ const Project = ({ t }) => {
                     </p>
                   </div>
                 </div>
-                <div className="w-[75%]">
+                <div className="w-[100%] md:w-[75%]">
                   <h1 className="inter-600 text-[32px] leading-[39px] mb-[36px]">
                     Until recently, the prevailing{" "}
                   </h1>
@@ -324,7 +324,7 @@ const Project = ({ t }) => {
             <h1 className="inter-normal text-[24px] leading-[29px] mb-[74px] uppercase">
               {t("investors")}
             </h1>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center gap-5 md:gap-[40px] flex-wrap">
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
                 img={polygon}
@@ -348,7 +348,7 @@ const Project = ({ t }) => {
             </div>
           </div>
           <div className="mt-[90px] mb-[40px]">
-            <p className="inter-bold text-[48px] leading-[58px] mb-[100px] nav-shadow">
+            <p className="inter-bold text-[32px] leading-9 md:text-[48px] md:leading-[58px] mb-[100px] nav-shadow">
               {t("explore_more")}
             </p>
             <Slider />

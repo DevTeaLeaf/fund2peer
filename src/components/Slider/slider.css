@@ -335,7 +335,9 @@ Slider
 .read-the-docs {
   color: #888;
 }
-
+.projectLeft {
+  left: 31.1px !important;
+}
 @media screen and (max-width: 1024px) {
   .left-part {
     width: 75%;
@@ -427,6 +429,9 @@ Slider
   }
   .right-part {
     align-items: start;
+  }
+  .projectLeft {
+    left: 53px !important;
   }
 }
 @keyframes appearance {

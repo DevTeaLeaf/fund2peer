@@ -37,12 +37,13 @@ const CurrentPresales = ({ t }) => {
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
+
   return (
     <>
       <Header page="launchpad" />
       <div className="max-w-[1440px] mx-auto overflow-hidden md:overflow-visible">
         <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[70px] text-[#fff]">
-          <p className="inter-bold text-[48px] leading-[58px] nav-shadow mb-[50px]">
+          <p className="inter-bold text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow mb-[50px]">
             {t("current_presales")}
           </p>
           <div className="relative">
@@ -54,8 +55,8 @@ const CurrentPresales = ({ t }) => {
                     ref={(el) => (tabsRef.current[idx] = el)}
                     className={
                       activeTabIndex === idx
-                        ? "pb-[25px] text-[#fff] transition-all duration-1000 inter-normal text-[24px] leading-[29px]"
-                        : "pb-[25px] text-[#515151] text-[24px] leading-[29px] "
+                        ? "pb-[25px] text-[#fff] transition-all duration-1000 inter-normal text-[16px] leading-[10px] md:text-[24px] md:leading-[29px]"
+                        : "pb-[25px] text-[#515151] text-[16px] leading-[10px] md:text-[24px] md:leading-[29px] "
                     }
                     onClick={() => setActiveTabIndex(idx)}
                   >
@@ -72,7 +73,7 @@ const CurrentPresales = ({ t }) => {
           <div className="mt-[70px]">
             {presalesTabsData[activeTabIndex].label === "all_launchpads" ? (
               <div>
-                <div className="flex  justify-between items-end">
+                <div className="flex  justify-between items-end flex-wrap gap-5">
                   <div className="relative">
                     <label
                       className={
@@ -144,7 +145,37 @@ const CurrentPresales = ({ t }) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-[100px] flex items-center flex-wrap gap-[20px]">
+                <div className="mt-[100px] flex items-center justify-center flex-wrap gap-[20px] mb-[100px]">
+                  <PresaleBox
+                    projectLogo={projectLogo}
+                    status="Verified"
+                    name="Sequoia.game"
+                    currentRaise="50.5"
+                    softCap="520,000"
+                    hardCap="800,000"
+                    lockupTime="180"
+                    reward="10"
+                  />
+                  <PresaleBox
+                    projectLogo={projectLogo}
+                    status="Verified"
+                    name="Sequoia.game"
+                    currentRaise="50.5"
+                    softCap="520,000"
+                    hardCap="800,000"
+                    lockupTime="180"
+                    reward="10"
+                  />
+                  <PresaleBox
+                    projectLogo={projectLogo}
+                    status="Verified"
+                    name="Sequoia.game"
+                    currentRaise="50.5"
+                    softCap="520,000"
+                    hardCap="800,000"
+                    lockupTime="180"
+                    reward="10"
+                  />
                   <PresaleBox
                     projectLogo={projectLogo}
                     status="Verified"

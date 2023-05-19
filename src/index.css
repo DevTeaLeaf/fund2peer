@@ -191,5 +191,8 @@ body {
   .socialModalTransorm {
     transform: translate(-50%, -50%);
   }
+  .search {
+    width: 320px;
+  }
 }
 /********************/
