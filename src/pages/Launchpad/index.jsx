@@ -15,8 +15,6 @@ import {
   launchpadToken,
 } from "../../assets/img";
 
-import { Link } from "react-router-dom";
-
 import { withTranslation } from "react-i18next";
 
 const Launchpad = ({ t }) => {
@@ -37,7 +35,7 @@ const Launchpad = ({ t }) => {
                 <Button
                   filled={true}
                   text={t("launchpad_meet")}
-                  to="launchpad"
+                  to="currentPresales"
                 />
                 <Button
                   filled={false}
@@ -67,7 +65,7 @@ const Launchpad = ({ t }) => {
               {t("launchpad_active")}
             </p>
             <Slider />
-            <div className="text-center mt-[50px]">
+            <div className="text-center mt-[50px] ">
               <Button filled={true} text={t("launchpad_list")} to="launchpad" />
             </div>
           </div>
