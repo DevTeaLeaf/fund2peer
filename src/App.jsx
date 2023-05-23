@@ -8,6 +8,7 @@ import XReturn from "./pages/XReturn";
 import FAQ from "./pages/FAQ";
 import CurrentPresales from "./pages/CurrentPresales";
 import Project from "./pages/Project";
+import Form from "./pages/Form";
 
 import { ScrollToTop } from "./components";
 
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/project" element={<Project />} />
           <Route path="/xreturn" element={<XReturn />} />
           <Route path="/currentPresales" element={<CurrentPresales />} />
+          <Route path="/form" element={<Form />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </WagmiConfig>

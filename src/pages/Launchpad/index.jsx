@@ -42,11 +42,7 @@ const Launchpad = ({ t }) => {
                   text={t("launchpad_guide")}
                   to="launchpad"
                 />
-                <Button
-                  filled={false}
-                  text={t("launchpad_list")}
-                  to="launchpad"
-                />
+                <Button filled={false} text={t("launchpad_list")} to="form" />
               </div>
             </div>
             <img
@@ -70,7 +66,7 @@ const Launchpad = ({ t }) => {
             </div>
           </div>
           <div className="mt-[100px] mb-5">
-            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[50px] max-w-[300px]  md:max-w-full nav-shadow">
+            <p className="inter-bold text-[26px] leading-[32px] md:inter-700 mb-[50px] max-w-[300px]  md:max-w-full nav-shadow">
               {t("launchpad_recently")}
             </p>
             <div className="flex items-center justify-around flex-wrap gap-8 mb-[100px] md:mb-0">

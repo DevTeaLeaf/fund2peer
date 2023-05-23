@@ -21,6 +21,17 @@
   "clock_hours": "hours",
   "clock_min": "min",
 
+  "form_questions": "We have some questions",
+  "form_name": "Name of your company",
+  "form_enter_name": "Enter company name",
+  "form_short_desc": "Short description of your project",
+  "form_full_desc": "Full description of your project",
+  "form_100": "(100 symbols)",
+  "form_300": "(300 symbols)",
+  "form_youtube": "Youtube Video",
+  "form_country": "Your country",
+  "form_website": "Your website",
+
   "token": "Token",
   "country": "Country",
   "time": "Time",
@@ -48,5 +59,8 @@
   "project_name": "Project Name",
   "short_desc": "Short Description",
   "website": "Website",
-  "category": "Category"
+  "category": "Category",
+  "link": "Link",
+  "back": "Back",
+  "next": "Next"
 }

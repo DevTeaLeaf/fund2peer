@@ -173,7 +173,7 @@ const Project = ({ t }) => {
           <div className="mt-[70px]">
             {projectTabsData[activeTabIndex].label === "overview" ? (
               <div className="flex items-start justify-center flex-wrap gap-10 md:gap-5">
-                <div className="flex flex-col gap-[25px] w-[302px] mt-[42px]">
+                <div className="flex flex-col gap-[25px] w-[302px] mt-0 md:mt-[42px]">
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
                       {t("project_name")}
