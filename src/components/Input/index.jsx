@@ -31,7 +31,9 @@ const Input = ({ input, t }) => {
       <label
         className={
           isFocused || inputActive
-            ? `absolute text-[#${color}] top-[-12px] left-0 inter-normal text-[15px] leading-5 pointer-events-none hoverEffect`
+            ? `absolute ${
+                color === "89C6B9" ? "validColorText" : "invalidColorText"
+              } top-[-12px] left-0 inter-normal text-[15px] leading-5 pointer-events-none hoverEffect`
             : `absolute text-[#8d8e96] top-2 left-0 text-[15px] inter-normal md:inter-400 pointer-events-none hoverEffect`
         }
       >
@@ -47,7 +49,9 @@ const Input = ({ input, t }) => {
           inputValidation.onBlur(e);
         }}
         ref={inputRef}
-        className={`search focus:border-[#${color}] transition500 w-full`}
+        className={`search ${
+          color === "89C6B9" ? "validColor" : "invalidColor"
+        } transition500 w-full`}
       />
     </div>
   );
