@@ -32,6 +32,8 @@
   "form_country": "Your country",
   "form_website": "Your website",
 
+  "validation_symbols": "Unacceptable symbols",
+
   "token": "Token",
   "country": "Country",
   "time": "Time",
@@ -62,5 +64,9 @@
   "category": "Category",
   "link": "Link",
   "back": "Back",
-  "next": "Next"
+  "next": "Next",
+  "name": "Name",
+  "avatar_link": "Avatar (Link)",
+  "nickname": "Nickname",
+  "your_team": "Your team"
 }

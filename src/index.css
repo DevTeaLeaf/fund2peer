@@ -195,7 +195,21 @@ body {
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
-
+.nickname:hover .social path {
+  fill: #89c6b9;
+  box-shadow: inset 4px 4px 2px rgba(0, 0, 0, 0.25);
+}
+.nickname:hover p {
+  transition: all 300ms ease-out;
+  color: #89c6b9;
+}
+.nickname.active p {
+  color: #89c6b9;
+}
+.nickname.active .social path {
+  fill: #89c6b9;
+  box-shadow: inset 4px 4px 2px rgba(0, 0, 0, 0.25);
+}
 /********************/
 /**********Media**********/
 @media screen and (max-width: 767px) {

@@ -32,6 +32,8 @@
   "form_country": "Ваша страна",
   "form_website": "Ваш сайт",
 
+  "validation_symbols": "Недопустимые символы",
+
   "token": "Токен",
   "country": "Страна",
   "time": "Время",
@@ -62,5 +64,9 @@
   "category": "Категория",
   "link": "Ссылка",
   "back": "Назад",
-  "next": "Дальше"
+  "next": "Дальше",
+  "name": "Имя",
+  "avatar_link": "Аватар (Ссылка)",
+  "nickname": "Никнейм",
+  "your_team": "Ваша команда"
 }

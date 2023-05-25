@@ -16,6 +16,7 @@ import polygon from "./polygon.png";
 import youtube from "./youtube.png";
 import favorite from "./favorite.png";
 import projectLogo from "./projectLogo.png";
+import slimArrow from "./slimArrow.png";
 
 export {
   arrow,
@@ -36,4 +37,5 @@ export {
   polygon,
   favorite,
   projectLogo,
+  slimArrow,
 };

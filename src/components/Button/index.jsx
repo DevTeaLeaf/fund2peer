@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Button = ({ filled, text, to }) => {
   return (
     <>
-      <Link to={`/${to}`}>
+      <Link to={to ? `/${to}` : false}>
         <button
           className={
             filled

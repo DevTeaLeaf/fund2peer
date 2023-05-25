@@ -8,6 +8,7 @@ import Slider from "./Slider";
 import InvestorBox from "./InvestorBox";
 import ScrollToTop from "./ScrollToTop";
 import PresaleBox from "./PresaleBox";
+import Input from "./Input";
 import FormInput from "./FormInput";
 
 export {
@@ -21,5 +22,6 @@ export {
   InvestorBox,
   ScrollToTop,
   PresaleBox,
+  Input,
   FormInput,
 };

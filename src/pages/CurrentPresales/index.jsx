@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Header, Footer, PresaleBox } from "../../components";
+import { Header, Footer, PresaleBox, Input } from "../../components";
 import { presalesTabsData } from "../../constants";
 
 import { arrow, projectLogo } from "../../assets/img";
@@ -12,15 +12,18 @@ const CurrentPresales = ({ t }) => {
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
+  const inputRef = useRef();
 
   //for input
   const [isFocused, setIsFocused] = useState(false);
+  const [inputActive, setInputActive] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
   };
 
   const handleBlur = () => {
+    inputRef.current.value != "" ? setInputActive(true) : setInputActive(false);
     setIsFocused(false);
   };
   //for input
@@ -74,22 +77,8 @@ const CurrentPresales = ({ t }) => {
             {presalesTabsData[activeTabIndex].label === "all_launchpads" ? (
               <div>
                 <div className="flex  justify-between items-end flex-wrap gap-5">
-                  <div className="relative">
-                    <label
-                      className={
-                        isFocused
-                          ? "absolute text-[#89c6b9] top-[-12px] left-0 inter-normal text-[16px] leading-5 pointer-events-none hoverEffect"
-                          : "absolute text-[#8d8e96] top-2 left-0 inter-400 pointer-events-none hoverEffect"
-                      }
-                    >
-                      {t("current_search")}
-                    </label>
-                    <input
-                      type="text"
-                      onFocus={handleFocus}
-                      onBlur={handleBlur}
-                      className="search focus:border-[#89c6b9] transition500"
-                    />
+                  <div className="w-[30%] min-w-[300px]">
+                    <Input input={t("current_search")} />
                   </div>
                   <div>
                     <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">

@@ -62,7 +62,7 @@ const Launchpad = ({ t }) => {
             </p>
             <Slider />
             <div className="text-center mt-[50px] ">
-              <Button filled={true} text={t("launchpad_list")} to="launchpad" />
+              <Button filled={true} text={t("launchpad_list")} to="form" />
             </div>
           </div>
           <div className="mt-[100px] mb-5">
