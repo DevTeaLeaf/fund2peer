@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useInput } from "../../utils";
+import { dimensionWarning } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
 
-const FormInput = ({ name, input, obligatorily, t }) => {
+const FormInput = ({ name, input, obligatorily, dimension, t }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputActive, setInputActive] = useState(false);
   const [color, setColor] = useState("89C6B9");
@@ -62,6 +63,16 @@ const FormInput = ({ name, input, obligatorily, t }) => {
               } transition500 w-full`}
             />
           </div>
+          {dimension ? (
+            <div className="mt-5 flex items-center gap-4">
+              <img src={dimensionWarning} alt="dimension warning" />
+              <div className="inter-normal text-[14px] leading-[17px]">
+                {t("size")} {dimension}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

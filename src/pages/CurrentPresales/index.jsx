@@ -12,21 +12,6 @@ const CurrentPresales = ({ t }) => {
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
-  const inputRef = useRef();
-
-  //for input
-  const [isFocused, setIsFocused] = useState(false);
-  const [inputActive, setInputActive] = useState(false);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    inputRef.current.value != "" ? setInputActive(true) : setInputActive(false);
-    setIsFocused(false);
-  };
-  //for input
 
   useEffect(() => {
     const setTabPosition = () => {

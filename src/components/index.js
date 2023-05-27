@@ -10,6 +10,7 @@ import ScrollToTop from "./ScrollToTop";
 import PresaleBox from "./PresaleBox";
 import Input from "./Input";
 import FormInput from "./FormInput";
+import Token from "./Token";
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   PresaleBox,
   Input,
   FormInput,
+  Token,
 };

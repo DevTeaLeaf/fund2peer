@@ -68,5 +68,14 @@
   "name": "Name",
   "avatar_link": "Avatar (Link)",
   "nickname": "Nickname",
-  "your_team": "Your team"
+  "your_team": "Your team",
+  "business_plan": "Business plan",
+  "documents": "Additional Documents",
+  "header_img": "Header Image",
+  "preview_img": "Preview Image",
+  "size": "Size",
+  "number": "Number",
+  "investors_reward": "Investors reward",
+  "choose_token": "Choose token",
+  "keep_touch": "Project social media"
 }

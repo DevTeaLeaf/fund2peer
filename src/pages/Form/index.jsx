@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { Header, Footer, Input, FormInput, Button } from "../../components";
+import { useEffect, useState } from "react";
+import {
+  Header,
+  Footer,
+  Input,
+  FormInput,
+  Button,
+  Token,
+} from "../../components";
 import {
   slimArrow,
   Twitter,
   Discord,
   Telegram,
   Facebook,
+  plus,
+  testToken,
 } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
@@ -32,6 +41,10 @@ const Form = ({ t }) => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   return (
     <>
       <Header page="launchpad" />
@@ -47,36 +60,12 @@ const Form = ({ t }) => {
           </div>
           {page === "1" ? (
             <div>
-              <FormInput
-                name={t("form_name")}
-                input={t("form_enter_name")}
-                obligatorily={true}
-              />
-              <FormInput
-                name={t("form_short_desc")}
-                input={t("form_100")}
-                obligatorily={false}
-              />
-              <FormInput
-                name={t("form_full_desc")}
-                input={t("form_300")}
-                obligatorily={false}
-              />
-              <FormInput
-                name={t("form_youtube")}
-                input={t("link")}
-                obligatorily={false}
-              />
-              <FormInput
-                name={t("form_country")}
-                input={t("country")}
-                obligatorily={false}
-              />
-              <FormInput
-                name={t("form_website")}
-                input={t("link")}
-                obligatorily={false}
-              />
+              <FormInput name={t("form_name")} input={t("form_enter_name")} />
+              <FormInput name={t("form_short_desc")} input={t("form_100")} />
+              <FormInput name={t("form_full_desc")} input={t("form_300")} />
+              <FormInput name={t("form_youtube")} input={t("link")} />
+              <FormInput name={t("form_country")} input={t("country")} />
+              <FormInput name={t("form_website")} input={t("link")} />
             </div>
           ) : page === "2" ? (
             <div>
@@ -87,14 +76,14 @@ const Form = ({ t }) => {
                   </p>
                   <div>
                     <p className="inter-normal mb-4">Member 1</p>
-                    <div className="flex items-end gap-10">
-                      <div className="w-[30%]">
+                    <div className="flex items-end gap-10 flex-wrap justify-center md:justify-between xl:justify-normal">
+                      <div className="max-w-[390px] xl:w-[30%]">
                         <Input input={t("name")} />
                       </div>
-                      <div className="w-[40%]">
+                      <div className="max-w-[520px] xl:w-[40%]">
                         <Input input={t("avatar_link")} />
                       </div>
-                      <div className="flex items-end gap-3">
+                      <div className=" flex items-end gap-3">
                         <Input input={t("nickname")} />
                         <div className="relative">
                           <div
@@ -181,11 +170,80 @@ const Form = ({ t }) => {
                       </div>
                     </div>
                   </div>
+                  <img
+                    src={plus}
+                    alt="plus"
+                    className="mt-[70px] pt-[15px] pr-4 pb-4 pl-[17px] cursor-pointer border border-[#89C6B9] rounded-[10px]  mx-auto max-w-[52px]"
+                  />
+                </div>
+              </div>
+              <FormInput name={t("white_paper")} input={t("link")} />
+              <FormInput
+                name={t("roadmap")}
+                input={t("link")}
+                obligatorily={true}
+              />
+              <FormInput name={t("business_plan")} input={t("link")} />
+              <FormInput name={t("documents")} input={t("link")} />
+              <FormInput
+                name={t("header_img")}
+                input={t("link")}
+                dimension="1440x500"
+              />
+              <FormInput
+                name={t("preview_img")}
+                input={t("link")}
+                dimension="350x500"
+              />
+            </div>
+          ) : (
+            <div>
+              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
+                <div className="px-10 py-[60px]">
+                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                    {t("choose_token")}:
+                  </p>
+                  <div className="flex items-center gap-5 flex-wrap">
+                    <Token img={testToken} name="Bitcoin" />
+                    <Token img={testToken} name="Bitcoin" />
+                    <Token img={testToken} name="Bitcoin" />
+                  </div>
+                </div>
+              </div>
+              <FormInput name={t("soft_cap")} input={t("number")} />
+              <FormInput name={t("hard_cap")} input={t("number")} />
+              <FormInput name={t("investors_reward")} input={t("form_300")} />
+              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">
+                <div className="px-10 py-[60px]">
+                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                    {t("keep_touch")}
+                  </p>
+                  <div className="flex flex-col gap-5">
+                    <div className="flex gap-5 md:gap-10 items-end">
+                      <Telegram className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                      <Input input={t("link")} />
+                    </div>
+                    <div className="flex gap-5 md:gap-10 items-end">
+                      <Twitter className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                      <Input input={t("link")} />
+                    </div>
+                    <div className="flex gap-5 md:gap-10 items-end">
+                      <Discord className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                      <Input input={t("link")} />
+                    </div>
+                    <div className="flex gap-5 md:gap-10 items-end">
+                      <Facebook className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                      <Input input={t("link")} />
+                    </div>
+                    <img
+                      src={plus}
+                      alt="plus"
+                      className="mt-[20px] pt-[15px] pr-4 pb-4 pl-[17px] cursor-pointer border border-[#89C6B9] rounded-[10px]  mx-auto max-w-[52px]"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          ) : (
-            <div>3</div>
           )}
 
           {page === "1" ? (

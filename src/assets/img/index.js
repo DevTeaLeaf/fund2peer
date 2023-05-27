@@ -17,6 +17,9 @@ import youtube from "./youtube.png";
 import favorite from "./favorite.png";
 import projectLogo from "./projectLogo.png";
 import slimArrow from "./slimArrow.png";
+import plus from "./plus.png";
+import dimensionWarning from "./dimensionWarning.png";
+import testToken from "./testToken.png";
 
 export {
   arrow,
@@ -38,4 +41,7 @@ export {
   favorite,
   projectLogo,
   slimArrow,
+  plus,
+  dimensionWarning,
+  testToken,
 };
