@@ -63,7 +63,7 @@ const CurrentPresales = ({ t }) => {
               <div>
                 <div className="flex  justify-between items-end flex-wrap gap-5">
                   <div className="w-[30%] min-w-[300px]">
-                    <Input input={t("current_search")} />
+                    <Input input={t("current_search")} type="text" />
                   </div>
                   <div>
                     <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">

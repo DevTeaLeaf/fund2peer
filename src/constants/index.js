@@ -66,32 +66,128 @@ export const formTokens = [
     active: false,
   },
 ];
-export const formInputs1 = [
-  {
-    id: 1,
-    value: "",
-    name: "form_name",
-    input: "form_enter_name",
-    type: "text",
-    obligatorily: true,
-  },
-  {
-    id: 2,
-    value: "",
-    name: "form_short_desc",
-    input: "form_100",
-    type: "text",
-  },
-  {
-    id: 3,
-    value: "",
-    name: "form_full_desc",
-    input: "form_300",
-    type: "text",
-  },
-  { id: 4, value: "", name: "form_youtube", input: "link", type: "link" },
-  { id: 5, value: "", name: "form_country", input: "country", type: "country" },
-  { id: 6, value: "", name: "form_website", input: "link", type: "link" },
-];
-export const formInputs2 = [];
-export const formInputs3 = [];
+export const formInputs = {
+  page1: [
+    {
+      id: 1,
+      value: "",
+      name: "form_name",
+      input: "form_enter_name",
+      type: "text",
+      obligatorily: true,
+    },
+    {
+      id: 2,
+      value: "",
+      name: "form_short_desc",
+      input: "form_300",
+      type: "text",
+    },
+    {
+      id: 3,
+      value: "",
+      name: "form_full_desc",
+      input: "form_1500",
+      type: "text",
+    },
+    { id: 4, value: "", name: "form_youtube", input: "link", type: "link" },
+    {
+      id: 5,
+      value: "",
+      name: "form_country",
+      input: "country",
+      type: "country",
+    },
+    { id: 6, value: "", name: "form_website", input: "link", type: "link" },
+  ],
+  page2: [
+    {
+      id: 11,
+      value: "",
+      name: "white_paper",
+      input: "link",
+      type: "link",
+    },
+    {
+      id: 12,
+      value: "",
+      name: "roadmap",
+      input: "link",
+      type: "link",
+      obligatorily: true,
+    },
+    {
+      id: 13,
+      value: "",
+      name: "business_plan",
+      input: "link",
+      type: "link",
+    },
+    {
+      id: 14,
+      value: "",
+      name: "documents",
+      input: "link",
+      type: "link",
+    },
+    {
+      id: 15,
+      value: "",
+      name: "header_img",
+      input: "link",
+      type: "link",
+      dimension: "1440x500",
+    },
+    {
+      id: 16,
+      value: "",
+      name: "preview_img",
+      input: "link",
+      type: "link",
+      dimension: "350x500",
+    },
+  ],
+  page3: [
+    {
+      id: 21,
+      value: "",
+      name: "soft_cap",
+      input: "number",
+      type: "number",
+    },
+    {
+      id: 22,
+      value: "",
+      name: "hard_cap",
+      input: "number",
+      type: "number",
+    },
+    {
+      id: 23,
+      value: "",
+      name: "investors_reward",
+      input: "number",
+      type: "number",
+    },
+  ],
+  highlights: [
+    {
+      id: 31,
+      value: "",
+      input: "form_100",
+      type: "text",
+    },
+    {
+      id: 32,
+      value: "",
+      input: "form_100",
+      type: "text",
+    },
+    {
+      id: 33,
+      value: "",
+      input: "form_100",
+      type: "text",
+    },
+  ],
+};

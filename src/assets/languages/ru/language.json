@@ -28,9 +28,11 @@
   "form_full_desc": "Полное описание вашего проекта",
   "form_100": "(100 символов)",
   "form_300": "(300 символов)",
+  "form_1500": "(1500 символов)",
   "form_youtube": "Youtube Видео",
   "form_country": "Ваша страна",
   "form_website": "Ваш сайт",
+  "form_highlights": "Основные моменты вашего проекта",
 
   "validation_symbols": "Недопустимые символы",
   "validation_country": "Неверная страна",

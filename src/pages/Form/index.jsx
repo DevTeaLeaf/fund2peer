@@ -15,12 +15,7 @@ import {
   Facebook,
   plus,
 } from "../../assets/img";
-import {
-  formTokens,
-  formInputs1,
-  formInputs2,
-  formInputs3,
-} from "../../constants";
+import { formTokens, formInputs } from "../../constants";
 
 import { withTranslation } from "react-i18next";
 
@@ -29,7 +24,13 @@ const Form = ({ t }) => {
   const [modal, setModal] = useState(false);
   const [social, setSocial] = useState(false);
   const [tokens, setTokens] = useState(formTokens);
-  const [formInputsp1, setFromInputsp1] = useState(formInputs1);
+  const [formInputsP1, setFormInputsP1] = useState(formInputs.page1);
+  const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
+  const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
+
+  const [highlightsInputs, setHighlightsInputs] = useState(
+    formInputs.highlights
+  );
 
   const handleTokens = (itemId) => {
     const updatedTokens = tokens.map((item) =>
@@ -39,11 +40,11 @@ const Form = ({ t }) => {
     );
     setTokens(updatedTokens);
   };
-  const handleInputs = (itemId, value) => {
-    const updatedInputs = formInputsp1.map((item) =>
+  const handleInputs = (itemId, value, inputs, setInputs) => {
+    const updatedInputs = inputs.map((item) =>
       item.id === itemId ? { ...item, value: value } : { ...item }
     );
-    setFromInputsp1(updatedInputs);
+    setInputs(updatedInputs);
   };
   const socialModalController = (social) => {
     setModal(false);
@@ -64,6 +65,8 @@ const Form = ({ t }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(formInputsP2);
+    console.log(formInputsP3);
   }, [page]);
 
   return (
@@ -81,7 +84,7 @@ const Form = ({ t }) => {
           </div>
           {page === "1" ? (
             <div>
-              {formInputsp1.map(
+              {formInputsP1.map(
                 ({ id, value, name, input, type, obligatorily }) => {
                   return (
                     <FormInput
@@ -93,10 +96,35 @@ const Form = ({ t }) => {
                       type={type}
                       obligatorily={obligatorily}
                       controller={handleInputs}
+                      inputs={formInputsP1}
+                      setInputs={setFormInputsP1}
                     />
                   );
                 }
               )}
+              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
+                <div className="px-10 py-[60px]">
+                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                    {t("form_highlights")}
+                  </p>
+                  <div className="flex flex-col gap-4">
+                    {highlightsInputs.map(({ id, value, input, type }) => {
+                      return (
+                        <Input
+                          key={id}
+                          id={id}
+                          input={t(input)}
+                          value={value}
+                          type={type}
+                          controller={handleInputs}
+                          inputs={highlightsInputs}
+                          setInputs={setHighlightsInputs}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           ) : page === "2" ? (
             <div>
@@ -109,13 +137,14 @@ const Form = ({ t }) => {
                     <p className="inter-normal mb-4">Member 1</p>
                     <div className="flex items-end gap-10 flex-wrap justify-center md:justify-between xl:justify-normal">
                       <div className="max-w-[390px] xl:w-[30%]">
-                        <Input input={t("name")} />
+                        <Input input={t("name")} type="text" />
                       </div>
                       <div className="max-w-[520px] xl:w-[40%]">
-                        <Input input={t("avatar_link")} />
+                        <Input input={t("avatar_link")} type="link" />
                       </div>
                       <div className=" flex items-end gap-3">
-                        <Input input={t("nickname")} />
+                        <Input input={t("nickname")} type="text" />
+
                         <div className="relative">
                           <div
                             onClick={
@@ -208,35 +237,26 @@ const Form = ({ t }) => {
                   />
                 </div>
               </div>
-              <FormInput
-                name={t("white_paper")}
-                input={t("link")}
-                type="link"
-              />
-              <FormInput
-                name={t("roadmap")}
-                input={t("link")}
-                obligatorily={true}
-                type="link"
-              />
-              <FormInput
-                name={t("business_plan")}
-                input={t("link")}
-                type="link"
-              />
-              <FormInput name={t("documents")} input={t("link")} type="link" />
-              <FormInput
-                name={t("header_img")}
-                input={t("link")}
-                dimension="1440x500"
-                type="link"
-              />
-              <FormInput
-                name={t("preview_img")}
-                input={t("link")}
-                dimension="350x500"
-                type="link"
-              />
+
+              {formInputsP2.map(
+                ({ id, value, name, input, type, obligatorily, dimension }) => {
+                  return (
+                    <FormInput
+                      key={id}
+                      id={id}
+                      value={value}
+                      name={t(name)}
+                      input={t(input)}
+                      type={type}
+                      obligatorily={obligatorily}
+                      dimension={dimension}
+                      controller={handleInputs}
+                      inputs={formInputsP2}
+                      setInputs={setFormInputsP2}
+                    />
+                  );
+                }
+              )}
             </div>
           ) : (
             <div>
@@ -261,21 +281,21 @@ const Form = ({ t }) => {
                   </div>
                 </div>
               </div>
-              <FormInput
-                name={t("soft_cap")}
-                input={t("number")}
-                type="number"
-              />
-              <FormInput
-                name={t("hard_cap")}
-                input={t("number")}
-                type="number"
-              />
-              <FormInput
-                name={t("investors_reward")}
-                input={t("number")}
-                type="number"
-              />
+              {formInputsP3.map(({ id, value, name, input, type }) => {
+                return (
+                  <FormInput
+                    key={id}
+                    id={id}
+                    value={value}
+                    name={t(name)}
+                    input={t(input)}
+                    type={type}
+                    controller={handleInputs}
+                    inputs={formInputsP3}
+                    setInputs={setFormInputsP3}
+                  />
+                );
+              })}
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">
                 <div className="px-10 py-[60px]">
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -284,19 +304,19 @@ const Form = ({ t }) => {
                   <div className="flex flex-col gap-5">
                     <div className="flex gap-5 md:gap-10 items-end">
                       <Telegram className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} />
+                      <Input input={t("link")} type="link" />
                     </div>
                     <div className="flex gap-5 md:gap-10 items-end">
                       <Twitter className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} />
+                      <Input input={t("link")} type="link" />
                     </div>
                     <div className="flex gap-5 md:gap-10 items-end">
                       <Discord className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} />
+                      <Input input={t("link")} type="link" />
                     </div>
                     <div className="flex gap-5 md:gap-10 items-end">
                       <Facebook className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} />
+                      <Input input={t("link")} type="link" />
                     </div>
                     <img
                       src={plus}

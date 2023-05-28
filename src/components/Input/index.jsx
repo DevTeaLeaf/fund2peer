@@ -2,7 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { useInput } from "../../utils";
 import { withTranslation } from "react-i18next";
 
-const Input = ({ input, t }) => {
+const Input = ({
+  id,
+  value,
+  input,
+  type,
+  controller,
+  inputs,
+  setInputs,
+  t,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputActive, setInputActive] = useState(false);
   const [color, setColor] = useState("89C6B9");
@@ -17,15 +26,50 @@ const Input = ({ input, t }) => {
     inputRef.current.value != "" ? setInputActive(true) : setInputActive(false);
     setIsFocused(false);
   };
+  const validation =
+    type === "number"
+      ? {
+          isEmpty: true,
+          validNumber: true,
+        }
+      : type === "country"
+      ? {
+          isEmpty: true,
+          validCountry: true,
+        }
+      : type === "link"
+      ? {
+          isEmpty: true,
+          validLink: true,
+        }
+      : {
+          isEmpty: true,
+          validText: true,
+        };
 
-  const inputValidation = useInput("", {
-    isEmpty: true,
-    validText: true,
-  });
+  const inputValidation = useInput("", validation);
 
   useEffect(() => {
-    !inputValidation.validText ? setColor("ee6a63") : setColor("89C6B9");
+    type === "number"
+      ? !inputValidation.validNumber
+        ? setColor("ee6a63")
+        : setColor("89C6B9")
+      : type === "country"
+      ? !inputValidation.validCountry
+        ? setColor("ee6a63")
+        : setColor("89C6B9")
+      : type === "link"
+      ? !inputValidation.validLink
+        ? setColor("ee6a63")
+        : setColor("89C6B9")
+      : !inputValidation.validText
+      ? setColor("ee6a63")
+      : setColor("89C6B9");
   }, [inputValidation]);
+  useEffect(() => {
+    inputRef.current.value != "" ? handleFocus() : "";
+  }, []);
+
   return (
     <div className="relative">
       <label
@@ -37,11 +81,32 @@ const Input = ({ input, t }) => {
             : `absolute text-[#8d8e96] top-2 left-0 text-[15px] inter-normal md:inter-400 pointer-events-none hoverEffect`
         }
       >
-        {!inputValidation.validText ? t("validation_symbols") : input}
+        {type === "text"
+          ? !inputValidation.validText
+            ? t("validation_symbols")
+            : input
+          : type === "country"
+          ? !inputValidation.validCountry
+            ? t("validation_country")
+            : input
+          : type === "number"
+          ? !inputValidation.validNumber
+            ? t("validation_number")
+            : input
+          : type === "link"
+          ? !inputValidation.validLink
+            ? t("validation_link")
+            : input
+          : ""}
       </label>
       <input
-        onChange={(e) => inputValidation.onChange(e)}
-        defaultValue={inputValidation.value}
+        onChange={(e) => {
+          inputValidation.onChange(e);
+          controller
+            ? controller(id, inputRef.current.value, inputs, setInputs)
+            : "";
+        }}
+        defaultValue={value}
         type="text"
         onFocus={handleFocus}
         onBlur={(e) => {

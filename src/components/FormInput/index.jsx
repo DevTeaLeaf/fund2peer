@@ -13,6 +13,8 @@ const FormInput = ({
   dimension,
   type,
   controller,
+  inputs,
+  setInputs,
   t,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -111,7 +113,9 @@ const FormInput = ({
             <input
               onChange={(e) => {
                 inputValidation.onChange(e);
-                controller(id, inputRef.current.value);
+                controller
+                  ? controller(id, inputRef.current.value, inputs, setInputs)
+                  : "";
               }}
               defaultValue={value}
               type="text"

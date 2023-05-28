@@ -28,9 +28,11 @@
   "form_full_desc": "Full description of your project",
   "form_100": "(100 symbols)",
   "form_300": "(300 symbols)",
+  "form_1500": "(1500 symbols)",
   "form_youtube": "Youtube Video",
   "form_country": "Your country",
   "form_website": "Your website",
+  "form_highlights": "Highlights of your project",
 
   "validation_symbols": "Unacceptable symbols",
   "validation_country": "Wrong country",

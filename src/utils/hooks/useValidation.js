@@ -35,7 +35,7 @@ const useValidation = (value, validations) => {
             : setValidCountry(false);
           break;
         case "validNumber":
-          /\d+/g.test(value) || value === ""
+          /\d+/g.test(Number(value)) || value === ""
             ? setValidNumber(true)
             : setValidNumber(false);
 
