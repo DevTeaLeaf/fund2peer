@@ -5,6 +5,8 @@ const useValidation = (value, validations) => {
   const [minLengthError, setMinLengthError] = useState(false);
   const [validText, setValidText] = useState(true);
   const [validLink, setValidLink] = useState(true);
+  const [validCountry, setValidCountry] = useState(true);
+  const [validNumber, setValidNumber] = useState(true);
 
   useEffect(() => {
     for (const validation in validations) {
@@ -27,16 +29,29 @@ const useValidation = (value, validations) => {
             ? setValidLink(true)
             : setValidLink(false);
           break;
-        /*case "validAddress":
-            /^0x[a-fA-F0-9]{40}$/.test(value) || value === ""
-              ? setValidAddress(false)
-              : setValidAddress(true);
-            break;*/
+        case "validCountry":
+          /^[A-Za-z]+$/.test(value) || value === ""
+            ? setValidCountry(true)
+            : setValidCountry(false);
+          break;
+        case "validNumber":
+          /\d+/g.test(value) || value === ""
+            ? setValidNumber(true)
+            : setValidNumber(false);
+
+          break;
       }
     }
   }, [value]);
 
-  return { isEmpty, minLengthError, validText, validLink };
+  return {
+    isEmpty,
+    minLengthError,
+    validText,
+    validLink,
+    validCountry,
+    validNumber,
+  };
 };
 
 export default useValidation;

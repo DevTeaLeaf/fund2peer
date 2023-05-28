@@ -33,6 +33,9 @@
   "form_website": "Ваш сайт",
 
   "validation_symbols": "Недопустимые символы",
+  "validation_country": "Неверная страна",
+  "validation_link": "Неправильная ссылка",
+  "validation_number": "Неправильное число",
 
   "token": "Токен",
   "country": "Страна",

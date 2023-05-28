@@ -33,6 +33,9 @@
   "form_website": "Your website",
 
   "validation_symbols": "Unacceptable symbols",
+  "validation_country": "Wrong country",
+  "validation_link": "Wrong link",
+  "validation_number": "Wrong number",
 
   "token": "Token",
   "country": "Country",

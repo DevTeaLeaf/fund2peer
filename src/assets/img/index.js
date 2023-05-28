@@ -12,14 +12,18 @@ import slider from "./slider.png";
 import launchpadToken from "./launchpadToken.png";
 import launchpadBg from "./launchpadBg.png";
 import projectBg from "./projectBg.png";
-import polygon from "./polygon.png";
 import youtube from "./youtube.png";
 import favorite from "./favorite.png";
 import projectLogo from "./projectLogo.png";
 import slimArrow from "./slimArrow.png";
 import plus from "./plus.png";
 import dimensionWarning from "./dimensionWarning.png";
-import testToken from "./testToken.png";
+import wmatic from "./wmatic.png";
+import wbtc from "./wbtc.png";
+import weth from "./weth.png";
+import usdt from "./usdt.png";
+import usdc from "./usdc.png";
+import dai from "./dai.png";
 
 export {
   arrow,
@@ -37,11 +41,15 @@ export {
   launchpadBg,
   projectBg,
   youtube,
-  polygon,
   favorite,
   projectLogo,
   slimArrow,
   plus,
   dimensionWarning,
-  testToken,
+  wmatic,
+  wbtc,
+  weth,
+  usdt,
+  usdc,
+  dai,
 };

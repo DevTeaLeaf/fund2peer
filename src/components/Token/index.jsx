@@ -1,12 +1,23 @@
-const Token = ({ img, name }) => {
+const Token = ({ id, img, name, active, setActive }) => {
   return (
-    <div className="cursor-pointer flex align-center flex-col">
+    <div
+      onClick={() => setActive(id)}
+      className="cursor-pointer flex items-center flex-col"
+    >
       <img
         src={img}
         alt="test"
-        className="border-[3px] border-[#89C6B9] rounded-full max-w-[42px]"
+        className={`${
+          active ? "border-[3px] border-[#89C6B9]" : ""
+        } rounded-full max-w-[42px]`}
       />
-      <p className="inter-normal text-[14px] leading-[17px] mt-2">{name}</p>
+      <p
+        className={`inter-normal text-[14px] leading-[17px] mt-2 ${
+          active ? "text-[#89c6b9]" : ""
+        }`}
+      >
+        {name}
+      </p>
     </div>
   );
 };

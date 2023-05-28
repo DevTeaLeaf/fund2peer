@@ -10,7 +10,7 @@ import {
   Telegram,
   Facebook,
   youtube,
-  polygon,
+  wmatic,
 } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
@@ -327,22 +327,22 @@ const Project = ({ t }) => {
             <div className="flex items-center justify-center gap-5 md:gap-[40px] flex-wrap">
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={polygon}
+                img={wmatic}
                 amount="100,000"
               />
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={polygon}
+                img={wmatic}
                 amount="100,000"
               />
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={polygon}
+                img={wmatic}
                 amount="100,000"
               />
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={polygon}
+                img={wmatic}
                 amount="100,000"
               />
             </div>

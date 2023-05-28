@@ -14,8 +14,13 @@ import {
   Telegram,
   Facebook,
   plus,
-  testToken,
 } from "../../assets/img";
+import {
+  formTokens,
+  formInputs1,
+  formInputs2,
+  formInputs3,
+} from "../../constants";
 
 import { withTranslation } from "react-i18next";
 
@@ -23,7 +28,23 @@ const Form = ({ t }) => {
   const [page, setPage] = useState("1");
   const [modal, setModal] = useState(false);
   const [social, setSocial] = useState(false);
+  const [tokens, setTokens] = useState(formTokens);
+  const [formInputsp1, setFromInputsp1] = useState(formInputs1);
 
+  const handleTokens = (itemId) => {
+    const updatedTokens = tokens.map((item) =>
+      item.id === itemId
+        ? { ...item, active: true }
+        : { ...item, active: false }
+    );
+    setTokens(updatedTokens);
+  };
+  const handleInputs = (itemId, value) => {
+    const updatedInputs = formInputsp1.map((item) =>
+      item.id === itemId ? { ...item, value: value } : { ...item }
+    );
+    setFromInputsp1(updatedInputs);
+  };
   const socialModalController = (social) => {
     setModal(false);
 
@@ -60,12 +81,22 @@ const Form = ({ t }) => {
           </div>
           {page === "1" ? (
             <div>
-              <FormInput name={t("form_name")} input={t("form_enter_name")} />
-              <FormInput name={t("form_short_desc")} input={t("form_100")} />
-              <FormInput name={t("form_full_desc")} input={t("form_300")} />
-              <FormInput name={t("form_youtube")} input={t("link")} />
-              <FormInput name={t("form_country")} input={t("country")} />
-              <FormInput name={t("form_website")} input={t("link")} />
+              {formInputsp1.map(
+                ({ id, value, name, input, type, obligatorily }) => {
+                  return (
+                    <FormInput
+                      key={id}
+                      id={id}
+                      value={value}
+                      name={t(name)}
+                      input={t(input)}
+                      type={type}
+                      obligatorily={obligatorily}
+                      controller={handleInputs}
+                    />
+                  );
+                }
+              )}
             </div>
           ) : page === "2" ? (
             <div>
@@ -177,23 +208,34 @@ const Form = ({ t }) => {
                   />
                 </div>
               </div>
-              <FormInput name={t("white_paper")} input={t("link")} />
+              <FormInput
+                name={t("white_paper")}
+                input={t("link")}
+                type="link"
+              />
               <FormInput
                 name={t("roadmap")}
                 input={t("link")}
                 obligatorily={true}
+                type="link"
               />
-              <FormInput name={t("business_plan")} input={t("link")} />
-              <FormInput name={t("documents")} input={t("link")} />
+              <FormInput
+                name={t("business_plan")}
+                input={t("link")}
+                type="link"
+              />
+              <FormInput name={t("documents")} input={t("link")} type="link" />
               <FormInput
                 name={t("header_img")}
                 input={t("link")}
                 dimension="1440x500"
+                type="link"
               />
               <FormInput
                 name={t("preview_img")}
                 input={t("link")}
                 dimension="350x500"
+                type="link"
               />
             </div>
           ) : (
@@ -203,16 +245,37 @@ const Form = ({ t }) => {
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                     {t("choose_token")}:
                   </p>
-                  <div className="flex items-center gap-5 flex-wrap">
-                    <Token img={testToken} name="Bitcoin" />
-                    <Token img={testToken} name="Bitcoin" />
-                    <Token img={testToken} name="Bitcoin" />
+                  <div className="flex items-center gap-7 flex-wrap">
+                    {tokens.map(({ id, name, img, active }) => {
+                      return (
+                        <Token
+                          key={id}
+                          id={id}
+                          img={img}
+                          name={name}
+                          active={active}
+                          setActive={handleTokens}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </div>
-              <FormInput name={t("soft_cap")} input={t("number")} />
-              <FormInput name={t("hard_cap")} input={t("number")} />
-              <FormInput name={t("investors_reward")} input={t("form_300")} />
+              <FormInput
+                name={t("soft_cap")}
+                input={t("number")}
+                type="number"
+              />
+              <FormInput
+                name={t("hard_cap")}
+                input={t("number")}
+                type="number"
+              />
+              <FormInput
+                name={t("investors_reward")}
+                input={t("number")}
+                type="number"
+              />
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">
                 <div className="px-10 py-[60px]">
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
