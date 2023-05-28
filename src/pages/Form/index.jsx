@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Header,
-  Footer,
-  Input,
-  FormInput,
-  Button,
-  Token,
-} from "../../components";
+import { Header, Footer, Input, Button, Token } from "../../components";
 import {
   slimArrow,
   Twitter,
@@ -14,6 +7,7 @@ import {
   Telegram,
   Facebook,
   plus,
+  dimensionWarning,
 } from "../../assets/img";
 import { formTokens, formInputs } from "../../constants";
 
@@ -65,8 +59,6 @@ const Form = ({ t }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(formInputsP2);
-    console.log(formInputsP3);
   }, [page]);
 
   return (
@@ -87,18 +79,29 @@ const Form = ({ t }) => {
               {formInputsP1.map(
                 ({ id, value, name, input, type, obligatorily }) => {
                   return (
-                    <FormInput
+                    <div
                       key={id}
-                      id={id}
-                      value={value}
-                      name={t(name)}
-                      input={t(input)}
-                      type={type}
-                      obligatorily={obligatorily}
-                      controller={handleInputs}
-                      inputs={formInputsP1}
-                      setInputs={setFormInputsP1}
-                    />
+                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                    >
+                      <div className="px-[36px] py-[50px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                          <p className="mr-2">{t(name)}</p>
+                          <p className="text-[#89C6B9]">
+                            {obligatorily ? "*" : ""}
+                          </p>
+                        </div>
+                        <Input
+                          key={id}
+                          id={id}
+                          input={t(input)}
+                          value={value}
+                          type={type}
+                          controller={handleInputs}
+                          inputs={formInputsP1}
+                          setInputs={setFormInputsP1}
+                        />
+                      </div>
+                    </div>
                   );
                 }
               )}
@@ -241,19 +244,39 @@ const Form = ({ t }) => {
               {formInputsP2.map(
                 ({ id, value, name, input, type, obligatorily, dimension }) => {
                   return (
-                    <FormInput
-                      key={id}
-                      id={id}
-                      value={value}
-                      name={t(name)}
-                      input={t(input)}
-                      type={type}
-                      obligatorily={obligatorily}
-                      dimension={dimension}
-                      controller={handleInputs}
-                      inputs={formInputsP2}
-                      setInputs={setFormInputsP2}
-                    />
+                    <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10">
+                      <div className="px-[36px] py-[50px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                          <p className="mr-2">{t(name)}</p>
+                          <p className="text-[#89C6B9]">
+                            {obligatorily ? "*" : ""}
+                          </p>
+                        </div>
+                        <Input
+                          key={id}
+                          id={id}
+                          input={t(input)}
+                          value={value}
+                          type={type}
+                          controller={handleInputs}
+                          inputs={formInputsP2}
+                          setInputs={setFormInputsP2}
+                        />
+                        {dimension ? (
+                          <div className="mt-5 flex items-center gap-4">
+                            <img
+                              src={dimensionWarning}
+                              alt="dimension warning"
+                            />
+                            <div className="inter-normal text-[14px] leading-[17px]">
+                              {t("size")} {dimension}
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                   );
                 }
               )}
@@ -283,17 +306,23 @@ const Form = ({ t }) => {
               </div>
               {formInputsP3.map(({ id, value, name, input, type }) => {
                 return (
-                  <FormInput
-                    key={id}
-                    id={id}
-                    value={value}
-                    name={t(name)}
-                    input={t(input)}
-                    type={type}
-                    controller={handleInputs}
-                    inputs={formInputsP3}
-                    setInputs={setFormInputsP3}
-                  />
+                  <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10">
+                    <div className="px-[36px] py-[50px]">
+                      <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                        <p className="mr-2">{t(name)}</p>
+                      </div>
+                      <Input
+                        key={id}
+                        id={id}
+                        input={t(input)}
+                        value={value}
+                        type={type}
+                        controller={handleInputs}
+                        inputs={formInputsP3}
+                        setInputs={setFormInputsP3}
+                      />
+                    </div>
+                  </div>
                 );
               })}
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">

@@ -9,7 +9,6 @@ import InvestorBox from "./InvestorBox";
 import ScrollToTop from "./ScrollToTop";
 import PresaleBox from "./PresaleBox";
 import Input from "./Input";
-import FormInput from "./FormInput";
 import Token from "./Token";
 
 export {
@@ -24,6 +23,5 @@ export {
   ScrollToTop,
   PresaleBox,
   Input,
-  FormInput,
   Token,
 };
