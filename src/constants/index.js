@@ -191,3 +191,16 @@ export const formInputs = {
     },
   ],
 };
+export const members = [
+  {
+    id: Math.random(),
+    input1: { id: Math.random(), value: "", input: "name", type: "text" },
+    input2: {
+      id: Math.random(),
+      value: "",
+      input: "avatar_link",
+      type: "link",
+    },
+    input3: { id: Math.random(), value: "", input: "nickname", type: "text" },
+  },
+];
