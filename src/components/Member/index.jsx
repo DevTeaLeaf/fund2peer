@@ -9,9 +9,10 @@ import {
 } from "../../assets/img";
 import { withTranslation } from "react-i18next";
 
-const Member = ({ inputs, index, t }) => {
+const Member = ({ memberInputs, setMemberInputs, index, t }) => {
   const [modal, setModal] = useState(false);
   const [social, setSocial] = useState(false);
+  const [thisMemberInputs, setThisMemberInputs] = useState(memberInputs[index]);
 
   const socialModalController = (social) => {
     setModal(false);
@@ -29,6 +30,19 @@ const Member = ({ inputs, index, t }) => {
       setSocial(["facebook", <Facebook className="w-[28px] h-[28px]" />]);
     }
   };
+  const handleInputs = (itemId, value, inputs, setInputs) => {
+    console.log(inputs);
+    const updatedInputs = inputs.map((item) =>
+      item.id === itemId ? { ...item, value: value } : { ...item }
+    );
+
+    const updatedArray = [...memberInputs];
+    updatedArray[index] = updatedInputs;
+
+    setInputs(updatedArray);
+    setThisMemberInputs(updatedInputs);
+  };
+
   return (
     <div className="mb-5">
       <p className="inter-normal mb-4">
@@ -36,13 +50,40 @@ const Member = ({ inputs, index, t }) => {
       </p>
       <div className="flex items-end gap-10 flex-wrap justify-center md:justify-between xl:justify-normal">
         <div className="max-w-[390px] xl:w-[30%]">
-          <Input input={t(inputs[0].input)} type={inputs[0].type} />
+          <Input
+            key={thisMemberInputs[0].id}
+            id={thisMemberInputs[0].id}
+            input={t(thisMemberInputs[0].input)}
+            type={thisMemberInputs[0].type}
+            value={thisMemberInputs[0].value}
+            inputs={thisMemberInputs}
+            setInputs={setMemberInputs}
+            controller={handleInputs}
+          />
         </div>
         <div className="max-w-[520px] xl:w-[40%]">
-          <Input input={t(inputs[1].input)} type={inputs[1].type} />
+          <Input
+            key={thisMemberInputs[1].id}
+            id={thisMemberInputs[1].id}
+            input={t(thisMemberInputs[1].input)}
+            type={thisMemberInputs[1].type}
+            value={thisMemberInputs[1].value}
+            inputs={thisMemberInputs}
+            setInputs={setMemberInputs}
+            controller={handleInputs}
+          />
         </div>
         <div className=" flex items-end gap-3">
-          <Input input={t(inputs[2].input)} type={inputs[2].type} />
+          <Input
+            key={thisMemberInputs[2].id}
+            id={thisMemberInputs[2].id}
+            input={t(thisMemberInputs[2].input)}
+            type={thisMemberInputs[2].type}
+            value={thisMemberInputs[2].value}
+            inputs={thisMemberInputs}
+            setInputs={setMemberInputs}
+            controller={handleInputs}
+          />
 
           <div className="relative">
             <div

@@ -19,12 +19,26 @@ const Form = ({ t }) => {
   const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
   const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
   const [formTeam, setFormTeam] = useState(members);
+  const [formTeamInputs, setFormTeamInputs] = useState([members[0].inputs]);
 
   const [highlightsInputs, setHighlightsInputs] = useState(
     formInputs.highlights
   );
 
   const addToTeam = () => {
+    let newInputs = [
+      ...formTeamInputs,
+      [
+        { id: Math.random(), value: "", input: "name", type: "text" },
+        {
+          id: Math.random(),
+          value: "",
+          input: "avatar_link",
+          type: "link",
+        },
+        { id: Math.random(), value: "", input: "nickname", type: "text" },
+      ],
+    ];
     let newTeam = [
       ...formTeam,
       {
@@ -45,6 +59,7 @@ const Form = ({ t }) => {
       },
     ];
     setFormTeam(newTeam);
+    setFormTeamInputs(newInputs);
   };
   const handleTokens = (itemId) => {
     const updatedTokens = tokens.map((item) =>
@@ -64,7 +79,10 @@ const Form = ({ t }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
-
+  useEffect(() => {
+    console.log(formTeamInputs);
+    console.log(formTeam);
+  }, [formTeamInputs]);
   return (
     <>
       <Header page="launchpad" />
@@ -141,12 +159,13 @@ const Form = ({ t }) => {
                     {t("your_team")}
                   </p>
                   <div>
-                    {formTeam.map(({ id, input1, input2, input3 }, index) => {
+                    {formTeam.map((item, index) => {
                       return (
                         <Member
                           index={index}
-                          key={id}
-                          inputs={[input1, input2, input3]}
+                          key={item.id}
+                          memberInputs={formTeamInputs}
+                          setMemberInputs={setFormTeamInputs}
                         />
                       );
                     })}
@@ -228,7 +247,10 @@ const Form = ({ t }) => {
               </div>
               {formInputsP3.map(({ id, value, name, input, type }) => {
                 return (
-                  <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10">
+                  <div
+                    key={id}
+                    className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                  >
                     <div className="px-[36px] py-[50px]">
                       <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                         <p className="mr-2">{t(name)}</p>
