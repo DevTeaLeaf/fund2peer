@@ -191,7 +191,7 @@ export const formInputs = {
     },
   ],
 };
-export const members = [
+export const formMembers = [
   {
     id: Math.random(),
     inputs: [
@@ -204,5 +204,32 @@ export const members = [
       },
       { id: Math.random(), value: "", input: "nickname", type: "text" },
     ],
+    network: false,
+  },
+];
+export const formSocialMedia = [
+  {
+    id: 1,
+    value: "",
+    input: "link",
+    group: "telegram",
+  },
+  {
+    id: 2,
+    value: "",
+    input: "link",
+    group: "twitter",
+  },
+  {
+    id: 3,
+    value: "",
+    input: "link",
+    group: "discord",
+  },
+  {
+    id: 4,
+    value: "",
+    input: "link",
+    group: "facebook",
   },
 ];

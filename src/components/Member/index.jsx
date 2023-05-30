@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "../Input";
 import {
   Twitter,
@@ -9,9 +9,17 @@ import {
 } from "../../assets/img";
 import { withTranslation } from "react-i18next";
 
-const Member = ({ memberInputs, setMemberInputs, index, t }) => {
+const Member = ({
+  memberInputs,
+  setMemberInputs,
+  network,
+  team,
+  setTeam,
+  index,
+  t,
+}) => {
   const [modal, setModal] = useState(false);
-  const [social, setSocial] = useState(false);
+  const [social, setSocial] = useState(network);
   const [thisMemberInputs, setThisMemberInputs] = useState(memberInputs[index]);
 
   const socialModalController = (social) => {
@@ -29,9 +37,11 @@ const Member = ({ memberInputs, setMemberInputs, index, t }) => {
     if (social === "facebook") {
       setSocial(["facebook", <Facebook className="w-[28px] h-[28px]" />]);
     }
+    const updatedTeam = [...team];
+    updatedTeam[index].network = social;
+    setTeam(updatedTeam);
   };
   const handleInputs = (itemId, value, inputs, setInputs) => {
-    console.log(inputs);
     const updatedInputs = inputs.map((item) =>
       item.id === itemId ? { ...item, value: value } : { ...item }
     );
@@ -39,10 +49,17 @@ const Member = ({ memberInputs, setMemberInputs, index, t }) => {
     const updatedArray = [...memberInputs];
     updatedArray[index] = updatedInputs;
 
+    const updatedTeam = [...team];
+    updatedTeam[index].inputs = updatedInputs;
+    updatedTeam[index].network = social[0];
+
     setInputs(updatedArray);
     setThisMemberInputs(updatedInputs);
+    setTeam(updatedTeam);
   };
-
+  useEffect(() => {
+    socialModalController(network);
+  }, []);
   return (
     <div className="mb-5">
       <p className="inter-normal mb-4">

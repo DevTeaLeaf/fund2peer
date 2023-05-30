@@ -5,10 +5,16 @@ import {
   Discord,
   Telegram,
   Facebook,
+  Web,
   plus,
   dimensionWarning,
 } from "../../assets/img";
-import { formTokens, formInputs, members } from "../../constants";
+import {
+  formTokens,
+  formInputs,
+  formMembers,
+  formSocialMedia,
+} from "../../constants";
 
 import { withTranslation } from "react-i18next";
 
@@ -18,12 +24,12 @@ const Form = ({ t }) => {
   const [formInputsP1, setFormInputsP1] = useState(formInputs.page1);
   const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
   const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
-  const [formTeam, setFormTeam] = useState(members);
-  const [formTeamInputs, setFormTeamInputs] = useState([members[0].inputs]);
-
+  const [formTeam, setFormTeam] = useState(formMembers);
+  const [formTeamInputs, setFormTeamInputs] = useState([formMembers[0].inputs]);
   const [highlightsInputs, setHighlightsInputs] = useState(
     formInputs.highlights
   );
+  const [social, setSocial] = useState(formSocialMedia);
 
   const addToTeam = () => {
     let newInputs = [
@@ -43,23 +49,33 @@ const Form = ({ t }) => {
       ...formTeam,
       {
         id: Math.random(),
-        input1: { id: Math.random(), value: "", input: "name", type: "text" },
-        input2: {
-          id: Math.random(),
-          value: "",
-          input: "avatar_link",
-          type: "link",
-        },
-        input3: {
-          id: Math.random(),
-          value: "",
-          input: "nickname",
-          type: "text",
-        },
+        inputs: [
+          { id: Math.random(), value: "", input: "name", type: "text" },
+          {
+            id: Math.random(),
+            value: "",
+            input: "avatar_link",
+            type: "link",
+          },
+          { id: Math.random(), value: "", input: "nickname", type: "text" },
+        ],
+        network: false,
       },
     ];
     setFormTeam(newTeam);
     setFormTeamInputs(newInputs);
+  };
+  const addToSocial = () => {
+    let newSocial = [
+      ...social,
+      {
+        id: Math.random(),
+        value: "",
+        input: "link",
+        social: "web",
+      },
+    ];
+    setSocial(newSocial);
   };
   const handleTokens = (itemId) => {
     const updatedTokens = tokens.map((item) =>
@@ -75,14 +91,13 @@ const Form = ({ t }) => {
     );
     setInputs(updatedInputs);
   };
-
+  useEffect(() => {
+    console.log("inputs", formTeamInputs);
+    console.log("form", formTeam);
+  }, [formTeamInputs]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
-  useEffect(() => {
-    console.log(formTeamInputs);
-    console.log(formTeam);
-  }, [formTeamInputs]);
   return (
     <>
       <Header page="launchpad" />
@@ -164,8 +179,11 @@ const Form = ({ t }) => {
                         <Member
                           index={index}
                           key={item.id}
+                          network={item.network}
                           memberInputs={formTeamInputs}
                           setMemberInputs={setFormTeamInputs}
+                          team={formTeam}
+                          setTeam={setFormTeam}
                         />
                       );
                     })}
@@ -275,26 +293,42 @@ const Form = ({ t }) => {
                     {t("keep_touch")}
                   </p>
                   <div className="flex flex-col gap-5">
-                    <div className="flex gap-5 md:gap-10 items-end">
-                      <Telegram className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} type="link" />
-                    </div>
-                    <div className="flex gap-5 md:gap-10 items-end">
-                      <Twitter className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} type="link" />
-                    </div>
-                    <div className="flex gap-5 md:gap-10 items-end">
-                      <Discord className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} type="link" />
-                    </div>
-                    <div className="flex gap-5 md:gap-10 items-end">
-                      <Facebook className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
-                      <Input input={t("link")} type="link" />
-                    </div>
+                    {social.map(({ id, value, input, group }) => {
+                      return (
+                        <div
+                          key={id}
+                          className="flex gap-5 md:gap-10 items-end"
+                        >
+                          {group === "telegram" ? (
+                            <Telegram className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                          ) : group === "twitter" ? (
+                            <Twitter className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                          ) : group === "discord" ? (
+                            <Discord className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                          ) : group === "facebook" ? (
+                            <Facebook className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                          ) : (
+                            <Web className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
+                          )}
+                          <Input
+                            key={id}
+                            id={id}
+                            input={t(input)}
+                            type={input}
+                            value={value}
+                            controller={handleInputs}
+                            inputs={social}
+                            setInputs={setSocial}
+                          />
+                        </div>
+                      );
+                    })}
+
                     <img
                       src={plus}
                       alt="plus"
                       className="mt-[20px] pt-[15px] pr-4 pb-4 pl-[17px] cursor-pointer border border-[#89C6B9] rounded-[10px]  mx-auto max-w-[52px]"
+                      onClick={addToSocial}
                     />
                   </div>
                 </div>
