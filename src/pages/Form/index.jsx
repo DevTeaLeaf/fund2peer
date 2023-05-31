@@ -91,10 +91,7 @@ const Form = ({ t }) => {
     );
     setInputs(updatedInputs);
   };
-  useEffect(() => {
-    console.log("inputs", formTeamInputs);
-    console.log("form", formTeam);
-  }, [formTeamInputs]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);

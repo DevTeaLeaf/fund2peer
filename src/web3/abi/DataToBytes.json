@@ -32,6 +32,20 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changeAdditionalDocsLink",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changeBusinessPlanLink",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "_category", "type": "uint256" }
     ],
@@ -99,6 +113,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changeHeaderLink",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string[]",
@@ -125,6 +146,22 @@
       { "internalType": "string[]", "name": "_owners", "type": "string[]" }
     ],
     "name": "changeOwners",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string[]", "name": "_link", "type": "string[]" }
+    ],
+    "name": "changePersonAvatarLink",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changePreviewLink",
     "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
     "stateMutability": "pure",
     "type": "function"
@@ -163,6 +200,13 @@
       { "internalType": "uint256", "name": "_stageToChange", "type": "uint256" }
     ],
     "name": "changeRoadmapFunds",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changeRoadmapLink",
     "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
     "stateMutability": "pure",
     "type": "function"
@@ -218,6 +262,15 @@
   },
   {
     "inputs": [
+      { "internalType": "string[]", "name": "_type", "type": "string[]" }
+    ],
+    "name": "changeSocialMediaPersonType",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "uint256", "name": "_soft", "type": "uint256" }
     ],
     "name": "changeSoftCap",
@@ -264,6 +317,13 @@
       { "internalType": "string", "name": "_newWebsite", "type": "string" }
     ],
     "name": "changeWebsite",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_link", "type": "string" }],
+    "name": "changeWhitepaperLink",
     "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
     "stateMutability": "pure",
     "type": "function"
