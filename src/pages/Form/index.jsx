@@ -1,4 +1,13 @@
 import { useEffect, useState } from "react";
+
+import { useAccount, useSigner, useContract } from "wagmi";
+import { ethers } from "ethers";
+
+import { DataToBytesABI } from "../../web3/abi";
+import { DATA_TO_BYTES } from "../../web3/constants";
+
+import { withTranslation } from "react-i18next";
+
 import { Header, Footer, Input, Button, Token, Member } from "../../components";
 import {
   Twitter,
@@ -16,9 +25,10 @@ import {
   formSocialMedia,
 } from "../../constants";
 
-import { withTranslation } from "react-i18next";
-
 const Form = ({ t }) => {
+  const { address, connectorAccount, isConnected } = useAccount();
+  const { data, error, isLoading, refetch } = useSigner();
+
   const [page, setPage] = useState("1");
   const [tokens, setTokens] = useState(formTokens);
   const [formInputsP1, setFormInputsP1] = useState(formInputs.page1);
@@ -30,6 +40,12 @@ const Form = ({ t }) => {
     formInputs.highlights
   );
   const [social, setSocial] = useState(formSocialMedia);
+
+  const DTBContract = useContract({
+    address: DATA_TO_BYTES,
+    abi: DataToBytesABI,
+    signerOrProvider: data,
+  });
 
   const addToTeam = () => {
     let newInputs = [
@@ -91,7 +107,77 @@ const Form = ({ t }) => {
     );
     setInputs(updatedInputs);
   };
+  //web3 functions
+  const getBytes = async () => {
+    console.log(formInputsP3);
+    //P1
+    const companyNameBytes = await DTBContract.changeCompanyName(
+      formInputsP1[0].value
+    );
+    const shortDescriptionBytes = await DTBContract.changeShortDescription(
+      formInputsP1[1].value
+    );
+    const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
+      formInputsP1[2].value
+    );
 
+    const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
+    const countryBytes = await DTBContract.changeCountry(formInputsP1[4].value);
+    const websiteBytes = await DTBContract.changeWebsite(formInputsP1[5].value);
+
+    const highlightsBytes = await DTBContract.changeHighlights([
+      highlightsInputs[0].value,
+      highlightsInputs[1].value,
+      highlightsInputs[2].value,
+    ]);
+    //P2
+    const teamSocials = formTeam.map((obj) => obj.network);
+    const teamLogins = formTeam.map((obj) => obj.inputs[2].value);
+
+    const teamSocialsBytes = await DTBContract.changeSocialMediaName(
+      teamSocials
+    );
+    const teamLoginsBytes = await DTBContract.changeSocialMediaLogin(
+      teamLogins
+    );
+    //
+
+    const whitepaperBytes = await DTBContract.changeWhitepaperLink(
+      formInputsP2[0].value
+    );
+    const roadmapBytes = await DTBContract.changeRoadmapLink(
+      formInputsP2[1].value
+    );
+    const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
+      formInputsP2[2].value
+    );
+    const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
+      formInputsP2[3].value
+    );
+    const headerImgBytes = await DTBContract.changeHeaderLink(
+      formInputsP2[4].value
+    );
+    const previewImgBytes = await DTBContract.changePreviewLink(
+      formInputsP2[5].value
+    );
+
+    //P3
+
+    const token = tokens.filter((token) => token.active);
+
+    const tokenBytes = await DTBContract.changeToken(token?.address);
+    const softCapBytes = await DTBContract.changeSoftCap(
+      Number(formInputsP3[0].value)
+    );
+    const hardCapBytes = await DTBContract.changeHardCap(
+      Number(formInputsP3[1].value)
+    );
+    //const investorsRewardBytes = await DTBContract.changeHardCap(
+    //  Number(formInputsP3[3].value)
+    //);
+  };
+
+  //
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
@@ -355,8 +441,9 @@ const Form = ({ t }) => {
               <div onClick={() => setPage("2")}>
                 <Button filled={false} text={t("back")} to={false} />
               </div>
-
-              <Button filled={true} text={t("next")} to="launchpad" />
+              <div onClick={getBytes}>
+                <Button filled={true} text={t("finish")} to="" />
+              </div>
             </div>
           )}
         </div>
