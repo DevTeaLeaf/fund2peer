@@ -115,130 +115,191 @@ const Form = ({ t }) => {
   };
   //web3 functions
   const getBytes = async () => {
-    console.log(formInputsP1);
-    console.log(formInputsP2);
-    console.log(formInputsP3);
-    console.log(highlightsInputs);
-    console.log(formTeam);
-    console.log(tokens);
+    let bytes = [];
     try {
       //P1
-      const companyNameBytes = await DTBContract.changeCompanyName(
-        formInputsP1[0].value
-      );
-      const shortDescriptionBytes = await DTBContract.changeShortDescription(
-        formInputsP1[1].value
-      );
-      const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
-        formInputsP1[2].value
-      );
 
-      const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
-      const countryBytes = await DTBContract.changeCountry(
-        formInputsP1[4].value
-      );
-      const websiteBytes = await DTBContract.changeWebsite(
-        formInputsP1[5].value
-      );
+      if (formInputsP1[0].value != "") {
+        const companyNameBytes = await DTBContract.changeCompanyName(
+          formInputsP1[0].value
+        );
+        bytes.push(companyNameBytes);
+      }
 
-      const highlightsBytes = await DTBContract.changeHighlights([
-        highlightsInputs[0].value,
-        highlightsInputs[1].value,
-        highlightsInputs[2].value,
-      ]);
+      if (formInputsP1[1].value != "") {
+        const shortDescriptionBytes = await DTBContract.changeShortDescription(
+          formInputsP1[1].value
+        );
+        bytes.push(shortDescriptionBytes);
+      }
+
+      if (formInputsP1[2].value != "") {
+        const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
+          formInputsP1[2].value
+        );
+        bytes.push(fullDescriptionBytes);
+      }
+      if (formInputsP1[3].value != "") {
+        const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
+        bytes.push(videoBytes);
+      }
+
+      if (formInputsP1[4].value != "") {
+        const countryBytes = await DTBContract.changeCountry(
+          formInputsP1[4].value
+        );
+        bytes.push(countryBytes);
+      }
+      if (formInputsP1[5].value != "") {
+        const websiteBytes = await DTBContract.changeWebsite(
+          formInputsP1[5].value
+        );
+        bytes.push(websiteBytes);
+      }
+
+      if (
+        highlightsInputs[0].value != "" ||
+        highlightsInputs[1].value != "" ||
+        highlightsInputs[2].value != ""
+      ) {
+        let highlights = [
+          highlightsInputs[0].value,
+          highlightsInputs[1].value,
+          highlightsInputs[2].value,
+        ];
+        highlights = highlights.filter((highlight) => highlight != "");
+        console.log(highlights);
+        const highlightsBytes = await DTBContract.changeHighlights(highlights);
+        bytes.push(highlightsBytes);
+      }
 
       //P2
       //TEAM
-      const teamSocials = formTeam.map((team) => team.network);
-      const teamAvatar = formTeam.map((team) => team.inputs[1].value);
-      const teamLogins = formTeam.map((team) => team.inputs[2].value);
-      const teamNetworks = formTeam.map((team) => team.network);
+      const teamSocials = formTeam.filter((team) => team.network);
+      const teamAvatar = formTeam
+        .map((team) => team.inputs[1].value)
+        .filter((avatar) => avatar != "");
 
-      const teamSocialsBytes = await DTBContract.changeSocialMediaPersonName(
-        teamSocials
-      );
-      const teamAvatarBytes = await DTBContract.changePersonAvatarLink(
-        teamAvatar
-      );
-      const teamLoginsBytes = await DTBContract.changeSocialMediaPersonLogin(
-        teamLogins
-      );
-      const teamNetworksBytes = await DTBContract.changeSocialMediaPersonType(
-        teamNetworks
-      );
+      const teamLogins = formTeam
+        .map((team) => team.inputs[2].value)
+        .filter((login) => login != "");
+      const teamNetworks = formTeam
+        .map((team) => team.network)
+        .filter((network) => network != "");
+
+      if (teamSocials.length > 0) {
+        const teamSocialsBytes = await DTBContract.changeSocialMediaPersonName(
+          teamSocials
+        );
+        bytes.push(teamSocialsBytes);
+      }
+      if (teamAvatar.length > 0) {
+        const teamAvatarBytes = await DTBContract.changePersonAvatarLink(
+          teamAvatar
+        );
+        bytes.push(teamAvatarBytes);
+      }
+
+      if (teamLogins.length > 0) {
+        const teamLoginsBytes = await DTBContract.changeSocialMediaPersonLogin(
+          teamLogins
+        );
+        bytes.push(teamLoginsBytes);
+      }
+      if (teamNetworks.length > 0) {
+        const teamNetworksBytes = await DTBContract.changeSocialMediaPersonType(
+          teamNetworks
+        );
+        bytes.push(teamNetworksBytes);
+      }
+
       //
-
-      const whitepaperBytes = await DTBContract.changeWhitepaperLink(
-        formInputsP2[0].value
-      );
-      const roadmapBytes = await DTBContract.changeRoadmapLink(
-        formInputsP2[1].value
-      );
-      const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
-        formInputsP2[2].value
-      );
-      const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
-        formInputsP2[3].value
-      );
-      const headerImgBytes = await DTBContract.changeHeaderLink(
-        formInputsP2[4].value
-      );
-      const previewImgBytes = await DTBContract.changePreviewLink(
-        formInputsP2[5].value
-      );
+      if (formInputsP2[0].value != "") {
+        const whitepaperBytes = await DTBContract.changeWhitepaperLink(
+          formInputsP2[0].value
+        );
+        bytes.push(whitepaperBytes);
+      }
+      if (formInputsP2[1].value != "") {
+        const roadmapBytes = await DTBContract.changeRoadmapLink(
+          formInputsP2[1].value
+        );
+        bytes.push(roadmapBytes);
+      }
+      if (formInputsP2[2].value != "") {
+        const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
+          formInputsP2[2].value
+        );
+        bytes.push(businessPlanBytes);
+      }
+      if (formInputsP2[3].value != "") {
+        const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
+          formInputsP2[3].value
+        );
+        bytes.push(additionalDocsBytes);
+      }
+      if (formInputsP2[4].value != "") {
+        const headerImgBytes = await DTBContract.changeHeaderLink(
+          formInputsP2[4].value
+        );
+        bytes.push(headerImgBytes);
+      }
+      if (formInputsP2[5].value != "") {
+        const previewImgBytes = await DTBContract.changePreviewLink(
+          formInputsP2[5].value
+        );
+        bytes.push(previewImgBytes);
+      }
 
       //P3
 
       const token = tokens.filter((token) => token.active);
-      const socialMediaNames = social.map((social) => social.value);
-      const socialMediaTypes = social.map((social) => social.group);
+      const socialMediaNames = social
+        .map((social) => social.value)
+        .filter((name) => name != "");
+      const socialMediaTypes = social
+        .map((social) => social.group)
+        .filter((type) => type != "");
+
       const tokenBytes = await DTBContract.changeToken(token[0].address);
+      bytes.push(tokenBytes);
 
-      const softCapBytes = await DTBContract.changeSoftCap(
-        Number(formInputsP3[0].value)
-      );
+      if (formInputsP3[0].value != "") {
+        const softCapBytes = await DTBContract.changeSoftCap(
+          Number(formInputsP3[0].value)
+        );
+        bytes.push(softCapBytes);
+      }
 
-      const hardCapBytes = await DTBContract.changeHardCap(
-        Number(formInputsP3[1].value)
-      );
+      if (formInputsP3[1].value != "") {
+        const hardCapBytes = await DTBContract.changeHardCap(
+          Number(formInputsP3[1].value)
+        );
+        bytes.push(hardCapBytes);
+      }
+      if (formInputsP3[2].value != "") {
+        const investorsRewardBytes = await DTBContract.changeReward(
+          Number(formInputsP3[2].value)
+        );
+        bytes.push(investorsRewardBytes);
+      }
 
-      const investorsRewardBytes = await DTBContract.changeReward(
-        Number(formInputsP3[2].value)
-      );
+      if (socialMediaTypes.length > 0) {
+        const socialMediaNameBytes = await DTBContract.changeSocialMediaName(
+          socialMediaTypes
+        );
+        bytes.push(socialMediaNameBytes);
+      }
 
-      const socialMediaNameBytes = await DTBContract.changeSocialMediaName(
-        socialMediaTypes
-      );
-      const socialMediaLoginBytes = await DTBContract.changeSocialMediaLogin(
-        socialMediaNames
-      );
+      if (socialMediaNames.length > 0) {
+        const socialMediaLoginBytes = await DTBContract.changeSocialMediaLogin(
+          socialMediaNames
+        );
+        bytes.push(socialMediaLoginBytes);
+      }
 
-      const bytes = [
-        companyNameBytes,
-        shortDescriptionBytes,
-        fullDescriptionBytes,
-        videoBytes,
-        countryBytes,
-        websiteBytes,
-        highlightsBytes,
-        teamSocialsBytes,
-        teamAvatarBytes,
-        teamLoginsBytes,
-        teamNetworksBytes,
-        whitepaperBytes,
-        roadmapBytes,
-        businessPlanBytes,
-        additionalDocsBytes,
-        headerImgBytes,
-        previewImgBytes,
-        tokenBytes,
-        softCapBytes,
-        hardCapBytes,
-        investorsRewardBytes,
-        socialMediaNameBytes,
-        socialMediaLoginBytes,
-      ];
       console.log(bytes);
+
       const applicationFee = await LDContract.applicationFee();
 
       const transaction = await LDContract.ApplyToCreateProject(
