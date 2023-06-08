@@ -4,7 +4,7 @@ import { useAccount, useSigner, useContract } from "wagmi";
 import { ethers } from "ethers";
 
 import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
-import { DATA_TO_BYTES, LAUNCHPAD_DRIVER } from "../../web3/constants";
+import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "../../web3/constants";
 
 import { withTranslation } from "react-i18next";
 
@@ -186,7 +186,6 @@ const Form = ({ t }) => {
       const token = tokens.filter((token) => token.active);
       const socialMediaNames = social.map((social) => social.value);
       const socialMediaTypes = social.map((social) => social.group);
-
       const tokenBytes = await DTBContract.changeToken(token[0].address);
 
       const softCapBytes = await DTBContract.changeSoftCap(
@@ -234,7 +233,18 @@ const Form = ({ t }) => {
         socialMediaLoginBytes,
       ];
       console.log(bytes);
-      const transaction = await LDContract.callFunctions(bytes);
+      const applicationFee = await LDContract.applicationFee();
+
+      const transaction = await LDContract.ApplyToCreateProject(
+        15552000,
+        "Sequoia",
+        "SEQ",
+        bytes,
+        {
+          value: applicationFee,
+          gasLimit: GAS,
+        }
+      );
 
       console.log(transaction);
     } catch (error) {
