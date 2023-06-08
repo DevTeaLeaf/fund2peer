@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useAccount, useSigner, useContract } from "wagmi";
 import { ethers } from "ethers";
 
-import { DataToBytesABI } from "../../web3/abi";
-import { DATA_TO_BYTES } from "../../web3/constants";
+import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
+import { DATA_TO_BYTES, LAUNCHPAD_DRIVER } from "../../web3/constants";
 
 import { withTranslation } from "react-i18next";
 
@@ -44,6 +44,11 @@ const Form = ({ t }) => {
   const DTBContract = useContract({
     address: DATA_TO_BYTES,
     abi: DataToBytesABI,
+    signerOrProvider: data,
+  });
+  const LDContract = useContract({
+    address: LAUNCHPAD_DRIVER,
+    abi: LaunchpadDriverABI,
     signerOrProvider: data,
   });
 
@@ -91,6 +96,7 @@ const Form = ({ t }) => {
         social: "web",
       },
     ];
+    console.log(newSocial);
     setSocial(newSocial);
   };
   const handleTokens = (itemId) => {
@@ -109,72 +115,131 @@ const Form = ({ t }) => {
   };
   //web3 functions
   const getBytes = async () => {
-    console.log(formInputsP3);
-    //P1
-    const companyNameBytes = await DTBContract.changeCompanyName(
-      formInputsP1[0].value
-    );
-    const shortDescriptionBytes = await DTBContract.changeShortDescription(
-      formInputsP1[1].value
-    );
-    const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
-      formInputsP1[2].value
-    );
+    try {
+      //P1
+      const companyNameBytes = await DTBContract.changeCompanyName(
+        formInputsP1[0].value
+      );
+      const shortDescriptionBytes = await DTBContract.changeShortDescription(
+        formInputsP1[1].value
+      );
+      const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
+        formInputsP1[2].value
+      );
 
-    const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
-    const countryBytes = await DTBContract.changeCountry(formInputsP1[4].value);
-    const websiteBytes = await DTBContract.changeWebsite(formInputsP1[5].value);
+      const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
+      const countryBytes = await DTBContract.changeCountry(
+        formInputsP1[4].value
+      );
+      const websiteBytes = await DTBContract.changeWebsite(
+        formInputsP1[5].value
+      );
 
-    const highlightsBytes = await DTBContract.changeHighlights([
-      highlightsInputs[0].value,
-      highlightsInputs[1].value,
-      highlightsInputs[2].value,
-    ]);
-    //P2
-    const teamSocials = formTeam.map((obj) => obj.network);
-    const teamLogins = formTeam.map((obj) => obj.inputs[2].value);
+      const highlightsBytes = await DTBContract.changeHighlights([
+        highlightsInputs[0].value,
+        highlightsInputs[1].value,
+        highlightsInputs[2].value,
+      ]);
 
-    const teamSocialsBytes = await DTBContract.changeSocialMediaName(
-      teamSocials
-    );
-    const teamLoginsBytes = await DTBContract.changeSocialMediaLogin(
-      teamLogins
-    );
-    //
+      //P2
+      //TEAM
+      const teamSocials = formTeam.map((team) => team.network);
+      const teamAvatar = formTeam.map((team) => team.inputs[1].value);
+      const teamLogins = formTeam.map((team) => team.inputs[2].value);
+      const teamNetworks = formTeam.map((team) => team.network);
 
-    const whitepaperBytes = await DTBContract.changeWhitepaperLink(
-      formInputsP2[0].value
-    );
-    const roadmapBytes = await DTBContract.changeRoadmapLink(
-      formInputsP2[1].value
-    );
-    const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
-      formInputsP2[2].value
-    );
-    const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
-      formInputsP2[3].value
-    );
-    const headerImgBytes = await DTBContract.changeHeaderLink(
-      formInputsP2[4].value
-    );
-    const previewImgBytes = await DTBContract.changePreviewLink(
-      formInputsP2[5].value
-    );
+      const teamSocialsBytes = await DTBContract.changeSocialMediaPersonName(
+        teamSocials
+      );
+      const teamAvatarBytes = await DTBContract.changePersonAvatarLink(
+        teamAvatar
+      );
+      const teamLoginsBytes = await DTBContract.changeSocialMediaPersonLogin(
+        teamLogins
+      );
+      const teamNetworksBytes = await DTBContract.changeSocialMediaPersonType(
+        teamNetworks
+      );
+      //
 
-    //P3
+      const whitepaperBytes = await DTBContract.changeWhitepaperLink(
+        formInputsP2[0].value
+      );
+      const roadmapBytes = await DTBContract.changeRoadmapLink(
+        formInputsP2[1].value
+      );
+      const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
+        formInputsP2[2].value
+      );
+      const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
+        formInputsP2[3].value
+      );
+      const headerImgBytes = await DTBContract.changeHeaderLink(
+        formInputsP2[4].value
+      );
+      const previewImgBytes = await DTBContract.changePreviewLink(
+        formInputsP2[5].value
+      );
 
-    const token = tokens.filter((token) => token.active);
+      //P3
 
-    const tokenBytes = await DTBContract.changeToken(token?.address);
-    const softCapBytes = await DTBContract.changeSoftCap(
-      Number(formInputsP3[0].value)
-    );
-    const hardCapBytes = await DTBContract.changeHardCap(
-      Number(formInputsP3[1].value)
-    );
-    //const investorsRewardBytes = await DTBContract.changeHardCap(
-    //  Number(formInputsP3[3].value)
-    //);
+      const token = tokens.filter((token) => token.active);
+      const socialMediaNames = social.map((social) => social.value);
+      const socialMediaTypes = social.map((social) => social.group);
+
+      const tokenBytes = await DTBContract.changeToken(token[0].address);
+
+      const softCapBytes = await DTBContract.changeSoftCap(
+        Number(formInputsP3[0].value)
+      );
+
+      const hardCapBytes = await DTBContract.changeHardCap(
+        Number(formInputsP3[1].value)
+      );
+
+      const investorsRewardBytes = await DTBContract.changeReward(
+        Number(formInputsP3[2].value)
+      );
+
+      const socialMediaNameBytes = await DTBContract.changeSocialMediaName(
+        socialMediaTypes
+      );
+      const socialMediaLoginBytes = await DTBContract.changeSocialMediaLogin(
+        socialMediaNames
+      );
+
+      const bytes = [
+        companyNameBytes,
+        shortDescriptionBytes,
+        fullDescriptionBytes,
+        videoBytes,
+        countryBytes,
+        websiteBytes,
+        highlightsBytes,
+        teamSocialsBytes,
+        teamAvatarBytes,
+        teamLoginsBytes,
+        teamNetworksBytes,
+        whitepaperBytes,
+        roadmapBytes,
+        businessPlanBytes,
+        additionalDocsBytes,
+        headerImgBytes,
+        previewImgBytes,
+        tokenBytes,
+        softCapBytes,
+        hardCapBytes,
+        investorsRewardBytes,
+        socialMediaNameBytes,
+        socialMediaLoginBytes,
+      ];
+      console.log(bytes);
+      const transaction = await LDContract.callFunctions(bytes);
+
+      console.log(transaction);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //

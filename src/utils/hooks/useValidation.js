@@ -20,9 +20,9 @@ const useValidation = (value, validations) => {
             : setMinLengthError(false);
           break;
         case "validText":
-          /^[a-zA-Z0-9. ]+$/.test(value) || value === ""
-            ? setValidText(true)
-            : setValidText(false);
+          /*/^[a-zA-Z0-9. ]+$/.test(value) ||value === "" ? setValidText(true)
+            : setValidText(false);*/
+          setValidText(true);
           break;
         case "validLink":
           /^(http|https):\/\/[^\s/$.?#].[^\s]*$/.test(value) || value === ""
