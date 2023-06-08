@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useAccount, useSigner, useContract } from "wagmi";
-import { ethers } from "ethers";
+import { useSigner, useContract } from "wagmi";
 
 import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
 import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "../../web3/constants";
@@ -26,8 +25,7 @@ import {
 } from "../../constants";
 
 const Form = ({ t }) => {
-  const { address, connectorAccount, isConnected } = useAccount();
-  const { data, error, isLoading, refetch } = useSigner();
+  const { data } = useSigner();
 
   const [page, setPage] = useState("1");
   const [tokens, setTokens] = useState(formTokens);
@@ -113,12 +111,11 @@ const Form = ({ t }) => {
     );
     setInputs(updatedInputs);
   };
-  //web3 functions
-  const getBytes = async () => {
+  //web3 function
+  const regProject = async () => {
     let bytes = [];
     try {
       //P1
-
       if (formInputsP1[0].value != "") {
         const companyNameBytes = await DTBContract.changeCompanyName(
           formInputsP1[0].value
@@ -212,7 +209,6 @@ const Form = ({ t }) => {
         );
         bytes.push(teamNetworksBytes);
       }
-
       //
       if (formInputsP2[0].value != "") {
         const whitepaperBytes = await DTBContract.changeWhitepaperLink(
@@ -250,9 +246,7 @@ const Form = ({ t }) => {
         );
         bytes.push(previewImgBytes);
       }
-
       //P3
-
       const token = tokens.filter((token) => token.active);
       const socialMediaNames = social
         .map((social) => social.value)
@@ -298,18 +292,18 @@ const Form = ({ t }) => {
         bytes.push(socialMediaLoginBytes);
       }
 
-      console.log(bytes);
-
       const applicationFee = await LDContract.applicationFee();
 
+      const time = Number(formInputsP3[3].value) * 60 * 60 * 24;
+
       const transaction = await LDContract.ApplyToCreateProject(
-        15552000,
-        "Sequoia",
-        "SEQ",
+        time,
+        formInputsP3[4].value,
+        formInputsP3[5].value,
         bytes,
         {
           value: applicationFee,
-          gasLimit: 4000000,
+          gasLimit: GAS,
         }
       );
 
@@ -318,7 +312,6 @@ const Form = ({ t }) => {
       console.log(error);
     }
   };
-
   //
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -488,30 +481,35 @@ const Form = ({ t }) => {
                   </div>
                 </div>
               </div>
-              {formInputsP3.map(({ id, value, name, input, type }) => {
-                return (
-                  <div
-                    key={id}
-                    className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
-                  >
-                    <div className="px-[36px] py-[50px]">
-                      <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                        <p className="mr-2">{t(name)}</p>
+              {formInputsP3.map(
+                ({ id, value, name, input, type, obligatorily }) => {
+                  return (
+                    <div
+                      key={id}
+                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                    >
+                      <div className="px-[36px] py-[50px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                          <p className="mr-2">{t(name)}</p>
+                          <p className="text-[#89C6B9]">
+                            {obligatorily ? "*" : ""}
+                          </p>
+                        </div>
+                        <Input
+                          key={id}
+                          id={id}
+                          input={t(input)}
+                          value={value}
+                          type={type}
+                          controller={handleInputs}
+                          inputs={formInputsP3}
+                          setInputs={setFormInputsP3}
+                        />
                       </div>
-                      <Input
-                        key={id}
-                        id={id}
-                        input={t(input)}
-                        value={value}
-                        type={type}
-                        controller={handleInputs}
-                        inputs={formInputsP3}
-                        setInputs={setFormInputsP3}
-                      />
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">
                 <div className="px-10 py-[60px]">
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -583,7 +581,7 @@ const Form = ({ t }) => {
               <div onClick={() => setPage("2")}>
                 <Button filled={false} text={t("back")} to={false} />
               </div>
-              <div onClick={getBytes}>
+              <div onClick={regProject}>
                 <Button filled={true} text={t("finish")} to="" />
               </div>
             </div>

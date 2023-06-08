@@ -80,9 +80,15 @@
   "preview_img": "Изображение для превью",
   "size": "Размер",
   "number": "Цифра",
+  "numberPercent": "Цифра (%)",
+  "numberDays": "Цифра (дни)",
   "investors_reward": "Вознаграждение инвесторов",
   "choose_token": "Выберите токен",
   "keep_touch": "Социальные сети проекта",
   "member": "Участник",
-  "finish": "Завершить"
+  "finish": "Завершить",
+  "project_token_name": "Имя токена проекта",
+  "project_token_ticker": "Тикер токена проекта",
+  "bitcoin": "Bitcoin",
+  "btc": "BTC"
 }

@@ -80,9 +80,15 @@
   "preview_img": "Preview Image",
   "size": "Size",
   "number": "Number",
+  "numberPercent": "Number (%)",
+  "numberDays": "Number (days)",
   "investors_reward": "Investors reward",
   "choose_token": "Choose token",
   "keep_touch": "Project social media",
   "member": "Member",
-  "finish": "Finish"
+  "finish": "Finish",
+  "project_token_name": "Project token name",
+  "project_token_ticker": "Project token ticker",
+  "bitcoin": "Bitcoin",
+  "btc": "BTC"
 }
