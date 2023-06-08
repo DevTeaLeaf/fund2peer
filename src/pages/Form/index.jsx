@@ -115,6 +115,12 @@ const Form = ({ t }) => {
   };
   //web3 functions
   const getBytes = async () => {
+    console.log(formInputsP1);
+    console.log(formInputsP2);
+    console.log(formInputsP3);
+    console.log(highlightsInputs);
+    console.log(formTeam);
+    console.log(tokens);
     try {
       //P1
       const companyNameBytes = await DTBContract.changeCompanyName(
@@ -242,7 +248,7 @@ const Form = ({ t }) => {
         bytes,
         {
           value: applicationFee,
-          gasLimit: GAS,
+          gasLimit: 4000000,
         }
       );
 

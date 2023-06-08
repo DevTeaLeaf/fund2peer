@@ -48,7 +48,7 @@ export const formTokens = [
     id: 4,
     name: "USDT",
     img: usdt,
-    address: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    address: "0xe22964E0EF70cADec2Ccf797ED06Cb33121CfE8d", // "0xc2132d05d31c914a87c6611c10748aeb04b58e8f", normal usdt address
     active: true,
   },
   {
