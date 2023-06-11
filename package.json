@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@web3-react/core": "^8.2.0",
     "@web3modal/ethereum": "^2.3.7",
     "@web3modal/react": "^2.3.7",
@@ -22,7 +23,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.2",
+    "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.0",
+    "redux": "^4.2.1",
     "sort-by": "^1.2.0",
     "vite-plugin-svgr": "^3.2.0",
     "wagmi": "^0.12.12",

@@ -23,8 +23,12 @@ import { LaunchpadDriverABI } from "../../web3/abi";
 import { LAUNCHPAD_DRIVER } from "../../web3/constants";
 
 import { withTranslation } from "react-i18next";
+//import { useDispatch, useSelector } from "react-redux";
 
 const Launchpad = ({ t }) => {
+  //const dispatch = useDispatch();
+  //const ex = useSelector((state) => state.cash);
+
   const { data } = useSigner();
 
   const LDContract = useContract({
