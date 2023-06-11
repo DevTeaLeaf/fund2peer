@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Header,
   Footer,
@@ -15,9 +15,38 @@ import {
   launchpadToken,
 } from "../../assets/img";
 
+import { decrypt } from "../../utils";
+
+import { useSigner, useContract } from "wagmi";
+
+import { LaunchpadDriverABI } from "../../web3/abi";
+import { LAUNCHPAD_DRIVER } from "../../web3/constants";
+
 import { withTranslation } from "react-i18next";
 
 const Launchpad = ({ t }) => {
+  const { data } = useSigner();
+
+  const LDContract = useContract({
+    address: LAUNCHPAD_DRIVER,
+    abi: LaunchpadDriverABI,
+    signerOrProvider: data,
+  });
+
+  const initData = async () => {
+    let projectsCount = await decrypt(await LDContract.id());
+
+    for (let i = 0; i <= projectsCount; i++) {
+      let pj = await LDContract.projectsList(i);
+      console.log(i);
+      console.log(pj);
+    }
+  };
+
+  useEffect(() => {
+    initData();
+  }, [data]);
+
   return (
     <>
       <Header page="launchpad" />

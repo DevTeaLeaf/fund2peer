@@ -65,11 +65,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_projectAddress",
-        "type": "address"
-      },
+      { "internalType": "uint256", "name": "_id", "type": "uint256" },
       { "internalType": "bytes[]", "name": "data", "type": "bytes[]" }
     ],
     "name": "callFunctions",

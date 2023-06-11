@@ -4,6 +4,7 @@ import { useSigner, useContract } from "wagmi";
 
 import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
 import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "../../web3/constants";
+import { getLimit } from "../../utils";
 
 import { withTranslation } from "react-i18next";
 
@@ -94,7 +95,6 @@ const Form = ({ t }) => {
         social: "web",
       },
     ];
-    console.log(newSocial);
     setSocial(newSocial);
   };
   const handleTokens = (itemId) => {
@@ -165,7 +165,7 @@ const Form = ({ t }) => {
           highlightsInputs[2].value,
         ];
         highlights = highlights.filter((highlight) => highlight != "");
-        console.log(highlights);
+
         const highlightsBytes = await DTBContract.changeHighlights(highlights);
         bytes.push(highlightsBytes);
       }
@@ -296,6 +296,18 @@ const Form = ({ t }) => {
 
       const time = Number(formInputsP3[3].value) * 60 * 60 * 24;
 
+      let gasLimit = getLimit(
+        await LDContract.estimateGas.ApplyToCreateProject(
+          time,
+          formInputsP3[4].value,
+          formInputsP3[5].value,
+          bytes,
+          {
+            value: applicationFee,
+          }
+        )
+      );
+      console.log(gasLimit);
       const transaction = await LDContract.ApplyToCreateProject(
         time,
         formInputsP3[4].value,
@@ -303,7 +315,7 @@ const Form = ({ t }) => {
         bytes,
         {
           value: applicationFee,
-          gasLimit: GAS,
+          gasLimit: gasLimit,
         }
       );
 

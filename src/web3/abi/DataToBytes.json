@@ -360,7 +360,23 @@
   },
   {
     "inputs": [],
+    "name": "nextStage",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "refund",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_newFee", "type": "uint256" }
+    ],
+    "name": "setApplicationFee",
     "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
     "stateMutability": "pure",
     "type": "function"
