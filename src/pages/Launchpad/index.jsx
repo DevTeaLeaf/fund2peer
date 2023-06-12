@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Header,
   Footer,
@@ -15,41 +14,12 @@ import {
   launchpadToken,
 } from "../../assets/img";
 
-import { decrypt } from "../../utils";
-
-import { useSigner, useContract } from "wagmi";
-
-import { LaunchpadDriverABI } from "../../web3/abi";
-import { LAUNCHPAD_DRIVER } from "../../web3/constants";
-
 import { withTranslation } from "react-i18next";
 //import { useDispatch, useSelector } from "react-redux";
 
 const Launchpad = ({ t }) => {
   //const dispatch = useDispatch();
   //const ex = useSelector((state) => state.cash);
-
-  const { data } = useSigner();
-
-  const LDContract = useContract({
-    address: LAUNCHPAD_DRIVER,
-    abi: LaunchpadDriverABI,
-    signerOrProvider: data,
-  });
-
-  const initData = async () => {
-    let projectsCount = await decrypt(await LDContract.id());
-
-    for (let i = 0; i <= projectsCount; i++) {
-      let pj = await LDContract.projectsList(i);
-      console.log(i);
-      console.log(pj);
-    }
-  };
-
-  useEffect(() => {
-    initData();
-  }, [data]);
 
   return (
     <>

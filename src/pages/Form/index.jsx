@@ -296,7 +296,7 @@ const Form = ({ t }) => {
 
       const time = Number(formInputsP3[3].value) * 60 * 60 * 24;
 
-      let gasLimit = getLimit(
+      const gasLimit = await getLimit(
         await LDContract.estimateGas.ApplyToCreateProject(
           time,
           formInputsP3[4].value,
@@ -307,7 +307,7 @@ const Form = ({ t }) => {
           }
         )
       );
-      console.log(gasLimit);
+
       const transaction = await LDContract.ApplyToCreateProject(
         time,
         formInputsP3[4].value,
