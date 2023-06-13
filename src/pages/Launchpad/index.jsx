@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import {
   Header,
   Footer,
@@ -14,12 +16,114 @@ import {
   launchpadToken,
 } from "../../assets/img";
 
+import { useSigner, useContract } from "wagmi";
+
+import { ethers } from "ethers";
+
+import { LaunchpadDriverABI, LaunchProjectInfoABI } from "../../web3/abi";
+import { LAUNCHPAD_DRIVER } from "../../web3/constants";
+
+import { decrypt } from "../../utils";
+
 import { withTranslation } from "react-i18next";
-//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { SET_PROJECTS } from "../../store";
 
 const Launchpad = ({ t }) => {
-  //const dispatch = useDispatch();
-  //const ex = useSelector((state) => state.cash);
+  const dispatch = useDispatch();
+
+  const [projects, setProjects] = useState(false);
+
+  const { data } = useSigner();
+
+  const LDContract = useContract({
+    address: LAUNCHPAD_DRIVER,
+    abi: LaunchpadDriverABI,
+    signerOrProvider: data,
+  });
+
+  const setProjectsData = async () => {
+    let pj = [];
+    projects.map(async (item) => {
+      let whitepaperLink = await item.contract.whitepaperLink();
+      let youtubeLink = await item.contract.youtubeVideo();
+      let projectName = await item.contract.projectName();
+      let shortDesc = await item.contract.shortDescription();
+      let fullDesc = await item.contract.fullDescription();
+      let websiteLink = await item.contract.website();
+      let country = await item.contract.country();
+      let category = await decrypt(await item.contract.category());
+      let token = await item.contract.investToken();
+      let softCap = await decrypt(await item.contract.softCap());
+      let hardCap = await decrypt(await item.contract.hardCap());
+      let roadmapLink = await item.contract.roadmapLink();
+      let verified = await item.contract.verified();
+      let startFunding = await decrypt(await item.contract.startFunding());
+      let endFunding = await decrypt(await item.contract.endFunding());
+      let totalRaised = await decrypt(await item.contract.collectedFundTOTAL());
+      let preview = await item.contract.previewLink();
+
+      let info = {
+        whitepaperLink: whitepaperLink,
+        youtubeLink: youtubeLink,
+        projectName: projectName,
+        shortDesc: shortDesc,
+        fullDesc: fullDesc,
+        websiteLink: websiteLink,
+        country: country,
+        category: category,
+        token: token,
+        softCap: softCap,
+        hardCap: hardCap,
+        roadmapLink: roadmapLink,
+        verified: verified,
+        startFunding: startFunding,
+        endFunding: endFunding,
+        totalRaised: totalRaised,
+        preview: preview,
+      };
+      pj.push({ address: item.address, info: info });
+    });
+    dispatch({ type: SET_PROJECTS, payload: pj });
+    //setProjectsInfo(pj);
+  };
+
+  const initData = async () => {
+    let projectsCount = await decrypt(await LDContract.id());
+    let projects = [];
+    let approvedProjects = [];
+
+    for (let i = 0; i <= projectsCount; i++) {
+      let project = await LDContract.projectsList(i);
+      if (project.approved) {
+        projects.push(project);
+      }
+    }
+
+    for (const project of projects) {
+      let contract = new ethers.Contract(
+        project.projectAddress,
+        LaunchProjectInfoABI,
+        data?.provider
+      );
+      approvedProjects.push({
+        address: project.projectAddress,
+        contract: contract,
+      });
+    }
+    setProjects(approvedProjects);
+  };
+  useEffect(() => {
+    if (projects) {
+      setProjectsData();
+    }
+  }, [projects]);
+
+  useEffect(() => {
+    if (data) {
+      initData();
+    }
+  }, [data]);
 
   return (
     <>
