@@ -39,6 +39,12 @@
   "validation_link": "Неправильная ссылка",
   "validation_number": "Неправильное число",
 
+  "agriculture": "Сельское хозяйство",
+  "manufacturing": "Производство",
+  "development_estate": "Жилой комплекс",
+  "retail": "Розничная торговля",
+  "information_technology": "Информационные технологии",
+
   "token": "Токен",
   "country": "Страна",
   "time": "Время",
@@ -82,6 +88,7 @@
   "number": "Цифра",
   "numberPercent": "Цифра (%)",
   "numberDays": "Цифра (дни)",
+  "numberUnix": "Цифра (unix)",
   "investors_reward": "Вознаграждение инвесторов",
   "choose_token": "Выберите токен",
   "keep_touch": "Социальные сети проекта",
@@ -90,5 +97,7 @@
   "project_token_name": "Имя токена проекта",
   "project_token_ticker": "Тикер токена проекта",
   "bitcoin": "Bitcoin",
-  "btc": "BTC"
+  "btc": "BTC",
+  "start_funding": "Начало финансирования",
+  "end_funding": "Конец финансирования"
 }

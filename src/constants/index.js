@@ -180,13 +180,29 @@ export const formInputs = {
     {
       id: 25,
       value: "",
+      name: "start_funding",
+      input: "numberUnix",
+      type: "number",
+      obligatorily: true,
+    },
+    {
+      id: 26,
+      value: "",
+      name: "end_funding",
+      input: "numberUnix",
+      type: "number",
+      obligatorily: true,
+    },
+    {
+      id: 27,
+      value: "",
       name: "project_token_name",
       input: "bitcoin",
       type: "text",
       obligatorily: true,
     },
     {
-      id: 26,
+      id: 28,
       value: "",
       name: "project_token_ticker",
       input: "btc",
@@ -255,5 +271,27 @@ export const formSocialMedia = [
     value: "",
     input: "link",
     group: "facebook",
+  },
+];
+export const formCategories = [
+  {
+    value: 0,
+    name: "agriculture",
+  },
+  {
+    value: 1,
+    name: "manufacturing",
+  },
+  {
+    value: 2,
+    name: "development_estate",
+  },
+  {
+    value: 3,
+    name: "retail",
+  },
+  {
+    value: 4,
+    name: "information_technology",
   },
 ];

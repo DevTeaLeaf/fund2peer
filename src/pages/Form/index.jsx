@@ -23,6 +23,7 @@ import {
   formInputs,
   formMembers,
   formSocialMedia,
+  formCategories,
 } from "../../constants";
 
 const Form = ({ t }) => {
@@ -34,6 +35,7 @@ const Form = ({ t }) => {
   const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
   const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
   const [formTeam, setFormTeam] = useState(formMembers);
+  const [categories, setCategories] = useState(formCategories);
   const [formTeamInputs, setFormTeamInputs] = useState([formMembers[0].inputs]);
   const [highlightsInputs, setHighlightsInputs] = useState(
     formInputs.highlights
@@ -264,7 +266,6 @@ const Form = ({ t }) => {
         );
         bytes.push(softCapBytes);
       }
-
       if (formInputsP3[1].value != "") {
         const hardCapBytes = await DTBContract.changeHardCap(
           Number(formInputsP3[1].value)
@@ -277,7 +278,18 @@ const Form = ({ t }) => {
         );
         bytes.push(investorsRewardBytes);
       }
-
+      if (formInputsP3[4].value != "") {
+        const startFundingBytes = await DTBContract.changeStart(
+          Number(formInputsP3[4].value)
+        );
+        bytes.push(startFundingBytes);
+      }
+      if (formInputsP3[5].value != "") {
+        const endFundingBytes = await DTBContract.changeEnd(
+          Number(formInputsP3[5].value)
+        );
+        bytes.push(endFundingBytes);
+      }
       if (socialMediaTypes.length > 0) {
         const socialMediaNameBytes = await DTBContract.changeSocialMediaName(
           socialMediaTypes
@@ -291,7 +303,6 @@ const Form = ({ t }) => {
         );
         bytes.push(socialMediaLoginBytes);
       }
-
       const applicationFee = await LDContract.applicationFee();
 
       const time = Number(formInputsP3[3].value) * 60 * 60 * 24;
@@ -299,8 +310,8 @@ const Form = ({ t }) => {
       const gasLimit = await getLimit(
         await LDContract.estimateGas.ApplyToCreateProject(
           time,
-          formInputsP3[4].value,
-          formInputsP3[5].value,
+          formInputsP3[6].value,
+          formInputsP3[7].value,
           bytes,
           {
             value: applicationFee,
