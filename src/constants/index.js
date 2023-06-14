@@ -1,5 +1,33 @@
 import { wbtc, weth, wmatic, usdt, usdc, dai } from "../assets/img";
 
+const formCategories = [
+  {
+    value: 0,
+    name: "agriculture",
+    active: false,
+  },
+  {
+    value: 1,
+    name: "manufacturing",
+    active: false,
+  },
+  {
+    value: 2,
+    name: "development_estate",
+    active: false,
+  },
+  {
+    value: 3,
+    name: "retail",
+    active: false,
+  },
+  {
+    value: 4,
+    name: "information_technology",
+    active: true,
+  },
+];
+
 export const presalesTabsData = [
   {
     label: "all_launchpads",
@@ -76,6 +104,7 @@ export const formInputs = {
       type: "text",
       obligatorily: true,
     },
+    formCategories,
     {
       id: 2,
       value: "",
@@ -271,27 +300,5 @@ export const formSocialMedia = [
     value: "",
     input: "link",
     group: "facebook",
-  },
-];
-export const formCategories = [
-  {
-    value: 0,
-    name: "agriculture",
-  },
-  {
-    value: 1,
-    name: "manufacturing",
-  },
-  {
-    value: 2,
-    name: "development_estate",
-  },
-  {
-    value: 3,
-    name: "retail",
-  },
-  {
-    value: 4,
-    name: "information_technology",
   },
 ];

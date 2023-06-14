@@ -23,7 +23,6 @@ import {
   formInputs,
   formMembers,
   formSocialMedia,
-  formCategories,
 } from "../../constants";
 
 const Form = ({ t }) => {
@@ -35,7 +34,7 @@ const Form = ({ t }) => {
   const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
   const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
   const [formTeam, setFormTeam] = useState(formMembers);
-  const [categories, setCategories] = useState(formCategories);
+  const [categories, setCategories] = useState(formInputs.page1[1]);
   const [formTeamInputs, setFormTeamInputs] = useState([formMembers[0].inputs]);
   const [highlightsInputs, setHighlightsInputs] = useState(
     formInputs.highlights
@@ -113,6 +112,16 @@ const Form = ({ t }) => {
     );
     setInputs(updatedInputs);
   };
+  const changeCategories = (categoryValue) => {
+    let categoriesT = categories.map((category) => {
+      if (categoryValue === category.value) {
+        return { ...category, active: true };
+      } else {
+        return { ...category, active: false };
+      }
+    });
+    setCategories(categoriesT);
+  };
   //web3 function
   const regProject = async () => {
     let bytes = [];
@@ -124,34 +133,39 @@ const Form = ({ t }) => {
         );
         bytes.push(companyNameBytes);
       }
+      const categoryValue = categories.filter((category) => category.active);
+      const categoryBytes = await DTBContract.changeCategory(
+        categoryValue[0].value
+      );
+      bytes.push(categoryBytes);
 
-      if (formInputsP1[1].value != "") {
+      if (formInputsP1[2].value != "") {
         const shortDescriptionBytes = await DTBContract.changeShortDescription(
-          formInputsP1[1].value
+          formInputsP1[2].value
         );
         bytes.push(shortDescriptionBytes);
       }
 
-      if (formInputsP1[2].value != "") {
+      if (formInputsP1[3].value != "") {
         const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
-          formInputsP1[2].value
+          formInputsP1[3].value
         );
         bytes.push(fullDescriptionBytes);
       }
-      if (formInputsP1[3].value != "") {
-        const videoBytes = await DTBContract.changeVideo(formInputsP1[3].value);
+      if (formInputsP1[4].value != "") {
+        const videoBytes = await DTBContract.changeVideo(formInputsP1[4].value);
         bytes.push(videoBytes);
       }
 
-      if (formInputsP1[4].value != "") {
+      if (formInputsP1[5].value != "") {
         const countryBytes = await DTBContract.changeCountry(
-          formInputsP1[4].value
+          formInputsP1[5].value
         );
         bytes.push(countryBytes);
       }
-      if (formInputsP1[5].value != "") {
+      if (formInputsP1[6].value != "") {
         const websiteBytes = await DTBContract.changeWebsite(
-          formInputsP1[5].value
+          formInputsP1[6].value
         );
         bytes.push(websiteBytes);
       }
@@ -354,26 +368,56 @@ const Form = ({ t }) => {
           </div>
           {page === "1" ? (
             <div>
-              {formInputsP1.map(
-                ({ id, value, name, input, type, obligatorily }) => {
-                  return (
+              {formInputsP1.map((item, index) => {
+                let generatedItem;
+                if (index === 1) {
+                  generatedItem = (
                     <div
-                      key={id}
+                      key={item[0].name}
                       className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
                     >
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                          <p className="mr-2">{t(name)}</p>
+                          <p className="mr-2">{t("project_category")}</p>
+                          <p className="text-[#89C6B9]">*</p>
+                        </div>
+                        <div className="flex flex-col gap-5 inter-400">
+                          {categories.map((category) => {
+                            return (
+                              <p
+                                className={`cursor-pointer ${
+                                  category.active ? "text-[#89C6B9]" : ""
+                                }`}
+                                onClick={() => changeCategories(category.value)}
+                                key={category.value}
+                              >
+                                {t(category.name)}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  generatedItem = (
+                    <div
+                      key={item.id}
+                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                    >
+                      <div className="px-[36px] py-[50px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                          <p className="mr-2">{t(item.name)}</p>
                           <p className="text-[#89C6B9]">
-                            {obligatorily ? "*" : ""}
+                            {item.obligatorily ? "*" : ""}
                           </p>
                         </div>
                         <Input
-                          key={id}
-                          id={id}
-                          input={t(input)}
-                          value={value}
-                          type={type}
+                          key={item.id}
+                          id={item.id}
+                          input={t(item.input)}
+                          value={item.value}
+                          type={item.type}
                           controller={handleInputs}
                           inputs={formInputsP1}
                           setInputs={setFormInputsP1}
@@ -382,7 +426,9 @@ const Form = ({ t }) => {
                     </div>
                   );
                 }
-              )}
+
+                return generatedItem;
+              })}
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
                 <div className="px-10 py-[60px]">
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">

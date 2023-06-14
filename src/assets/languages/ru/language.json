@@ -34,6 +34,7 @@
   "form_website": "Ваш сайт",
   "form_highlights": "Основные моменты вашего проекта",
 
+  "project_category": "Категория вашего проекта",
   "validation_symbols": "Недопустимые символы",
   "validation_country": "Неверная страна",
   "validation_link": "Неправильная ссылка",
