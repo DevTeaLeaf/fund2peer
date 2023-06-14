@@ -1,6 +1,6 @@
 import { wbtc, weth, wmatic, usdt, usdc, dai } from "../assets/img";
 
-const formCategories = [
+export const formCategories = [
   {
     value: 0,
     name: "agriculture",

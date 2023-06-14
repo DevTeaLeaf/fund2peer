@@ -32,7 +32,7 @@ const Project = ({ t }) => {
   const tabsRef = useRef([]);
   //
 
-  const [activeProject, setActiveProject] = useState(false);
+  /*const [activeProject, setActiveProject] = useState(false);
 
   const { data } = useSigner();
 
@@ -128,7 +128,7 @@ const Project = ({ t }) => {
 
   useEffect(() => {
     initData();
-  }, [data]);
+  }, [data]);*/
   return (
     <>
       <Header page="launchpad" />

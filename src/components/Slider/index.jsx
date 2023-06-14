@@ -8,15 +8,15 @@ import { withTranslation } from "react-i18next";
 import { sliderArrow } from "../../assets/img";
 
 import { formatNumber } from "../../utils";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Button from "../Button";
 
 const Slider = ({ t }) => {
   const rxProjects = useSelector((state) => state);
-  const [projects, setProjects] = useState(rxProjects);
+  const [projects, setProjects] = useState(rxProjects.info);
+  const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(rxProjects);
 
   useEffect(() => {
     const lastIndex = projects.length - 1;
@@ -29,10 +29,9 @@ const Slider = ({ t }) => {
   }, [currentIndex, projects]);
 
   useEffect(() => {
-    if (projects.length < rxProjects.length) {
-      setProjects(rxProjects);
-    }
-  }, [rxProjects, projects]);
+    setProjects(rxProjects.info);
+    console.log("pj", rxProjects);
+  }, [rxProjects]);
   return (
     <section className="section">
       <div className="section-center">
