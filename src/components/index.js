@@ -11,6 +11,7 @@ import PresaleBox from "./PresaleBox";
 import Input from "./Input";
 import Token from "./Token";
 import Member from "./Member";
+import SliderLoader from "./Slider/SliderLoader";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Input,
   Token,
   Member,
+  SliderLoader,
 };

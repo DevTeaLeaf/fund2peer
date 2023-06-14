@@ -8,14 +8,13 @@ import { withTranslation } from "react-i18next";
 import { sliderArrow } from "../../assets/img";
 
 import { formatNumber } from "../../utils";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Button from "../Button";
 
 const Slider = ({ t }) => {
   const rxProjects = useSelector((state) => state);
   const [projects, setProjects] = useState(rxProjects.info);
-  const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const Slider = ({ t }) => {
 
   useEffect(() => {
     setProjects(rxProjects.info);
-    console.log("pj", rxProjects);
   }, [rxProjects]);
   return (
     <section className="section">

@@ -7,6 +7,7 @@ import {
   StatisticsBox,
   SocialModal,
   Slider,
+  SliderLoader,
 } from "../../components";
 import {
   blocks,
@@ -172,7 +173,7 @@ const Launchpad = ({ t }) => {
             <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[100px] nav-shadow">
               {t("launchpad_active")}
             </p>
-            {rxProjects.loaded ? <Slider /> : ""}
+            {rxProjects.loaded ? <Slider /> : <SliderLoader />}
             <div className="text-center mt-[50px] ">
               <Button filled={true} text={t("launchpad_list")} to="form" />
             </div>
