@@ -268,8 +268,8 @@ const Form = ({ t }) => {
         .map((social) => social.value)
         .filter((name) => name != "");
       const socialMediaTypes = social
-        .map((social) => social.group)
-        .filter((type) => type != "");
+        .filter((item) => item.value !== "")
+        .map((item) => item.group);
 
       const tokenBytes = await DTBContract.changeToken(token[0].address);
       bytes.push(tokenBytes);
@@ -288,7 +288,7 @@ const Form = ({ t }) => {
       }
       if (formInputsP3[2].value != "") {
         const investorsRewardBytes = await DTBContract.changeReward(
-          Number(formInputsP3[2].value)
+          Number(formInputsP3[2].value) * 100
         );
         bytes.push(investorsRewardBytes);
       }

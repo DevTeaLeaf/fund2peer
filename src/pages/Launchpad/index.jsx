@@ -7,7 +7,6 @@ import {
   StatisticsBox,
   SocialModal,
   Slider,
-  SliderLoader,
 } from "../../components";
 import {
   blocks,
@@ -16,6 +15,7 @@ import {
   launchpadBg,
   launchpadToken,
 } from "../../assets/img";
+import { SliderLoader } from "../../loaders";
 
 import { useSigner, useContract } from "wagmi";
 
@@ -49,27 +49,69 @@ const Launchpad = ({ t }) => {
   const setProjectsData = async () => {
     const pj = await Promise.all(
       projects.map(async (item) => {
-        let whitepaperLink = await item.contract.whitepaperLink();
-        let youtubeLink = await item.contract.youtubeVideo();
-        let projectName = await item.contract.projectName();
-        let shortDesc = await item.contract.shortDescription();
-        let fullDesc = await item.contract.fullDescription();
-        let websiteLink = await item.contract.website();
-        let country = await item.contract.country();
-        let category = await decrypt(await item.contract.category());
-        let token = await item.contract.investToken();
-        let softCap = await decrypt(await item.contract.softCap());
-        let hardCap = await decrypt(await item.contract.hardCap());
-        let roadmapLink = await item.contract.roadmapLink();
-        let verified = await item.contract.verified();
-        let startFunding = await decrypt(await item.contract.startFunding());
-        let endFunding = await decrypt(await item.contract.endFunding());
-        let totalRaised = await decrypt(
+        console.log(item.contract);
+        const whitepaperLink = await item.contract.whitepaperLink();
+        const youtubeLink = await item.contract.youtubeVideo();
+        const projectName = await item.contract.projectName();
+        const shortDesc = await item.contract.shortDescription();
+        const fullDesc = await item.contract.fullDescription();
+        const websiteLink = await item.contract.website();
+        const country = await item.contract.country();
+        const category = await decrypt(await item.contract.category());
+        const token = await item.contract.investToken();
+        const softCap = await decrypt(await item.contract.softCap());
+        const hardCap = await decrypt(await item.contract.hardCap());
+        const roadmapLink = await item.contract.roadmapLink();
+        const verified = await item.contract.verified();
+        const startFunding = await decrypt(await item.contract.startFunding());
+        const endFunding = await decrypt(await item.contract.endFunding());
+        const totalRaised = await decrypt(
           await item.contract.collectedFundTOTAL()
         );
-        let preview = await item.contract.previewLink();
+        const preview = await item.contract.previewLink();
+        const headerLink = await item.contract.headerLink();
+        const investorsReward = await decrypt(
+          await item.contract.investorsReward()
+        );
+        const lockupTime = await decrypt(await item.contract.minimumLock());
 
-        let info = {
+        let highlights = [];
+
+        try {
+          const highlight0 = await item.contract.highlights(0);
+          highlights.push(highlight0);
+          const highlight1 = await item.contract.highlights(1);
+          highlights.push(highlight1);
+          const highlight2 = await item.contract.highlights(2);
+          highlights.push(highlight2);
+        } catch (error) {}
+
+        let socialMediaNames = [];
+        let socialMediaLogins = [];
+
+        try {
+          const socialName0 = await item.contract.socialMediaName(0);
+          socialMediaNames.push(socialName0);
+          const socialName1 = await item.contract.socialMediaName(1);
+          socialMediaNames.push(socialName1);
+          const socialName2 = await item.contract.socialMediaName(2);
+          socialMediaNames.push(socialName2);
+          const socialName3 = await item.contract.socialMediaName(3);
+          socialMediaNames.push(socialName3);
+        } catch (error) {}
+
+        try {
+          const socialLogin0 = await item.contract.socialMediaLogin(0);
+          socialMediaLogins.push(socialLogin0);
+          const socialLogin1 = await item.contract.socialMediaLogin(1);
+          socialMediaLogins.push(socialLogin1);
+          const socialLogin2 = await item.contract.socialMediaLogin(2);
+          socialMediaLogins.push(socialLogin2);
+          const socialLogin3 = await item.contract.socialMediaLogin(3);
+          socialMediaLogins.push(socialLogin3);
+        } catch (error) {}
+
+        const info = {
           whitepaperLink: whitepaperLink,
           youtubeLink: youtubeLink,
           projectName: projectName,
@@ -87,6 +129,12 @@ const Launchpad = ({ t }) => {
           endFunding: endFunding,
           totalRaised: totalRaised,
           preview: preview,
+          headerLink: headerLink,
+          investorsReward: investorsReward,
+          lockupTime: lockupTime,
+          highlights: highlights,
+          socialMediaNames: socialMediaNames,
+          socialMediaLogins: socialMediaLogins,
         };
         return { address: item.address, info: info };
       })

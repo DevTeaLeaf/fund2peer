@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Header,
-  Footer,
-  Button,
-  InvestorBox,
-  Slider,
-  SliderLoader,
-} from "../../components";
-import { projectTabsData } from "../../constants";
+import { Header, Footer, Button, InvestorBox, Slider } from "../../components";
+import { projectTabsData, formCategories, formTokens } from "../../constants";
+import { SliderLoader, HeaderLoader } from "../../loaders";
+import { formatNumber, timeDifference } from "../../utils";
 
 import { useSelector } from "react-redux";
 
@@ -26,12 +21,19 @@ import { withTranslation } from "react-i18next";
 const Project = ({ t }) => {
   const rxProjects = useSelector((state) => state.projects);
   const rxProject = useSelector((state) => state.project.info);
+  console.log(rxProject.info);
   //tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
+
+  // web3 info
+  const [raised, setRaised] = useState(0);
+  const [lockupTime, setLockupTime] = useState(0);
+  const [category, setCategory] = useState("");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     const setTabPosition = () => {
@@ -45,26 +47,51 @@ const Project = ({ t }) => {
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
+  useEffect(() => {
+    const tempCategory = formCategories.filter(
+      (item) => item.value === rxProject.info.category
+    );
+    const tempToken = formTokens.filter(
+      (token) => token.address === rxProject.info.token
+    );
+
+    setToken(tempToken[0].name);
+    setCategory(tempCategory[0].name);
+    setRaised(
+      ((rxProject.info.totalRaised / rxProject.info.softCap) * 100).toFixed()
+    );
+    setLockupTime(rxProject.info.lockupTime / 86400);
+  }, [rxProject]);
   return (
     <>
       <Header page="launchpad" />
       <div className="max-w-[1440px] mx-auto overflow-hidden md:overflow-visible">
-        <img src={projectBg} alt="projectBg" />
+        {rxProject ? (
+          <img src={rxProject.info.headerLink} alt="projectBg" />
+        ) : (
+          <HeaderLoader />
+        )}
         <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[70px] text-[#fff]">
           <p className="inter-bold  text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow mb-[50px]">
-            Sequoia.game
+            {rxProject.info.projectName}
           </p>
           <div className="flex items-start justify-between mb-[70px] flex-wrap">
             <div className="flex flex-wrap justify-center gap-5">
               <div className=" relative mr-0 md:mr-[50px]">
                 <img src={slider} alt="projectImg" className="project-img" />
+                {/*rxProject.info.preview*/}
                 <div className="absolute bottom-[57.34px] projectLeft">
                   <div className="main-div">
                     <div className="main-1"></div>
-                    <div className="main-2"></div>
+                    <div
+                      className="main-2"
+                      style={{ width: `${raised}%` }}
+                    ></div>
                     <div className="main-3 gap-5 md:gap-14">
                       <p>Total Raise</p>
-                      <p>$520,000/$800,000</p>
+                      <p>{`$${formatNumber(
+                        rxProject.info.totalRaised
+                      )} / $${formatNumber(rxProject.info.softCap)}`}</p>
                     </div>
                   </div>
                 </div>
@@ -73,26 +100,34 @@ const Project = ({ t }) => {
                 <h3 className="mb-[32px] inter-bold text-[24px] leading-7">
                   {t("highlights")}
                 </h3>
-                <p className="inter-400">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since t he 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap...
-                </p>
+                {rxProject.info.highlights.length ? (
+                  rxProject.info.highlights.map((item) => {
+                    return (
+                      <p key={item.length} className="inter-300 mb-3">
+                        {item}
+                      </p>
+                    );
+                  })
+                ) : (
+                  <p className="inter-400">{rxProject.info.shortDesc}</p>
+                )}
+
                 <div className="flex items-center justify-between mt-5 inter-400">
-                  <p>{t("lockup_time")}</p> <p>180 {t("days")}</p>
+                  <p>{t("lockup_time")}</p>{" "}
+                  <p>
+                    {lockupTime} {t("days")}
+                  </p>
                 </div>
                 <div className="flex items-center justify-between mt-5 inter-400">
-                  <p>{t("reward")} </p> <p>10 %</p>
+                  <p>{t("reward")} </p>{" "}
+                  <p>{rxProject.info.investorsReward} %</p>
                 </div>
                 <div className="flex flex-col items-center gap-4 mt-[30px]">
-                  <Button
-                    filled={false}
-                    text={t("white_paper")}
-                    to="launchpad"
-                  />
+                  <a href={rxProject.info.whitepaperLink} target="_blank">
+                    <button className="button-transparent w-[250px] py-[14px] whitespace-nowrap">
+                      <p className="inter-400">{t("white_paper")}</p>
+                    </button>
+                  </a>
                   <Button
                     filled={true}
                     text={t("launchpad_invest")}
@@ -105,11 +140,15 @@ const Project = ({ t }) => {
               <div className="text-[24px] leading-[29px]">
                 <div className="flex items-center justify-between">
                   <p className="inter-300 text-[#C7C7C7]">{t("soft_cap")}</p>
-                  <p className="inter-normal">890 900$</p>
+                  <p className="inter-normal">{`$${formatNumber(
+                    rxProject.info.softCap
+                  )}`}</p>
                 </div>
                 <div className="flex items-center justify-between mt-[17px]">
                   <p className="inter-300 text-[#C7C7C7]">{t("hard_cap")}</p>
-                  <p className="inter-normal">890 900$</p>
+                  <p className="inter-normal">{`$${formatNumber(
+                    rxProject.info.hardCap
+                  )}`}</p>
                 </div>
               </div>
               <div className="mt-[60px] bg-[#1C1D2D] rounded-[10px] hoverEffect">
@@ -135,7 +174,9 @@ const Project = ({ t }) => {
                 </div>
               </div>
               <div className="flex items-center justify-center flex-wrap mt-[100px] gap-6 md:gap-0">
-                <div className="mr-5 inter-400">{t("follow")} Sequoia.game</div>
+                <div className="mr-5 inter-400">
+                  {t("follow")} {rxProject.info.projectName}
+                </div>
                 <div className="flex items-center justify-between gap-[50px]">
                   <a className="social cursor-pointer" href="">
                     <Telegram className="w-6 h-6 md:w-9 md:h-9" />
@@ -189,31 +230,27 @@ const Project = ({ t }) => {
                       {t("project_name")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="inter-300 text-[14px] leading-[17px]">
-                      {t("short_desc")}
-                    </p>
-                    <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {rxProject.info.projectName}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
                       {t("website")}
                     </p>
-                    <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
-                    </p>
+                    <a
+                      className="inter-bold text-[14px] leading-[17px] text-[#fff]"
+                      href={rxProject.info.websiteLink}
+                      target="_blank"
+                    >
+                      {rxProject.info.websiteLink}
+                    </a>
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="inter-300 text-[14px] leading-[17px]">
                       {t("country")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {rxProject.info.country}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -221,7 +258,7 @@ const Project = ({ t }) => {
                       {t("category")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {t(category)}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -229,7 +266,7 @@ const Project = ({ t }) => {
                       {t("token")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {token}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -237,7 +274,7 @@ const Project = ({ t }) => {
                       {t("soft_cap")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {`$${formatNumber(rxProject.info.softCap)}`}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -245,84 +282,16 @@ const Project = ({ t }) => {
                       {t("hard_cap")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      MyCompany
+                      {`$${formatNumber(rxProject.info.hardCap)}`}
                     </p>
                   </div>
                 </div>
                 <div className="w-[100%] md:w-[75%]">
                   <h1 className="inter-600 text-[32px] leading-[39px] mb-[36px]">
-                    Until recently, the prevailing{" "}
+                    {rxProject.info.projectName}
                   </h1>
                   <p className="inter-300 text-[14px] leading-[17px]">
-                    View assumed lorem ipsum was born as a nonsense text. “It's
-                    not Latin, though it looks like it, and it actually says
-                    nothing,” Before & After magazine answered a curious reader,
-                    “Its ‘words’ loosely approximate the frequency with which
-                    letters occur in English, which is why at a glance it looks
-                    pretty real.” As Cicero would put it, “Um, not so fast.” The
-                    placeholder text, beginning with the line “Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit”, looks like Latin
-                    because in its youth, centuries ago, it was Latin. Richard
-                    McClintock, a Latin scholar from Hampden-Sydney College, is
-                    credited with discovering the source behind the ubiquitous
-                    filler text. In seeing a sample of lorem ipsum, his interest
-                    was piqued by consectetur—a genuine, albeit rare, Latin
-                    word. Consulting a Latin dictionary led McClintock to a
-                    passage from De Finibus Bonorum et Malorum (“On the Extremes
-                    of Good and Evil”), a first-century B.C. text from the Roman
-                    philosopher Cicero. In particular, the garbled words of
-                    lorem ipsum bear an unmistakable resemblance to sections
-                    1.10.32–33 of Cicero's work, with the most notable passage
-                    excerpted below: “Neque porro quisquam est, qui dolorem
-                    ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                    quia non numquam eius modi tempora incidunt ut labore et
-                    dolore magnam aliquam quaerat voluptatem.” A 1914 English
-                    translation by Harris Rackham reads: “Nor is there anyone
-                    who loves or pursues or desires to obtain pain of itself,
-                    because it is pain, but occasionally circumstances occur in
-                    which toil and pain can procure him some great pleasure.”
-                    McClintock's eye for detail certainly helped narrow the
-                    whereabouts of lorem ipsum's origin, however, the “how and
-                    when” still remain something of a mystery, with competing
-                    theories and timelines.Until recently, the prevailing view
-                    assumed lorem ipsum was born as a nonsense text. “It's not
-                    Latin, though it looks like it, and it actually says
-                    nothing,” Before & After magazine answered a curious reader,
-                    “Its ‘words’ loosely approximate the frequency with which
-                    letters occur in English, which is why at a glance it looks
-                    pretty real.” As Cicero would put it, “Um, not so fast.” The
-                    placeholder text, beginning with the line “Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit”, looks like Latin
-                    because in its youth, centuries ago, it was Latin. Richard
-                    McClintock, a Latin scholar from Hampden-Sydney College, is
-                    credited with discovering the source behind the ubiquitous
-                    filler text. In seeing a sample of lorem ipsum, his interest
-                    was piqued by consectetur—a genuine, albeit rare, Latin
-                    word. Consulting a Latin dictionary led McClintock to a
-                    passage from De Finibus Bonorum et Malorum (“On the Extremes
-                    of Good and Evil”), a first-century B.C. text from the Roman
-                    philosopher Cicero. In particular, the garbled words of
-                    lorem ipsum bear an unmistakable resemblance to sections
-                    1.10.32–33 of Cicero's work, with the most notable passage
-                    excerpted below: “Neque porro quisquam est, qui dolorem
-                    ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                    quia non numquam eius modi tempora incidunt ut labore et
-                    dolore magnam aliquam quaerat voluptatem.” A 1914 English
-                    translation by Harris Rackham reads: “Nor is there anyone
-                    who loves or pursues or desires to obtain pain of itself,
-                    because it is pain, but occasionally circumstances occur in
-                    which toil and pain can procure him some great pleasure.”
-                    McClintock's eye for detail certainly helped narrow the
-                    whereabouts of lorem ipsum's origin, however, the “how and
-                    when” still remain something of a mystery, with competing
-                    theories and timelines.Until recently, the prevailing view
-                    assumed lorem ipsum was born as a nonsense text. “It's not
-                    Latin, though it looks like it, and it actually says
-                    nothing,” Before & After magazine answered a curious reader,
-                    “Its ‘words’ loosely approximate the frequency with which
-                    letters occur in English, which is why at a glance it looks
-                    pretty real.” As Cicero would put it, “Um, not so fast.” The
-                    placeholder text, beginning with
+                    {rxProject.info.fullDesc}
                   </p>
                 </div>
               </div>
