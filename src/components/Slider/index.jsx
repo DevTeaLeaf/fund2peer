@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
 import "./slider.css";
 
-import { Link } from "react-router-dom";
+import { timeDifference } from "../../utils";
 
 import { withTranslation } from "react-i18next";
 
 import { sliderArrow } from "../../assets/img";
 
 import { formatNumber } from "../../utils";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setProjectAction } from "../../store";
 
 import Button from "../Button";
 
 const Slider = ({ t }) => {
-  const rxProjects = useSelector((state) => state);
+  const rxProjects = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
   const [projects, setProjects] = useState(rxProjects.info);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const setStoreProject = (project) => {
+    dispatch(setProjectAction(project));
+  };
 
   useEffect(() => {
     const lastIndex = projects.length - 1;
@@ -34,6 +40,7 @@ const Slider = ({ t }) => {
     <section className="section">
       <div className="section-center">
         {projects.map((project, projectIndex) => {
+          //slider settings
           let position = "nextSlide";
           if (projectIndex === currentIndex) {
             position = "activeSlide";
@@ -55,6 +62,24 @@ const Slider = ({ t }) => {
                 ? `translate(${100 + 30 * pos}%,50%)`
                 : "",
           };
+          //days
+          const currentTime = Math.floor(Date.now() / 1000);
+          let days;
+          if (currentTime < project.info.startFunding) {
+            let timeDiff = timeDifference(project.info.startFunding);
+            days = timeDiff.days;
+          }
+          if (
+            currentTime > project.info.startFunding &&
+            currentTime < project.info.endFunding
+          ) {
+            let timeDiff = timeDifference(project.info.endFunding);
+            days = timeDiff.days;
+          }
+          if (project.info.startFunding == 0) {
+            days = 0;
+          }
+          //raised funds
           let raised = (
             (project.info.totalRaised / project.info.softCap) *
             100
@@ -87,7 +112,7 @@ const Slider = ({ t }) => {
                       </p>
                       <div className="end-days">
                         <p className="end">end in days</p>
-                        <p className="end-in">{project.info.startFunding}</p>
+                        <p className="end-in">{days}</p>
                       </div>
                     </div>
                     <div className="main-div">
@@ -116,11 +141,17 @@ const Slider = ({ t }) => {
                       to="currentPresales"
                     />
                   </div>
-                  <Button
-                    filled={true}
-                    text={t("launchpad_invest")}
-                    to="project"
-                  />
+                  <div
+                    onClick={() => {
+                      setStoreProject(project);
+                    }}
+                  >
+                    <Button
+                      filled={true}
+                      text={t("launchpad_invest")}
+                      to="project"
+                    />
+                  </div>
                 </div>
                 <div className="arrows">
                   <img

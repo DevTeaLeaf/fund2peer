@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Header, Footer, Button, InvestorBox, Slider } from "../../components";
+import {
+  Header,
+  Footer,
+  Button,
+  InvestorBox,
+  Slider,
+  SliderLoader,
+} from "../../components";
 import { projectTabsData } from "../../constants";
 
-import { useSigner, useContract } from "wagmi";
-
-import { ethers } from "ethers";
-
-import { LaunchpadDriverABI, LaunchProjectInfoABI } from "../../web3/abi";
-import { LAUNCHPAD_DRIVER } from "../../web3/constants";
-
-import { decrypt } from "../../utils";
+import { useSelector } from "react-redux";
 
 import {
   projectBg,
@@ -24,90 +24,14 @@ import {
 
 import { withTranslation } from "react-i18next";
 const Project = ({ t }) => {
+  const rxProjects = useSelector((state) => state.projects);
+  const rxProject = useSelector((state) => state.project.info);
   //tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
-  //
-
-  /*const [activeProject, setActiveProject] = useState(false);
-
-  const { data } = useSigner();
-
-  const LDContract = useContract({
-    address: LAUNCHPAD_DRIVER,
-    abi: LaunchpadDriverABI,
-    signerOrProvider: data,
-  });
-
-  let approvedProjects = [];
-
-  const setProjectData = async () => {
-    let projectContract = activeProject.contract;
-
-    console.log(projectContract);
-
-    let whitepaperLink = await projectContract.whitepaperLink();
-    let youtubeLink = await projectContract.youtubeVideo();
-    let projectName = await projectContract.projectName();
-    let shortDesc = await projectContract.shortDescription();
-    let fullDesc = await projectContract.fullDescription();
-    let websiteLink = await projectContract.website();
-    let country = await projectContract.country();
-    let category = await decrypt(await projectContract.category());
-    let token = await projectContract.investToken();
-    let softCap = await decrypt(await projectContract.softCap());
-    let hardCap = await decrypt(await projectContract.hardCap());
-    let roadmapLink = await projectContract.roadmapLink();
-    let verified = await projectContract.verified();
-    let startFunding = await decrypt(await projectContract.startFunding());
-    let endFunding = await decrypt(await projectContract.endFunding());
-    let totalRaised = await decrypt(await projectContract.collectedFundTOTAL());
-
-    console.log(whitepaperLink);
-    console.log(youtubeLink);
-    console.log(projectName);
-    console.log(shortDesc);
-    console.log(fullDesc);
-    console.log(websiteLink);
-    console.log(country);
-    console.log(category);
-    console.log(token);
-    console.log(softCap);
-    console.log(hardCap);
-    console.log(roadmapLink);
-    console.log(verified);
-    console.log(startFunding);
-    console.log(endFunding);
-    console.log(totalRaised);
-  };
-
-  const initData = async () => {
-    let projectsCount = await decrypt(await LDContract.id());
-    let projects = [];
-
-    for (let i = 0; i <= projectsCount; i++) {
-      let project = await LDContract.projectsList(i);
-      if (project.approved) {
-        projects.push(project);
-      }
-    }
-
-    for (const project of projects) {
-      let contract = new ethers.Contract(
-        project.projectAddress,
-        LaunchProjectInfoABI,
-        data?.provider
-      );
-      approvedProjects.push({
-        address: project.projectAddress,
-        contract: contract,
-      });
-    }
-    setActiveProject(approvedProjects[1]);
-  };
 
   useEffect(() => {
     const setTabPosition = () => {
@@ -121,14 +45,6 @@ const Project = ({ t }) => {
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
-
-  useEffect(() => {
-    setProjectData();
-  }, [activeProject]);
-
-  useEffect(() => {
-    initData();
-  }, [data]);*/
   return (
     <>
       <Header page="launchpad" />
@@ -445,7 +361,7 @@ const Project = ({ t }) => {
             <p className="inter-bold text-[32px] leading-9 md:text-[48px] md:leading-[58px] mb-[100px] nav-shadow">
               {t("explore_more")}
             </p>
-            <Slider />
+            {rxProjects.loaded ? <Slider /> : <SliderLoader />}
           </div>
         </div>
       </div>

@@ -30,11 +30,11 @@ import { decrypt } from "../../utils";
 
 import { withTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { SET_PROJECTS } from "../../store";
+import { setProjectsAction } from "../../store";
 
 const Launchpad = ({ t }) => {
   const dispatch = useDispatch();
-  const rxProjects = useSelector((state) => state);
+  const rxProjects = useSelector((state) => state.projects);
 
   const [projects, setProjects] = useState(false);
 
@@ -91,7 +91,7 @@ const Launchpad = ({ t }) => {
         return { address: item.address, info: info };
       })
     );
-    dispatch({ type: SET_PROJECTS, payload: pj });
+    dispatch(setProjectsAction(pj));
   };
 
   const initData = async () => {
