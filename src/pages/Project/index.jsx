@@ -9,7 +9,7 @@ import {
 } from "../../components";
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
-import { formatNumber, timeDifference } from "../../utils";
+import { formatNumber, timeDifference, copyText } from "../../utils";
 
 import { useSelector } from "react-redux";
 
@@ -85,16 +85,17 @@ const Project = ({ t }) => {
     const tempToken = formTokens.filter(
       (token) => token.address === rxProject.info.token
     );
+
     timeController();
-    setInterval(() => {
-      timeController();
-    }, 60000);
     setToken(tempToken[0].name);
     setCategory(tempCategory[0].name);
     setRaised(
       ((rxProject.info.totalRaised / rxProject.info.softCap) * 100).toFixed()
     );
     setLockupTime(rxProject.info.lockupTime / 86400);
+    setInterval(() => {
+      timeController();
+    }, 60000);
   }, [rxProject]);
   return (
     <>
@@ -357,19 +358,70 @@ const Project = ({ t }) => {
                   </p>
                 </div>
               </div>
+            ) : projectTabsData[activeTabIndex].label === "team" ? (
+              <div>
+                {rxProject.info.team.map((teammate, index) => {
+                  let social;
+
+                  switch (teammate.socialType) {
+                    case "telegram":
+                      social = <Telegram className="w-[14px] h-[14px]" />;
+                      break;
+                    case "twitter":
+                      social = <Twitter className="w-[14px] h-[14px]" />;
+                      break;
+                    case "discord":
+                      social = <Discord className="w-[14px] h-[14px]" />;
+                      break;
+                    case "facebook":
+                      social = <Facebook className="w-[14px] h-[14px]" />;
+                      break;
+                    default:
+                      social = <Web className="w-[14px] h-[14px]" />;
+                  }
+                  if (teammate.socialType) {
+                  }
+                  return (
+                    <div
+                      className="relative flex flex-col items-center"
+                      key={index}
+                    >
+                      <img
+                        src={teammate.avatarLink}
+                        alt="avatar"
+                        className="max-w-[194px] max-h-[194px] rounded-full"
+                      />
+                      <div className="bg-[#13141F] w-[140px] h-[68px] border border-[#89C6B9] rounded-[10px] flex flex-col items-center mt-[-20px]">
+                        <h1 className="mt-4 uppercase inter-normal text-[14px] leading-[17px]">
+                          {teammate.name}
+                        </h1>
+                        <div
+                          onClick={() => copyText(teammate.socialLogin)}
+                          className="flex items-center mt-1 cursor-pointer"
+                        >
+                          {social}
+                          <p className="inter-300 text-[11px] leading-[13px] ml-2">
+                            {teammate.socialLogin}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
               <div>test</div>
             )}
           </div>
           <div className="mt-[100px]">
             <h1 className="inter-normal text-[24px] leading-[29px] mb-[74px] uppercase">
-              {t("investors")}
+              {t("top_investors")}
             </h1>
             <div className="flex items-center justify-center gap-5 md:gap-[40px] flex-wrap">
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
                 img={wmatic}
-                amount="100,000"
+                amount="100 000"
               />
               <InvestorBox
                 address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"

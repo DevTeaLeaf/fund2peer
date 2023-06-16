@@ -10,7 +10,6 @@ const YouTubePlayer = ({ videoId }) => {
     },
   });
   useEffect(() => {
-    console.log(window.innerWidth);
     if (window.innerWidth >= 767) {
       setOpts({
         height: "400vh",

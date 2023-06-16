@@ -75,9 +75,11 @@ const Launchpad = ({ t }) => {
         );
         const lockupTime = await decrypt(await item.contract.minimumLock());
 
-        let highlights = [];
-        let socialMediaNames = [];
-        let socialMediaLogins = [];
+        const highlights = [];
+        const socialMediaNames = [];
+        const socialMediaLogins = [];
+        const team = [];
+        const investors = [];
 
         try {
           const highlight0 = await item.contract.highlights(0);
@@ -110,6 +112,40 @@ const Launchpad = ({ t }) => {
           socialMediaLogins.push(socialLogin3);
         } catch (error) {}
 
+        try {
+          let count = 0;
+          while (true) {
+            let socialMediaPersonName = await item.contract.socialMediaName(
+              count
+            );
+            let socialMediaPersonLogin =
+              await item.contract.socialMediaPersonLogin(count);
+            let socialMediaPersonType =
+              await item.contract.socialMediaPersonType(count);
+            let personAvatarLink = await item.contract.personAvatarLink(count);
+            team.push({
+              name: socialMediaPersonName,
+              socialLogin: socialMediaPersonLogin,
+              socialType: socialMediaPersonType,
+              avatarLink: personAvatarLink,
+            });
+            count++;
+          }
+        } catch (error) {}
+        try {
+          let count = 0;
+          while (true) {
+            const investor = await item.contract.investorsCount(count);
+            if (
+              String(investor) != "0x0000000000000000000000000000000000000000"
+            ) {
+              investors.push(investor);
+              count++;
+            } else {
+              break;
+            }
+          }
+        } catch (error) {}
         const info = {
           whitepaperLink: whitepaperLink,
           youtubeLink: youtubeLink,
@@ -134,6 +170,7 @@ const Launchpad = ({ t }) => {
           highlights: highlights,
           socialMediaNames: socialMediaNames,
           socialMediaLogins: socialMediaLogins,
+          team: team,
         };
         return { address: item.address, info: info };
       })

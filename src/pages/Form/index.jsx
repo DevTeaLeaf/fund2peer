@@ -188,7 +188,9 @@ const Form = ({ t }) => {
 
       //P2
       //TEAM
-      const teamSocials = formTeam.filter((team) => team.network);
+      const teamNames = formTeam
+        .map((team) => team.inputs[0].value)
+        .filter((name) => name != "");
       const teamAvatar = formTeam
         .map((team) => team.inputs[1].value)
         .filter((avatar) => avatar != "");
@@ -200,11 +202,11 @@ const Form = ({ t }) => {
         .map((team) => team.network)
         .filter((network) => network != "");
 
-      if (teamSocials.length > 0) {
-        const teamSocialsBytes = await DTBContract.changeSocialMediaPersonName(
-          teamSocials
+      if (teamNames.length > 0) {
+        const teamNamesBytes = await DTBContract.changeSocialMediaPersonName(
+          teamNames
         );
-        bytes.push(teamSocialsBytes);
+        bytes.push(teamNamesBytes);
       }
       if (teamAvatar.length > 0) {
         const teamAvatarBytes = await DTBContract.changePersonAvatarLink(
