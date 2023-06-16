@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Header, Footer, Button, InvestorBox, Slider } from "../../components";
+import {
+  Header,
+  Footer,
+  Button,
+  InvestorBox,
+  Slider,
+  YouTubePlayer,
+} from "../../components";
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
 import { formatNumber, timeDifference } from "../../utils";
@@ -7,12 +14,12 @@ import { formatNumber, timeDifference } from "../../utils";
 import { useSelector } from "react-redux";
 
 import {
-  projectBg,
   slider,
   Twitter,
   Discord,
   Telegram,
   Facebook,
+  Web,
   youtube,
   wmatic,
 } from "../../assets/img";
@@ -22,7 +29,7 @@ const Project = ({ t }) => {
   const rxProjects = useSelector((state) => state.projects);
   const rxProject = useSelector((state) => state.project.info);
   console.log(rxProject.info);
-  //tabs
+  // tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
@@ -34,6 +41,30 @@ const Project = ({ t }) => {
   const [lockupTime, setLockupTime] = useState(0);
   const [category, setCategory] = useState("");
   const [token, setToken] = useState("");
+  const [timeDiff, setTimeDiff] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    state: "end",
+  });
+
+  //functions
+
+  const timeController = () => {
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if (currentTime < rxProject.info.startFunding) {
+      let diff = timeDifference(rxProject.info.startFunding);
+      setTimeDiff({ ...diff, state: "start" });
+    }
+    if (
+      currentTime > rxProject.info.startFunding &&
+      currentTime < rxProject.info.endFunding
+    ) {
+      let diff = timeDifference(rxProject.info.endFunding);
+      setTimeDiff({ ...diff, state: "end" });
+    }
+  };
 
   useEffect(() => {
     const setTabPosition = () => {
@@ -54,7 +85,10 @@ const Project = ({ t }) => {
     const tempToken = formTokens.filter(
       (token) => token.address === rxProject.info.token
     );
-
+    timeController();
+    setInterval(() => {
+      timeController();
+    }, 60000);
     setToken(tempToken[0].name);
     setCategory(tempCategory[0].name);
     setRaised(
@@ -119,7 +153,7 @@ const Project = ({ t }) => {
                   </p>
                 </div>
                 <div className="flex items-center justify-between mt-5 inter-400">
-                  <p>{t("reward")} </p>{" "}
+                  <p>{t("reward")}</p>
                   <p>{rxProject.info.investorsReward} %</p>
                 </div>
                 <div className="flex flex-col items-center gap-4 mt-[30px]">
@@ -154,16 +188,16 @@ const Project = ({ t }) => {
               <div className="mt-[60px] bg-[#1C1D2D] rounded-[10px] hoverEffect">
                 <div className="py-5 px-[15px] flex flex-col items-center">
                   <div className="flex inter-bold text-[24px] leading-7 md:text-[32px] md:leading-[39px] mb-[30px] gap-4">
-                    <p className="text-[#89C6B9] ">{t("start")}</p>
+                    <p className="text-[#89C6B9] ">{t(timeDiff.state)}</p>
                     <p>{t("in")}</p>
                     <p>
-                      10 <sup>{t("clock_days")}</sup>
+                      {timeDiff.days} <sup>{t("clock_days")}</sup>
                     </p>
                     <p>
-                      22 <sup>{t("clock_hours")}</sup>
+                      {timeDiff.hours} <sup>{t("clock_hours")}</sup>
                     </p>
                     <p>
-                      59 <sup>{t("clock_min")}</sup>
+                      {timeDiff.minutes} <sup>{t("clock_min")}</sup>
                     </p>
                   </div>
                   <Button
@@ -178,24 +212,40 @@ const Project = ({ t }) => {
                   {t("follow")} {rxProject.info.projectName}
                 </div>
                 <div className="flex items-center justify-between gap-[50px]">
-                  <a className="social cursor-pointer" href="">
-                    <Telegram className="w-6 h-6 md:w-9 md:h-9" />
-                  </a>
-                  <a className="social cursor-pointer" href="">
-                    <Twitter className="w-6 h-6 md:w-9 md:h-9" />
-                  </a>
-                  <a className="social cursor-pointer" href="">
-                    <Discord className="w-6 h-6 md:w-9 md:h-9" />
-                  </a>
-                  <a className="social cursor-pointer" href="">
-                    <Facebook className="w-6 h-6 md:w-9 md:h-9" />
-                  </a>
+                  {rxProject.info.socialMediaNames.map((social, index) => {
+                    return (
+                      <a
+                        key={index}
+                        className="social cursor-pointer"
+                        href={rxProject.info.socialMediaLogins[index]}
+                        target="_blank"
+                      >
+                        {social === "telegram" ? (
+                          <Telegram className="w-6 h-6 md:w-9 md:h-9" />
+                        ) : social === "twitter" ? (
+                          <Twitter className="w-6 h-6 md:w-9 md:h-9" />
+                        ) : social === "discord" ? (
+                          <Discord className="w-6 h-6 md:w-9 md:h-9" />
+                        ) : social === "facebook" ? (
+                          <Facebook className="w-6 h-6 md:w-9 md:h-9" />
+                        ) : (
+                          <Web className="w-6 h-6 md:w-9 md:h-9" />
+                        )}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>
           </div>
           <div className="flex items-center justify-center mb-[87px]">
-            <img src={youtube} alt="youtube" />
+            {rxProject.info.youtubeLink ? (
+              <YouTubePlayer
+                videoId={rxProject.info.youtubeLink.split("v=")[1]}
+              />
+            ) : (
+              <img src={youtube} alt="youtube" />
+            )}
           </div>
           <div className="relative">
             <div className="flex items-center justify-center gap-[20px] md:gap-[80px] border-b border-[#000] border-opacity-25">
@@ -243,6 +293,18 @@ const Project = ({ t }) => {
                       target="_blank"
                     >
                       {rxProject.info.websiteLink}
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p className="inter-300 text-[14px] leading-[17px]">
+                      {t("roadmap")}
+                    </p>
+                    <a
+                      className="inter-bold text-[14px] leading-[17px] text-[#fff]"
+                      href={rxProject.info.roadmapLink}
+                      target="_blank"
+                    >
+                      {rxProject.info.roadmapLink}
                     </a>
                   </div>
                   <div className="flex items-center justify-between">

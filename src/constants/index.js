@@ -27,7 +27,6 @@ export const formCategories = [
     active: true,
   },
 ];
-
 export const presalesTabsData = [
   {
     label: "all_launchpads",

@@ -76,6 +76,8 @@ const Launchpad = ({ t }) => {
         const lockupTime = await decrypt(await item.contract.minimumLock());
 
         let highlights = [];
+        let socialMediaNames = [];
+        let socialMediaLogins = [];
 
         try {
           const highlight0 = await item.contract.highlights(0);
@@ -85,9 +87,6 @@ const Launchpad = ({ t }) => {
           const highlight2 = await item.contract.highlights(2);
           highlights.push(highlight2);
         } catch (error) {}
-
-        let socialMediaNames = [];
-        let socialMediaLogins = [];
 
         try {
           const socialName0 = await item.contract.socialMediaName(0);

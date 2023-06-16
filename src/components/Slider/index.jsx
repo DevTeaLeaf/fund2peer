@@ -17,6 +17,8 @@ const Slider = ({ t }) => {
   const rxProjects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
   const [projects, setProjects] = useState(rxProjects.info);
+  //const [projectState, setProjectState] = useState("");
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const setStoreProject = (project) => {
@@ -68,6 +70,7 @@ const Slider = ({ t }) => {
           if (currentTime < project.info.startFunding) {
             let timeDiff = timeDifference(project.info.startFunding);
             days = timeDiff.days;
+            //setProjectState("start");
           }
           if (
             currentTime > project.info.startFunding &&
@@ -75,6 +78,7 @@ const Slider = ({ t }) => {
           ) {
             let timeDiff = timeDifference(project.info.endFunding);
             days = timeDiff.days;
+            //setProjectState("end");
           }
           if (project.info.startFunding == 0) {
             days = 0;
