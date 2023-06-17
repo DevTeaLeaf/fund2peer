@@ -80,6 +80,7 @@ const Launchpad = ({ t }) => {
         const socialMediaLogins = [];
         const team = [];
         const investors = [];
+        const roadmap = [];
 
         try {
           const highlight0 = await item.contract.highlights(0);
@@ -146,6 +147,18 @@ const Launchpad = ({ t }) => {
             }
           }
         } catch (error) {}
+        try {
+          let count = 0;
+          while (true) {
+            const stage = await item.contract.roadmap(count);
+            if (stage.description != "") {
+              roadmap.push(stage);
+              count++;
+            } else {
+              break;
+            }
+          }
+        } catch (error) {}
         const info = {
           whitepaperLink: whitepaperLink,
           youtubeLink: youtubeLink,
@@ -171,6 +184,7 @@ const Launchpad = ({ t }) => {
           socialMediaNames: socialMediaNames,
           socialMediaLogins: socialMediaLogins,
           team: team,
+          roadmap: roadmap,
         };
         return { address: item.address, info: info };
       })

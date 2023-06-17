@@ -25,6 +25,7 @@ import weth from "./weth.png";
 import usdt from "./usdt.png";
 import usdc from "./usdc.png";
 import dai from "./dai.png";
+import close from "./close.png";
 
 export {
   arrow,
@@ -54,4 +55,5 @@ export {
   usdt,
   usdc,
   dai,
+  close,
 };

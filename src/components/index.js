@@ -12,6 +12,7 @@ import Input from "./Input";
 import Token from "./Token";
 import Member from "./Member";
 import YouTubePlayer from "./YouTubePlayer";
+import InvestModal from "./InvestModal";
 
 export {
   Button,
@@ -28,4 +29,5 @@ export {
   Token,
   Member,
   YouTubePlayer,
+  InvestModal,
 };

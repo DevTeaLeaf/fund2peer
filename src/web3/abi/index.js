@@ -3,6 +3,7 @@ import FeeCollectorABI from "./FeeCollector.json";
 import LaunchpadDriverABI from "./LaunchpadDriver.json";
 import LaunchpadLogicABI from "./LaunchpadLogic.json";
 import LaunchProjectInfoABI from "./LaunchpadProjectInfo.json";
+import TokenABI from "./Token.json";
 
 export {
   DataToBytesABI,
@@ -10,4 +11,5 @@ export {
   LaunchpadDriverABI,
   LaunchpadLogicABI,
   LaunchProjectInfoABI,
+  TokenABI,
 };

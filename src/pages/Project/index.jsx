@@ -6,12 +6,22 @@ import {
   InvestorBox,
   Slider,
   YouTubePlayer,
+  InvestModal,
 } from "../../components";
+
+import { useSigner, useContract, useAccount } from "wagmi";
+import { useSelector } from "react-redux";
+
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
 import { formatNumber, timeDifference, copyText } from "../../utils";
-
-import { useSelector } from "react-redux";
+import {
+  LaunchpadLogicABI,
+  TokenABI,
+  DataToBytesABI,
+  LaunchProjectInfoABI,
+} from "../../web3/abi";
+import { DATA_TO_BYTES } from "../../web3/constants";
 
 import {
   slider,
@@ -26,6 +36,8 @@ import {
 
 import { withTranslation } from "react-i18next";
 const Project = ({ t }) => {
+  const { data } = useSigner();
+  const { address } = useAccount();
   const rxProjects = useSelector((state) => state.projects);
   const rxProject = useSelector((state) => state.project.info);
   console.log(rxProject.info);
@@ -35,10 +47,28 @@ const Project = ({ t }) => {
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
+  // logic variables
+  const [investModalActive, setInvestModalActive] = useState(false);
 
-  // web3 info
+  // web3
+  const TContract = useContract({
+    address: rxProject.info.token,
+    abi: TokenABI,
+    signerOrProvider: data,
+  });
+  const DTBContract = useContract({
+    address: DATA_TO_BYTES,
+    abi: DataToBytesABI,
+    signerOrProvider: data,
+  });
+  const LPIContract = useContract({
+    address: rxProject.address,
+    abi: LaunchProjectInfoABI,
+    signerOrProvider: data,
+  });
   const [raised, setRaised] = useState(0);
   const [lockupTime, setLockupTime] = useState(0);
+  const [adresses, setAdresses] = useState({});
   const [category, setCategory] = useState("");
   const [token, setToken] = useState("");
   const [timeDiff, setTimeDiff] = useState({
@@ -49,7 +79,6 @@ const Project = ({ t }) => {
   });
 
   //functions
-
   const timeController = () => {
     const currentTime = Math.floor(Date.now() / 1000);
 
@@ -85,10 +114,14 @@ const Project = ({ t }) => {
     const tempToken = formTokens.filter(
       (token) => token.address === rxProject.info.token
     );
-
     timeController();
     setToken(tempToken[0].name);
     setCategory(tempCategory[0].name);
+    setAdresses({
+      logic: rxProject.address,
+      token: rxProject.info.token,
+      account: address,
+    });
     setRaised(
       ((rxProject.info.totalRaised / rxProject.info.softCap) * 100).toFixed()
     );
@@ -163,11 +196,9 @@ const Project = ({ t }) => {
                       <p className="inter-400">{t("white_paper")}</p>
                     </button>
                   </a>
-                  <Button
-                    filled={true}
-                    text={t("launchpad_invest")}
-                    to="launchpad"
-                  />
+                  <div onClick={() => setInvestModalActive(true)}>
+                    <Button filled={true} text={t("launchpad_invest")} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -449,6 +480,18 @@ const Project = ({ t }) => {
         </div>
       </div>
       <Footer />
+      {investModalActive ? (
+        <InvestModal
+          setModalActive={setInvestModalActive}
+          token={token}
+          adresses={adresses}
+          tokenContract={TContract}
+          bytesContract={DTBContract}
+          infoContract={LPIContract}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
