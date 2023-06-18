@@ -103,5 +103,10 @@
   "bitcoin": "Bitcoin",
   "btc": "BTC",
   "start_funding": "Начало финансирования",
-  "end_funding": "Конец финансирования"
+  "end_funding": "Конец финансирования",
+  "description": "Описание",
+  "amount": "Количество",
+  "collected": "Собрано",
+  "yes": "Да",
+  "no": "Нет"
 }

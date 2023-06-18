@@ -103,5 +103,10 @@
   "bitcoin": "Bitcoin",
   "btc": "BTC",
   "start_funding": "Start funding",
-  "end_funding": "End funding"
+  "end_funding": "End funding",
+  "description": "Description",
+  "amount": "Amount",
+  "collected": "Collected",
+  "yes": "Yes",
+  "no": "No"
 }

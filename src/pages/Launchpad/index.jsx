@@ -139,7 +139,10 @@ const Launchpad = ({ t }) => {
             if (
               String(investor) != "0x0000000000000000000000000000000000000000"
             ) {
-              investors.push(investor);
+              const invested = String(
+                await item.contract.rawInvested(investor)
+              );
+              investors.push({ investor: investor, invested: invested });
               count++;
             } else {
               break;
@@ -190,6 +193,7 @@ const Launchpad = ({ t }) => {
           socialMediaLogins: socialMediaLogins,
           team: team,
           roadmap: roadmap,
+          investors: investors,
         };
         return { address: item.address, info: info };
       })

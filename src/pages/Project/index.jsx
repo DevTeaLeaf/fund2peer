@@ -15,12 +15,7 @@ import { useSelector } from "react-redux";
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
 import { formatNumber, timeDifference, copyText } from "../../utils";
-import {
-  LaunchpadLogicABI,
-  TokenABI,
-  DataToBytesABI,
-  LaunchProjectInfoABI,
-} from "../../web3/abi";
+import { TokenABI, DataToBytesABI, LaunchProjectInfoABI } from "../../web3/abi";
 import { DATA_TO_BYTES } from "../../web3/constants";
 
 import {
@@ -50,6 +45,7 @@ const Project = ({ t }) => {
   // logic variables
   const [investModalActive, setInvestModalActive] = useState(false);
   const [projectState, setProjectState] = useState(false);
+  const [topInvestors, setTopInvestors] = useState([]);
 
   // web3
   const TContract = useContract({
@@ -94,6 +90,12 @@ const Project = ({ t }) => {
       setTimeDiff({ ...diff, state: "end" });
     }
   };
+  const topInvestorsController = () => {
+    const sortedInvestors = [...rxProject.info.investors].sort(
+      (a, b) => a.invested - b.invested
+    );
+    setTopInvestors(sortedInvestors.slice(0, 4));
+  };
   useEffect(() => {
     const setTabPosition = () => {
       const currentTab = tabsRef.current[activeTabIndex];
@@ -118,7 +120,8 @@ const Project = ({ t }) => {
       (token) => token.address === rxProject.info.token
     );
     timeController();
-    setToken(tempToken[0].name);
+    topInvestorsController();
+    setToken(tempToken[0]);
     setCategory(tempCategory[0].name);
     setAdresses({
       logic: rxProject.address,
@@ -367,7 +370,7 @@ const Project = ({ t }) => {
                       {t("token")}
                     </p>
                     <p className="inter-bold text-[14px] leading-[17px] text-[#fff]">
-                      {token}
+                      {token.name}
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -447,8 +450,55 @@ const Project = ({ t }) => {
                   );
                 })}
               </div>
+            ) : projectTabsData[activeTabIndex].label === "roadmap" ? (
+              <div className="flex flex-wrap gap-6">
+                {rxProject.info.roadmap.map((item) => {
+                  return (
+                    <div className="cursor-pointer w-full max-h-[1000px] bg-box rounded-[10px] hoverEffect">
+                      <div className="px-5 py-5 flex flex-col justify-between gap-4">
+                        <div className="flex flex-col items-center md:flex-row md:items-start">
+                          <p className="text-[#89C6B9] inter-bold text-[20px] leading-6 mr-3">
+                            {t("description")}
+                          </p>{" "}
+                          <p className="inter-400 mt-5 md:mt-0">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <p className="text-[#89C6B9] inter-bold text-[20px] leading-6 mr-3">
+                            {t("amount")}
+                          </p>{" "}
+                          <p className="inter-400 "> {item.funds} $</p>
+                        </div>
+                        <div className="flex">
+                          <p className="text-[#89C6B9] inter-bold text-[20px] leading-6 mr-3">
+                            {t("collected")}
+                          </p>{" "}
+                          <p className="inter-400">
+                            {item.ableToClaim ? t("yes") : t("no")}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : projectTabsData[activeTabIndex].label === "investors" ? (
+              <div>
+                {rxProject.info.investors.map(({ investor, invested }) => {
+                  const Tinvested = formatNumber(Number(invested) / 10 ** 18);
+
+                  return (
+                    <InvestorBox
+                      address={investor}
+                      img={token.img}
+                      amount={Tinvested}
+                    />
+                  );
+                })}
+              </div>
             ) : (
-              <div>test</div>
+              ""
             )}
           </div>
           <div className="mt-[100px]">
@@ -456,26 +506,17 @@ const Project = ({ t }) => {
               {t("top_investors")}
             </h1>
             <div className="flex items-center justify-center gap-5 md:gap-[40px] flex-wrap">
-              <InvestorBox
-                address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={wmatic}
-                amount="100 000"
-              />
-              <InvestorBox
-                address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={wmatic}
-                amount="100,000"
-              />
-              <InvestorBox
-                address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={wmatic}
-                amount="100,000"
-              />
-              <InvestorBox
-                address="0xd1d6bf74282782b0b3eb1413c901d6ecf02e8e28"
-                img={wmatic}
-                amount="100,000"
-              />
+              {topInvestors.map(({ investor, invested }) => {
+                const Tinvested = formatNumber(Number(invested) / 10 ** 18);
+
+                return (
+                  <InvestorBox
+                    address={investor}
+                    img={token.img}
+                    amount={Tinvested}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="mt-[90px] mb-[40px]">
@@ -490,7 +531,7 @@ const Project = ({ t }) => {
       {investModalActive ? (
         <InvestModal
           setModalActive={setInvestModalActive}
-          token={token}
+          token={token.name}
           adresses={adresses}
           tokenContract={TContract}
           bytesContract={DTBContract}
