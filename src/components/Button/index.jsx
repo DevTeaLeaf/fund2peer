@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 
-const Button = ({ filled, text, to }) => {
+const Button = ({ filled, text, to, active = true }) => {
   return (
     <>
       <Link to={to ? `/${to}` : false}>
         <button
           className={
             filled
-              ? "button-fill w-[250px] py-[14px] whitespace-nowrap"
+              ? `${
+                  active ? "button-fill" : "button-fill-disabled"
+                }  w-[250px] py-[14px] whitespace-nowrap`
               : "button-transparent w-[250px] py-[14px] whitespace-nowrap"
           }
         >

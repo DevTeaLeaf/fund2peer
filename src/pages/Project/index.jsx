@@ -49,6 +49,7 @@ const Project = ({ t }) => {
   const tabsRef = useRef([]);
   // logic variables
   const [investModalActive, setInvestModalActive] = useState(false);
+  const [projectState, setProjectState] = useState(false);
 
   // web3
   const TContract = useContract({
@@ -77,7 +78,6 @@ const Project = ({ t }) => {
     minutes: 0,
     state: "end",
   });
-
   //functions
   const timeController = () => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -94,7 +94,6 @@ const Project = ({ t }) => {
       setTimeDiff({ ...diff, state: "end" });
     }
   };
-
   useEffect(() => {
     const setTabPosition = () => {
       const currentTab = tabsRef.current[activeTabIndex];
@@ -108,6 +107,10 @@ const Project = ({ t }) => {
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
   useEffect(() => {
+    const now = Math.floor(Date.now() / 1000);
+    if (now > rxProject.info.startFunding && now < rxProject.info.endFunding) {
+      setProjectState(true);
+    }
     const tempCategory = formCategories.filter(
       (item) => item.value === rxProject.info.category
     );
@@ -196,8 +199,12 @@ const Project = ({ t }) => {
                       <p className="inter-400">{t("white_paper")}</p>
                     </button>
                   </a>
-                  <div onClick={() => setInvestModalActive(true)}>
-                    <Button filled={true} text={t("launchpad_invest")} />
+                  <div onClick={() => setInvestModalActive(projectState)}>
+                    <Button
+                      filled={true}
+                      text={t("launchpad_invest")}
+                      active={projectState}
+                    />
                   </div>
                 </div>
               </div>

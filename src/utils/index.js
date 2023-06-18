@@ -5,6 +5,7 @@ import decrypt from "./functions/decrypt";
 import formatNumber from "./functions/formatNumber";
 import timeDifference from "./functions/timeDifference";
 import copyText from "./functions/copyText";
+import getGasPrice from "./functions/getGasPrice";
 
 export {
   useInput,
@@ -14,4 +15,5 @@ export {
   formatNumber,
   timeDifference,
   copyText,
+  getGasPrice,
 };

@@ -146,6 +146,15 @@ body {
   transform: translateY(-10px);
   box-shadow: 40px 40px 10px rgba(1, 1, 2, 0.25);
 }
+.button-fill-disabled {
+  background: #89c6b9;
+  opacity: 80%;
+  cursor: auto;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+
 .button-transparent:hover {
   border: 5px solid #89c6b9;
   filter: drop-shadow(40px 40px 10px rgba(1, 1, 2, 0.25));

@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { withTranslation } from "react-i18next";
 import { ethers } from "ethers";
+import { useSigner } from "wagmi";
 
 import { GAS } from "../../web3/constants";
 import { close } from "../../assets/img";
-import { decrypt } from "../../utils";
+import { decrypt, getGasPrice, getLimit } from "../../utils";
 
 import Button from "../Button";
 import Input from "../Input";
@@ -18,6 +19,7 @@ const InvestModal = ({
   bytesContract,
   infoContract,
 }) => {
+  const { data } = useSigner();
   const [inputValue, setInputValue] = useState("");
   const modalRef = useRef(null);
 
@@ -29,18 +31,20 @@ const InvestModal = ({
       setModalActive(false);
     }
   };
+
   const invest = async (amount) => {
+    const gasPrice = await getGasPrice(data.provider);
     let allowance = await decrypt(
       await tokenContract.allowance(adresses.account, adresses.logic)
     );
     allowance /= 10 ** 18;
-
     if (Number(allowance) < Number(amount)) {
       const approve = await tokenContract.approve(
         adresses.logic,
         ethers.constants.MaxUint256,
         {
           gasLimit: GAS,
+          gasPrice: gasPrice,
         }
       );
       await approve.wait();
@@ -50,8 +54,12 @@ const InvestModal = ({
 
     const investBytes = await bytesContract.invest(amount);
 
+    const gasLimit = await getLimit(
+      await infoContract.estimateGas.callFunctions([investBytes])
+    );
     const transaction = await infoContract.callFunctions([investBytes], {
-      gasLimit: 30000000,
+      gasLimit: gasLimit,
+      gasPrice: gasPrice,
     });
     console.log(transaction);
   };

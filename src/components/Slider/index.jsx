@@ -17,7 +17,6 @@ const Slider = ({ t }) => {
   const rxProjects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
   const [projects, setProjects] = useState(rxProjects.info);
-  //const [projectState, setProjectState] = useState("");
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -67,10 +66,11 @@ const Slider = ({ t }) => {
           //days
           const currentTime = Math.floor(Date.now() / 1000);
           let days;
+          let startState = "start";
           if (currentTime < project.info.startFunding) {
             let timeDiff = timeDifference(project.info.startFunding);
             days = timeDiff.days;
-            //setProjectState("start");
+            startState = "start";
           }
           if (
             currentTime > project.info.startFunding &&
@@ -78,7 +78,7 @@ const Slider = ({ t }) => {
           ) {
             let timeDiff = timeDifference(project.info.endFunding);
             days = timeDiff.days;
-            //setProjectState("end");
+            startState = "end";
           }
           if (project.info.startFunding == 0) {
             days = 0;
@@ -115,7 +115,7 @@ const Slider = ({ t }) => {
                         {project.info.projectName}
                       </p>
                       <div className="end-days">
-                        <p className="end">end in days</p>
+                        <p className="end">{startState} in days</p>
                         <p className="end-in">{days}</p>
                       </div>
                     </div>

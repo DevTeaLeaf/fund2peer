@@ -65,13 +65,12 @@ const Launchpad = ({ t }) => {
         const verified = await item.contract.verified();
         const startFunding = await decrypt(await item.contract.startFunding());
         const endFunding = await decrypt(await item.contract.endFunding());
-        const totalRaised = await decrypt(
-          await item.contract.collectedFundTOTAL()
-        );
+        const totalRaised =
+          (await decrypt(await item.contract.collectedFundTOTAL())) / 10 ** 18;
         const preview = await item.contract.previewLink();
         const headerLink = await item.contract.headerLink();
         const investorsReward = await decrypt(
-          await item.contract.investorsReward()
+          await item.contract.rewardPercentage()
         );
         const lockupTime = await decrypt(await item.contract.minimumLock());
 
@@ -151,8 +150,14 @@ const Launchpad = ({ t }) => {
           let count = 0;
           while (true) {
             const stage = await item.contract.roadmap(count);
-            if (stage.description != "") {
-              roadmap.push(stage);
+            const decryptedStage = {
+              ableToClaim: stage.ableToClaim,
+              description: stage.description,
+              funds: await decrypt(stage.funds),
+            };
+
+            if (decryptedStage.description != "") {
+              roadmap.push(decryptedStage);
               count++;
             } else {
               break;
