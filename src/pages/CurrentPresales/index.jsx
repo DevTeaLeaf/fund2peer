@@ -1,17 +1,28 @@
 import { useState, useEffect, useRef } from "react";
-import { Header, Footer, PresaleBox, Input } from "../../components";
-import { presalesTabsData } from "../../constants";
+import { useSelector } from "react-redux";
 
-import { arrow, projectLogo } from "../../assets/img";
+import { Header, Footer, PresaleBox, Input } from "../../components";
+import { presalesTabsData, formTokens } from "../../constants";
+import { formatNumber, timeDifference } from "../../utils";
+import { arrow } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
 
 const CurrentPresales = ({ t }) => {
+  const rxProjects = useSelector((state) => state.projects);
+  console.log(rxProjects.info);
+  //tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   const tabsRef = useRef([]);
+  //logic
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInput = (itemId, value) => {
+    setInputValue(value);
+  };
 
   useEffect(() => {
     const setTabPosition = () => {
@@ -25,7 +36,20 @@ const CurrentPresales = ({ t }) => {
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
-
+  useEffect(() => {
+    console.log(inputValue);
+  }, [inputValue]);
+  useEffect(() => {
+    console.log(rxProjects.info);
+    const tokenTab = rxProjects.info
+      .map(({ info }) => info.token)
+      .filter((token, index, array) => array.indexOf(token) === index);
+    const countryTab = rxProjects.info
+      .map(({ info }) => info.country)
+      .filter((country, index, array) => array.indexOf(country) === index);
+    console.log("tok", tokenTab);
+    console.log("tok", countryTab);
+  }, [rxProjects]);
   return (
     <>
       <Header page="launchpad" />
@@ -63,7 +87,13 @@ const CurrentPresales = ({ t }) => {
               <div>
                 <div className="flex  justify-between items-end flex-wrap gap-5">
                   <div className="w-[30%] min-w-[300px]">
-                    <Input input={t("current_search")} type="text" />
+                    <Input
+                      id={Date.now()}
+                      input={t("current_search")}
+                      type="text"
+                      value={inputValue}
+                      controller={handleInput}
+                    />
                   </div>
                   <div>
                     <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
@@ -120,46 +150,53 @@ const CurrentPresales = ({ t }) => {
                   </div>
                 </div>
                 <div className="mt-[100px] flex items-center justify-center flex-wrap gap-[20px] mb-[100px]">
-                  <PresaleBox
-                    projectLogo={projectLogo}
-                    status="Verified"
-                    name="Sequoia.game"
-                    currentRaise="50.5"
-                    softCap="520,000"
-                    hardCap="800,000"
-                    lockupTime="180"
-                    reward="10"
-                  />
-                  <PresaleBox
-                    projectLogo={projectLogo}
-                    status="Verified"
-                    name="Sequoia.game"
-                    currentRaise="50.5"
-                    softCap="520,000"
-                    hardCap="800,000"
-                    lockupTime="180"
-                    reward="10"
-                  />
-                  <PresaleBox
-                    projectLogo={projectLogo}
-                    status="Verified"
-                    name="Sequoia.game"
-                    currentRaise="50.5"
-                    softCap="520,000"
-                    hardCap="800,000"
-                    lockupTime="180"
-                    reward="10"
-                  />
-                  <PresaleBox
-                    projectLogo={projectLogo}
-                    status="Verified"
-                    name="Sequoia.game"
-                    currentRaise="50.5"
-                    softCap="520,000"
-                    hardCap="800,000"
-                    lockupTime="180"
-                    reward="10"
-                  />
+                  {rxProjects.info.map((project) => {
+                    const token = formTokens.filter(
+                      (token) => token.address === project.info.token
+                    );
+                    const raise = String(
+                      (
+                        (project.info.totalRaised / project.info.softCap) *
+                        100
+                      ).toFixed()
+                    );
+                    const currentTime = Math.floor(Date.now() / 1000);
+                    let days;
+                    let startState = "Start";
+                    if (currentTime < project.info.startFunding) {
+                      const timeDiff = timeDifference(
+                        project.info.startFunding
+                      );
+                      days = timeDiff.days;
+                    }
+                    if (
+                      currentTime > project.info.startFunding &&
+                      currentTime < project.info.endFunding
+                    ) {
+                      const timeDiff = timeDifference(project.info.endFunding);
+                      days = timeDiff.days;
+                      startState = "End";
+                    }
+                    if (project.info.startFunding == 0) {
+                      days = 0;
+                    }
+                    const time = { state: startState, days: days };
+                    return (
+                      <PresaleBox
+                        key={project.address}
+                        projectLogo={token[0].img}
+                        status={project.info.verified}
+                        name={project.info.projectName}
+                        currentRaise={raise}
+                        softCap={formatNumber(project.info.softCap)}
+                        hardCap={formatNumber(project.info.hardCap)}
+                        lockupTime={project.info.lockupTime / 86400}
+                        reward={project.info.investorsReward}
+                        time={time}
+                        project={project}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             ) : (

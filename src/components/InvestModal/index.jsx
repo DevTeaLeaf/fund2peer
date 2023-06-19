@@ -93,7 +93,7 @@ const InvestModal = ({
           )}`}</p>
           <div className="w-full">
             <Input
-              id={111}
+              id={Date.now()}
               input={token}
               value={inputValue}
               type={"number"}

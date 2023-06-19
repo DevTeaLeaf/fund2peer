@@ -26,7 +26,6 @@ import {
   Facebook,
   Web,
   youtube,
-  wmatic,
 } from "../../assets/img";
 
 import { withTranslation } from "react-i18next";
@@ -487,7 +486,6 @@ const Project = ({ t }) => {
               <div>
                 {rxProject.info.investors.map(({ investor, invested }) => {
                   const Tinvested = formatNumber(Number(invested) / 10 ** 18);
-
                   return (
                     <InvestorBox
                       address={investor}

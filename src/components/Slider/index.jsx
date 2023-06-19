@@ -70,7 +70,6 @@ const Slider = ({ t }) => {
           if (currentTime < project.info.startFunding) {
             let timeDiff = timeDifference(project.info.startFunding);
             days = timeDiff.days;
-            startState = "start";
           }
           if (
             currentTime > project.info.startFunding &&

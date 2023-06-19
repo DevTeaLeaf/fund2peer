@@ -1,5 +1,7 @@
 import { withTranslation } from "react-i18next";
-
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setProjectAction } from "../../store";
 import { favorite } from "../../assets/img";
 
 const PresaleBox = ({
@@ -11,8 +13,14 @@ const PresaleBox = ({
   hardCap,
   reward,
   lockupTime,
+  time,
+  project,
   t,
 }) => {
+  const dispatch = useDispatch();
+  const setStoreProject = (project) => {
+    dispatch(setProjectAction(project));
+  };
   return (
     <div className="max-w-[348px] bg-[#13141F] rounded-[20px] border border-[#89C6B9]">
       <div className="px-[30px] pt-[20px] pb-[50px] flex  flex-col justify-between">
@@ -20,11 +28,15 @@ const PresaleBox = ({
           <img
             src={projectLogo}
             alt="projectLogo"
-            className="max-w-[100px] max-h-[100px] rounded-full"
+            className="w-[80px] h-[80px] rounded-full mr-5"
           />
           <div className="flex items-end flex-col justify-between">
-            <p className="px-[10px] py-[5px] bg-[#89C6B9] border border-[#233A37] rounded-[30px] inter-normal text-[12px] leading-[15px]">
-              {status}
+            <p
+              className={`px-[10px] py-[5px] ${
+                status ? "verified" : "not-verified"
+              } border border-[#233A37] rounded-[30px] inter-normal text-[12px] leading-[15px]`}
+            >
+              {status ? "Verified" : "Not verified"}
             </p>
             <p className="inter-600 text-[24px] leading-[29px] mt-[30px]">
               {name}
@@ -41,7 +53,10 @@ const PresaleBox = ({
         </div>
         <div className="max-w-[289px] relative">
           <div className="w-full h-3 projectLineBack"></div>
-          <div className="absolute bottom-0 w-[81%] h-3 projectLineFront"></div>
+          <div
+            className="absolute bottom-0 h-3 projectLineFront"
+            style={{ width: `${currentRaise}%` }}
+          ></div>
         </div>
         <div className="mt-[26px] flex justify-between items-center pb-5  border-b border-[#89C6B9] mb-5">
           <div>
@@ -54,10 +69,11 @@ const PresaleBox = ({
           </div>
           <div className="flex items-center gap-5 inter-normal">
             <p className="text-[24px] leading-[29px] pt-[11px] pr-[11px] pb-[10px] pl-3 bg-[#89C6B9] rounded-full">
-              10
+              {time.days}
             </p>
             <p className="text-[12px] leading-[15px]">
-              {t("end_in")} <br /> {t("days")}
+              {time.state}
+              <br /> in days
             </p>
           </div>
         </div>
@@ -74,9 +90,17 @@ const PresaleBox = ({
           </div>
         </div>
         <div className="mt-[44px] flex items-center justify-between">
-          <button className="button-transparent max-w-[186px] py-[14px] whitespace-nowrap">
-            <p className="inter-400">{t("view")}</p>
-          </button>
+          <Link to="/project">
+            {" "}
+            <button
+              onClick={() => {
+                setStoreProject(project);
+              }}
+              className="button-transparent max-w-[186px] py-[14px] whitespace-nowrap"
+            >
+              <p className="inter-400">{t("view")}</p>
+            </button>
+          </Link>
           <button className="button-transparent max-w-[52px] px-[15px] py-[15px] whitespace-nowrap">
             <img src={favorite} alt="favorite" />
           </button>
