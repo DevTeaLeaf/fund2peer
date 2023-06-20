@@ -13,7 +13,7 @@
   "launchpad_explore": "Explore",
 
   "current_presales": "Current Presales",
-  "current_search": "Enter token name or token symbol",
+  "current_search": "Enter project name or symbol",
   "current_filter": "No filter",
   "current_total": "Total Raise",
 
@@ -108,5 +108,11 @@
   "amount": "Amount",
   "collected": "Collected",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "active": "Active",
+  "waiting_launch": "Waiting for launch",
+  "canceled": "Canceled",
+  "finished": "Finished",
+  "verified": "Verified",
+  "not_verified": "Not Verified"
 }

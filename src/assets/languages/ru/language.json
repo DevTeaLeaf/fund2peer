@@ -13,7 +13,7 @@
   "launchpad_explore": "Изучить",
 
   "current_presales": "Текущие Предпродажи",
-  "current_search": "Введите имя или символ токена",
+  "current_search": "Введите название проекта или символ",
   "current_filter": "Нет фильтра",
   "current_total": "Общий рейз",
 
@@ -108,5 +108,11 @@
   "amount": "Количество",
   "collected": "Собрано",
   "yes": "Да",
-  "no": "Нет"
+  "no": "Нет",
+  "active": "Активные",
+  "waiting_launch": "Ожидание запуска",
+  "canceled": "Отменённые",
+  "finished": "Законченные",
+  "verified": "Проверенные",
+  "not_verified": "Не проверенные"
 }

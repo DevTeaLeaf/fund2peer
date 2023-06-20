@@ -34,7 +34,6 @@ const Project = ({ t }) => {
   const { address } = useAccount();
   const rxProjects = useSelector((state) => state.projects);
   const rxProject = useSelector((state) => state.project.info);
-  console.log(rxProject.info);
   // tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);

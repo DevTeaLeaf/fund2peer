@@ -49,7 +49,6 @@ const Launchpad = ({ t }) => {
   const setProjectsData = async () => {
     const pj = await Promise.all(
       projects.map(async (item) => {
-        console.log(item.contract);
         const whitepaperLink = await item.contract.whitepaperLink();
         const youtubeLink = await item.contract.youtubeVideo();
         const projectName = await item.contract.projectName();
@@ -73,6 +72,7 @@ const Launchpad = ({ t }) => {
           await item.contract.rewardPercentage()
         );
         const lockupTime = await decrypt(await item.contract.minimumLock());
+        const canceled = await item.contract.canceled();
 
         const highlights = [];
         const socialMediaNames = [];
@@ -194,6 +194,7 @@ const Launchpad = ({ t }) => {
           team: team,
           roadmap: roadmap,
           investors: investors,
+          canceled: canceled,
         };
         return { address: item.address, info: info };
       })
