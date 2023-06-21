@@ -114,5 +114,7 @@
   "canceled": "Canceled",
   "finished": "Finished",
   "verified": "Verified",
-  "not_verified": "Not Verified"
+  "not_verified": "Not Verified",
+  "enter_amount": "Enter amount",
+  "approve": "Approve"
 }

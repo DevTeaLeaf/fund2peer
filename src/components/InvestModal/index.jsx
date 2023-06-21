@@ -21,35 +21,48 @@ const InvestModal = ({
 }) => {
   const { data } = useSigner();
   const [inputValue, setInputValue] = useState("");
+  const [approved, setApproved] = useState("wait");
   const modalRef = useRef(null);
 
   const handleInput = (itemId, value) => {
     setInputValue(value);
+    allowanceController(value);
   };
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setModalActive(false);
     }
   };
-
-  const invest = async (amount) => {
-    const gasPrice = await getGasPrice(data.provider);
+  const allowanceController = async (amount) => {
     let allowance = await decrypt(
       await tokenContract.allowance(adresses.account, adresses.logic)
     );
     allowance /= 10 ** 18;
-    if (Number(allowance) < Number(amount)) {
-      const approve = await tokenContract.approve(
-        adresses.logic,
-        ethers.constants.MaxUint256,
-        {
-          gasLimit: GAS,
-          gasPrice: gasPrice,
-        }
-      );
-      await approve.wait();
+    if (amount === "" || amount <= 0) {
+      setApproved("wait");
+      return;
     }
-
+    if (Number(allowance) < Number(amount)) {
+      setApproved("approve");
+    } else if (Number(allowance) >= Number(amount)) {
+      setApproved("approved");
+    }
+  };
+  const approve = async () => {
+    const gasPrice = await getGasPrice(data.provider);
+    const approve = await tokenContract.approve(
+      adresses.logic,
+      ethers.constants.MaxUint256,
+      {
+        gasLimit: GAS,
+        gasPrice: gasPrice,
+      }
+    );
+    await approve.wait();
+    allowanceController(inputValue);
+  };
+  const invest = async (amount) => {
+    const gasPrice = await getGasPrice(data.provider);
     amount = ethers.utils.parseUnits(amount, 18);
 
     const investBytes = await bytesContract.invest(amount);
@@ -61,7 +74,8 @@ const InvestModal = ({
       gasLimit: gasLimit,
       gasPrice: gasPrice,
     });
-    console.log(transaction);
+    await transaction.wait();
+    setModalActive(false);
   };
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -100,10 +114,19 @@ const InvestModal = ({
               controller={handleInput}
             />
           </div>
-
-          <div onClick={() => invest(inputValue)} className="mt-[50px]">
-            <Button filled={false} text={t("launchpad_invest")} />
-          </div>
+          {approved === "wait" ? (
+            <p className="inter-normal text-[20px] leading-[22px] mt-[80px] pb-2 border-b-[2px] border-[#89C6B9]">
+              {t("enter_amount")}
+            </p>
+          ) : approved === "approve" ? (
+            <div onClick={approve} className="mt-[50px]">
+              <Button filled={false} text={`${t("approve")} ${token}`} />
+            </div>
+          ) : (
+            <div onClick={() => invest(inputValue)} className="mt-[50px]">
+              <Button filled={false} text={t("launchpad_invest")} />
+            </div>
+          )}
         </div>
       </div>
     </div>

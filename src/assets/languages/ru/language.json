@@ -114,5 +114,7 @@
   "canceled": "Отменённые",
   "finished": "Законченные",
   "verified": "Проверенные",
-  "not_verified": "Не проверенные"
+  "not_verified": "Не проверенные",
+  "enter_amount": "Введите сумму",
+  "approve": "Утвердите"
 }
