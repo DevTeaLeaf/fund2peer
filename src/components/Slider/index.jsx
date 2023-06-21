@@ -35,7 +35,13 @@ const Slider = ({ t }) => {
   }, [currentIndex, projects]);
 
   useEffect(() => {
-    setProjects(rxProjects.info);
+    const now = Math.floor(Date.now() / 1000);
+    const filtredProjects = rxProjects.info.filter(
+      (project) =>
+        now < project.info.startFunding ||
+        (now > project.info.startFunding && now < project.info.endFunding)
+    );
+    setProjects(filtredProjects);
   }, [rxProjects]);
   return (
     <section className="section">

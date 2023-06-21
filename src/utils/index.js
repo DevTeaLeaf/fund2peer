@@ -6,6 +6,7 @@ import formatNumber from "./functions/formatNumber";
 import timeDifference from "./functions/timeDifference";
 import copyText from "./functions/copyText";
 import getGasPrice from "./functions/getGasPrice";
+import initProjectsData from "./functions/initProjectsData";
 
 export {
   useInput,
@@ -16,4 +17,5 @@ export {
   timeDifference,
   copyText,
   getGasPrice,
+  initProjectsData,
 };

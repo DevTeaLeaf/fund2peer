@@ -319,6 +319,9 @@ Slider
   opacity: 0;
   transition: all 1s ease;
 }
+.nextSlide .end-in {
+  padding: 10px 6px;
+}
 .nextSlide .projectName {
   display: none;
 }

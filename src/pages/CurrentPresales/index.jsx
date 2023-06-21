@@ -1,28 +1,44 @@
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useSigner, useContract } from "wagmi";
+import { withTranslation } from "react-i18next";
 
 import { Header, Footer, PresaleBox, Input } from "../../components";
 import { presalesTabsData, formTokens } from "../../constants";
-import { formatNumber, timeDifference } from "../../utils";
+import { formatNumber, timeDifference, initProjectsData } from "../../utils";
+import { FilterLoader, InputLoader, PresaleLoader } from "../../loaders";
 import { arrow } from "../../assets/img";
-
-import { withTranslation } from "react-i18next";
+import { LaunchpadDriverABI } from "../../web3/abi";
+import { LAUNCHPAD_DRIVER } from "../../web3/constants";
+import { setProjectsAction } from "../../store";
 
 const CurrentPresales = ({ t }) => {
   const rxProjects = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
   const [filtredProjects, setFiltredProjects] = useState(false);
   //tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
+  //web3
+  const { data } = useSigner();
+
+  const LDContract = useContract({
+    address: LAUNCHPAD_DRIVER,
+    abi: LaunchpadDriverABI,
+    signerOrProvider: data,
+  });
   // filters
   const [tabs, setTabs] = useState(false);
   const [tabsFilters, setTabsFilters] = useState(false);
   const [activeTabs, setActiveTabs] = useState([false, false, false, false]);
-
+  const [inputValue, setInputValue] = useState("");
   const tabsRef = useRef([]);
   //logic
-  const [inputValue, setInputValue] = useState("");
+  const setProjects = async () => {
+    const projects = await initProjectsData(LDContract, data);
+    dispatch(setProjectsAction(projects));
+  };
   const applyFilters = () => {
     let projects = rxProjects.info.map((item) => item.info);
     const now = Math.floor(Date.now() / 1000);
@@ -168,19 +184,23 @@ const CurrentPresales = ({ t }) => {
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
   useEffect(() => {
-    if (!tabs) {
-      initTabs();
-    }
-  }, [rxProjects]);
-  useEffect(() => {
     if (filtredProjects) {
       applyFilters();
     }
   }, [inputValue, tabsFilters]);
   useEffect(() => {
-    let tempProjects = rxProjects.info.map((item) => item.info);
-    setFiltredProjects(tempProjects);
-  }, []);
+    if (data && !rxProjects.loaded) {
+      setProjects();
+    }
+  }, [data]);
+  useEffect(() => {
+    if (!tabs && rxProjects.loaded) {
+      const tempProjects = rxProjects.info.map((item) => item.info);
+      initTabs();
+      setFiltredProjects(tempProjects);
+    }
+  }, [rxProjects]);
+
   return (
     <>
       <Header page="launchpad" />
@@ -218,66 +238,130 @@ const CurrentPresales = ({ t }) => {
               <div>
                 <div className="flex  justify-between items-end flex-wrap gap-5">
                   <div className="w-[30%] min-w-[300px]">
-                    <Input
-                      id={222}
-                      input={t("current_search")}
-                      type="text"
-                      value={inputValue}
-                      controller={handleInput}
-                    />
+                    {rxProjects.loaded ? (
+                      <Input
+                        id={222}
+                        input={t("current_search")}
+                        type="text"
+                        value={inputValue}
+                        controller={handleInput}
+                      />
+                    ) : (
+                      <InputLoader />
+                    )}
                   </div>
-                  <div>
-                    <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
-                      {t("token")}
-                    </p>
-                    <div className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer">
-                      <div
-                        onClick={() => tabsController(0)}
-                        className="py-[10px] px-5 flex items-center"
-                      >
-                        <p className="mr-[15px] inter-400">
-                          {tabsFilters.tokenFilter &&
-                          tabsFilters.tokenFilter.name == "current_filter"
-                            ? t(tabsFilters.tokenFilter.name)
-                            : tabsFilters.tokenFilter &&
-                              tabsFilters.tokenFilter.name != "current_filter"
-                            ? tabsFilters.tokenFilter.name
-                            : null}
-                        </p>
-                        <img
-                          className={
-                            activeTabs[0]
-                              ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
-                              : "transition-[0.5s] min-w-[9px]"
-                          }
-                          src={arrow}
-                          alt="open"
-                        />
+                  {rxProjects.loaded ? (
+                    <div>
+                      <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
+                        {t("token")}
+                      </p>
+                      <div className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer">
+                        <div
+                          onClick={() => tabsController(0)}
+                          className="py-[10px] px-5 flex items-center"
+                        >
+                          <p className="mr-[15px] inter-400">
+                            {tabsFilters.tokenFilter &&
+                            tabsFilters.tokenFilter.name == "current_filter"
+                              ? t(tabsFilters.tokenFilter.name)
+                              : tabsFilters.tokenFilter &&
+                                tabsFilters.tokenFilter.name != "current_filter"
+                              ? tabsFilters.tokenFilter.name
+                              : null}
+                          </p>
+                          <img
+                            className={
+                              activeTabs[0]
+                                ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
+                                : "transition-[0.5s] min-w-[9px]"
+                            }
+                            src={arrow}
+                            alt="open"
+                          />
+                        </div>
+                        {activeTabs[0] ? (
+                          <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
+                            <div className="px-5 py-3 flex items-start flex-col gap-3">
+                              {tabs
+                                ? tabs.tokenTab.map((item, index) => {
+                                    return (
+                                      <p
+                                        onClick={() =>
+                                          filterTabController(
+                                            0,
+                                            tabs.tokenTab[index]
+                                          )
+                                        }
+                                        className={`${
+                                          item.name ==
+                                          tabsFilters.tokenFilter.name
+                                            ? "text-[#89C6B9]"
+                                            : ""
+                                        } inter-normal`}
+                                        key={index}
+                                      >
+                                        {item.name == "current_filter"
+                                          ? t(item.name)
+                                          : item.name}
+                                      </p>
+                                    );
+                                  })
+                                : null}
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
-                      {activeTabs[0] ? (
+                    </div>
+                  ) : (
+                    <FilterLoader />
+                  )}
+                  {rxProjects.loaded ? (
+                    <div>
+                      <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
+                        {t("time")}
+                      </p>
+                      <div className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer">
+                        <div
+                          onClick={() => tabsController(1)}
+                          className="py-[10px] px-5 flex items-center"
+                        >
+                          <p className="mr-[15px] inter-400">
+                            {tabsFilters.timeFilter
+                              ? t(tabsFilters.timeFilter)
+                              : null}
+                          </p>
+                          <img
+                            className={
+                              activeTabs[1]
+                                ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
+                                : "transition-[0.5s] min-w-[9px]"
+                            }
+                            src={arrow}
+                            alt="open"
+                          />
+                        </div>
+                      </div>
+                      {activeTabs[1] ? (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
                             {tabs
-                              ? tabs.tokenTab.map((item, index) => {
+                              ? tabs.timeTab.map((item, index) => {
                                   return (
                                     <p
                                       onClick={() =>
                                         filterTabController(
-                                          0,
-                                          tabs.tokenTab[index]
+                                          1,
+                                          tabs.timeTab[index]
                                         )
                                       }
                                       className={`${
-                                        item.name ==
-                                        tabsFilters.tokenFilter.name
+                                        item == tabsFilters.timeFilter
                                           ? "text-[#89C6B9]"
                                           : ""
                                       } inter-normal`}
                                       key={index}
                                     >
-                                      {item.name == "current_filter"
-                                        ? t(item.name)
-                                        : item.name}
+                                      {t(item)}
                                     </p>
                                   );
                                 })
@@ -286,222 +370,186 @@ const CurrentPresales = ({ t }) => {
                         </div>
                       ) : null}
                     </div>
-                  </div>
-                  <div>
-                    <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
-                      {t("time")}
-                    </p>
-                    <div className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer">
+                  ) : (
+                    <FilterLoader />
+                  )}
+                  {rxProjects.loaded ? (
+                    <div>
+                      <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
+                        {t("country")}
+                      </p>
                       <div
-                        onClick={() => tabsController(1)}
-                        className="py-[10px] px-5 flex items-center"
+                        onClick={() => tabsController(2)}
+                        className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer"
                       >
-                        <p className="mr-[15px] inter-400">
-                          {tabsFilters.timeFilter
-                            ? t(tabsFilters.timeFilter)
-                            : null}
-                        </p>
-                        <img
-                          className={
-                            activeTabs[1]
-                              ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
-                              : "transition-[0.5s] min-w-[9px]"
-                          }
-                          src={arrow}
-                          alt="open"
-                        />
-                      </div>
-                    </div>
-                    {activeTabs[1] ? (
-                      <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
-                        <div className="px-5 py-3 flex items-start flex-col gap-3">
-                          {tabs
-                            ? tabs.timeTab.map((item, index) => {
-                                return (
-                                  <p
-                                    onClick={() =>
-                                      filterTabController(
-                                        1,
-                                        tabs.timeTab[index]
-                                      )
-                                    }
-                                    className={`${
-                                      item == tabsFilters.timeFilter
-                                        ? "text-[#89C6B9]"
-                                        : ""
-                                    } inter-normal`}
-                                    key={index}
-                                  >
-                                    {t(item)}
-                                  </p>
-                                );
-                              })
-                            : null}
+                        <div className="py-[10px] px-5 flex items-center">
+                          <p className="mr-[15px] inter-400">
+                            {tabsFilters.countryFilter &&
+                            tabsFilters.countryFilter == "current_filter"
+                              ? t(tabsFilters.countryFilter)
+                              : tabsFilters.countryFilter &&
+                                tabsFilters.countryFilter != "current_filter"
+                              ? tabsFilters.countryFilter
+                              : null}
+                          </p>
+                          <img
+                            className={
+                              activeTabs[2]
+                                ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
+                                : "transition-[0.5s] min-w-[9px]"
+                            }
+                            src={arrow}
+                            alt="open"
+                          />
                         </div>
                       </div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
-                      {t("country")}
-                    </p>
-                    <div
-                      onClick={() => tabsController(2)}
-                      className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer"
-                    >
-                      <div className="py-[10px] px-5 flex items-center">
-                        <p className="mr-[15px] inter-400">
-                          {tabsFilters.countryFilter &&
-                          tabsFilters.countryFilter == "current_filter"
-                            ? t(tabsFilters.countryFilter)
-                            : tabsFilters.countryFilter &&
-                              tabsFilters.countryFilter != "current_filter"
-                            ? tabsFilters.countryFilter
-                            : null}
-                        </p>
-                        <img
-                          className={
-                            activeTabs[2]
-                              ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
-                              : "transition-[0.5s] min-w-[9px]"
-                          }
-                          src={arrow}
-                          alt="open"
-                        />
-                      </div>
+                      {activeTabs[2] ? (
+                        <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
+                          <div className="px-5 py-3 flex items-start flex-col gap-3">
+                            {tabs
+                              ? tabs.countryTab.map((item, index) => {
+                                  return (
+                                    <p
+                                      onClick={() =>
+                                        filterTabController(
+                                          2,
+                                          tabs.countryTab[index]
+                                        )
+                                      }
+                                      className={`${
+                                        item == tabsFilters.countryFilter
+                                          ? "text-[#89C6B9]"
+                                          : ""
+                                      } inter-normal`}
+                                      key={index}
+                                    >
+                                      {item == "current_filter"
+                                        ? t(item)
+                                        : item}
+                                    </p>
+                                  );
+                                })
+                              : null}
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
-                    {activeTabs[2] ? (
-                      <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
-                        <div className="px-5 py-3 flex items-start flex-col gap-3">
-                          {tabs
-                            ? tabs.countryTab.map((item, index) => {
-                                return (
-                                  <p
-                                    onClick={() =>
-                                      filterTabController(
-                                        2,
-                                        tabs.countryTab[index]
-                                      )
-                                    }
-                                    className={`${
-                                      item == tabsFilters.countryFilter
-                                        ? "text-[#89C6B9]"
-                                        : ""
-                                    } inter-normal`}
-                                    key={index}
-                                  >
-                                    {item == "current_filter" ? t(item) : item}
-                                  </p>
-                                );
-                              })
-                            : null}
+                  ) : (
+                    <FilterLoader />
+                  )}
+                  {rxProjects.loaded ? (
+                    <div>
+                      <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
+                        {t("state")}
+                      </p>
+                      <div
+                        onClick={() => tabsController(3)}
+                        className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer"
+                      >
+                        <div className="py-[10px] px-5 flex items-center">
+                          <p className="mr-[15px] inter-400">
+                            {tabsFilters.verifiedFilter
+                              ? t(tabsFilters.verifiedFilter)
+                              : null}
+                          </p>
+                          <img
+                            className={
+                              activeTabs[3]
+                                ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
+                                : "transition-[0.5s] min-w-[9px]"
+                            }
+                            src={arrow}
+                            alt="open"
+                          />
                         </div>
                       </div>
-                    ) : null}
-                  </div>
-                  <div className="relative">
-                    <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
-                      {t("state")}
-                    </p>
-                    <div
-                      onClick={() => tabsController(3)}
-                      className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer"
-                    >
-                      <div className="py-[10px] px-5 flex items-center">
-                        <p className="mr-[15px] inter-400">
-                          {tabsFilters.verifiedFilter
-                            ? t(tabsFilters.verifiedFilter)
-                            : null}
-                        </p>
-                        <img
-                          className={
-                            activeTabs[3]
-                              ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
-                              : "transition-[0.5s] min-w-[9px]"
-                          }
-                          src={arrow}
-                          alt="open"
-                        />
-                      </div>
-                    </div>
-                    {activeTabs[3] ? (
-                      <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
-                        <div className="px-5 py-3 flex items-start flex-col gap-3">
-                          {tabs
-                            ? tabs.verifiedTab.map((item, index) => {
-                                return (
-                                  <p
-                                    onClick={() =>
-                                      filterTabController(
-                                        3,
-                                        tabs.verifiedTab[index]
-                                      )
-                                    }
-                                    className={`${
-                                      item == tabsFilters.verifiedFilter
-                                        ? "text-[#89C6B9]"
-                                        : ""
-                                    } inter-normal`}
-                                    key={index}
-                                  >
-                                    {t(item)}
-                                  </p>
-                                );
-                              })
-                            : null}
+                      {activeTabs[3] ? (
+                        <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
+                          <div className="px-5 py-3 flex items-start flex-col gap-3">
+                            {tabs
+                              ? tabs.verifiedTab.map((item, index) => {
+                                  return (
+                                    <p
+                                      onClick={() =>
+                                        filterTabController(
+                                          3,
+                                          tabs.verifiedTab[index]
+                                        )
+                                      }
+                                      className={`${
+                                        item == tabsFilters.verifiedFilter
+                                          ? "text-[#89C6B9]"
+                                          : ""
+                                      } inter-normal`}
+                                      key={index}
+                                    >
+                                      {t(item)}
+                                    </p>
+                                  );
+                                })
+                              : null}
+                          </div>
                         </div>
-                      </div>
-                    ) : null}
-                  </div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <FilterLoader />
+                  )}
                 </div>
                 <div className="mt-[100px] flex items-center justify-center flex-wrap gap-[20px] mb-[100px]">
-                  {filtredProjects
-                    ? filtredProjects.map((project, index) => {
-                        const token = formTokens.filter(
-                          (token) => token.address === project.token
-                        );
-                        const raise = String(
-                          (
-                            (project.totalRaised / project.softCap) *
-                            100
-                          ).toFixed()
-                        );
-                        const currentTime = Math.floor(Date.now() / 1000);
-                        let days;
-                        let startState = "Start";
-                        if (currentTime < project.startFunding) {
-                          const timeDiff = timeDifference(project.startFunding);
-                          days = timeDiff.days;
-                        }
-                        if (
-                          currentTime > project.startFunding &&
-                          currentTime < project.endFunding
-                        ) {
-                          const timeDiff = timeDifference(project.endFunding);
-                          days = timeDiff.days;
-                          startState = "End";
-                        }
-                        if (project.startFunding == 0) {
-                          days = 0;
-                        }
-                        const time = { state: startState, days: days };
-                        return (
-                          <PresaleBox
-                            key={project.address}
-                            projectLogo={token[0]?.img}
-                            status={project.verified}
-                            name={project.projectName}
-                            currentRaise={raise}
-                            softCap={formatNumber(project.softCap)}
-                            hardCap={formatNumber(project.hardCap)}
-                            lockupTime={project.lockupTime / 86400}
-                            reward={project.investorsReward}
-                            time={time}
-                            project={rxProjects.info[index]}
-                          />
-                        );
-                      })
-                    : null}
+                  {filtredProjects ? (
+                    filtredProjects.map((project, index) => {
+                      const token = formTokens.filter(
+                        (token) => token.address === project.token
+                      );
+                      const raise = String(
+                        (
+                          (project.totalRaised / project.softCap) *
+                          100
+                        ).toFixed()
+                      );
+                      const currentTime = Math.floor(Date.now() / 1000);
+                      let days;
+                      let startState = "Start";
+                      if (currentTime < project.startFunding) {
+                        const timeDiff = timeDifference(project.startFunding);
+                        days = timeDiff.days;
+                      }
+                      if (
+                        currentTime > project.startFunding &&
+                        currentTime < project.endFunding
+                      ) {
+                        const timeDiff = timeDifference(project.endFunding);
+                        days = timeDiff.days;
+                        startState = "End";
+                      }
+                      if (project.startFunding == 0) {
+                        days = 0;
+                      }
+                      const time = { state: startState, days: days };
+                      return (
+                        <PresaleBox
+                          key={index}
+                          projectLogo={token[0]?.img}
+                          status={project.verified}
+                          name={project.projectName}
+                          currentRaise={raise}
+                          softCap={formatNumber(project.softCap)}
+                          hardCap={formatNumber(project.hardCap)}
+                          lockupTime={project.lockupTime / 86400}
+                          reward={project.investorsReward}
+                          time={time}
+                          project={rxProjects.info[index]}
+                        />
+                      );
+                    })
+                  ) : (
+                    <div className="flex justify-center md:justify-between items-center gap-10 flex-wrap">
+                      <PresaleLoader />
+                      <PresaleLoader />
+                      <PresaleLoader />
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

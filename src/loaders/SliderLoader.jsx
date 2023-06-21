@@ -3,7 +3,7 @@ import ContentLoader from "react-content-loader";
 
 const SliderLoader = (props) => (
   <ContentLoader
-    speed={3}
+    speed={2}
     width={800}
     height={600}
     viewBox="0 0 800 600"
