@@ -116,5 +116,10 @@
   "verified": "Verified",
   "not_verified": "Not Verified",
   "enter_amount": "Enter amount",
-  "approve": "Approve"
+  "approve": "Approve",
+  "next_stage": "Next stage",
+  "get_funds": "Get collected funds",
+  "distribute_profit": "Distribute profit",
+  "claim": "Claim",
+  "refund": "Refund"
 }

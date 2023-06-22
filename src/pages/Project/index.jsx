@@ -6,9 +6,14 @@ import { useSelector } from "react-redux";
 
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
-import { formatNumber, timeDifference, copyText } from "../../utils";
-import { TokenABI, DataToBytesABI, LaunchProjectInfoABI } from "../../web3/abi";
-import { DATA_TO_BYTES } from "../../web3/constants";
+import { formatNumber, timeDifference, copyText, getLimit } from "../../utils";
+import {
+  TokenABI,
+  DataToBytesABI,
+  LaunchProjectInfoABI,
+  LaunchpadLogicABI,
+} from "../../web3/abi";
+import { DATA_TO_BYTES, GAS } from "../../web3/constants";
 import {
   slider,
   Twitter,
@@ -45,8 +50,10 @@ const Project = ({ t }) => {
   const [projectState, setProjectState] = useState(false);
   const [topInvestors, setTopInvestors] = useState([]);
   const [projectLoaded, setProjectLoaded] = useState(false);
+  const [claimState, setClaimState] = useState(false);
 
   // web3
+  const [owner, setOwner] = useState(false);
   const TContract = useContract({
     address: rxProject?.info.token,
     abi: TokenABI,
@@ -62,6 +69,11 @@ const Project = ({ t }) => {
     abi: LaunchProjectInfoABI,
     signerOrProvider: data,
   });
+  const LContract = useContract({
+    address: rxProject?.address,
+    abi: LaunchpadLogicABI,
+    signerOrProvider: data,
+  });
   const [raised, setRaised] = useState(0);
   const [lockupTime, setLockupTime] = useState(0);
   const [adresses, setAdresses] = useState({});
@@ -74,6 +86,23 @@ const Project = ({ t }) => {
     state: "end",
   });
   //functions
+  const fundsController = async (state) => {
+    let bytes;
+    if (state === "claim") {
+      bytes = await DTBContract.claim();
+    }
+    if (state === "refund") {
+      bytes = await DTBContract.refund();
+    }
+
+    const gasLimit = await getLimit(
+      await LPIContract.estimateGas.callFunctions([bytes])
+    );
+    const transaction = await LPIContract.callFunctions([bytes], {
+      gasLimit: gasLimit,
+    });
+    await transaction.wait();
+  };
   const timeController = () => {
     const currentTime = Math.floor(Date.now() / 1000);
 
@@ -95,6 +124,46 @@ const Project = ({ t }) => {
     );
     setTopInvestors(sortedInvestors.slice(0, 4));
   };
+  const ownerButtonsController = async (button = false) => {
+    const owner = await LContract.projectOwner();
+    setOwner(owner);
+    switch (button) {
+      case "nextStage":
+        const nextStageBytes = await DTBContract.nextStage();
+        const nextStage = await LPIContract.callFunctions([nextStageBytes], {
+          gasLimit: GAS,
+        });
+        console.log(nextStage);
+        await nextStage.wait();
+        break;
+      case "getCollectedFunds":
+        const getCollectedFundsBytes = await DTBContract.getCollectedFunds();
+
+        const getCollectedFunds = await LPIContract.callFunctions(
+          [getCollectedFundsBytes],
+          {
+            gasLimit: GAS,
+          }
+        );
+        console.log(getCollectedFunds);
+        await getCollectedFunds.wait();
+        break;
+      case "distributeProfit":
+        const distributeProfitBytes = await DTBContract.distributeProfit();
+
+        const distributeProfit = await LPIContract.callFunctions(
+          [distributeProfitBytes],
+          {
+            gasLimit: GAS,
+          }
+        );
+        console.log(distributeProfit);
+        await distributeProfit.wait();
+        break;
+      default:
+        break;
+    }
+  };
   useEffect(() => {
     const setTabPosition = () => {
       const currentTab = tabsRef.current[activeTabIndex];
@@ -115,6 +184,9 @@ const Project = ({ t }) => {
         now < rxProject.info.endFunding
       ) {
         setProjectState(true);
+      }
+      if (now > rxProject.info.endFunding && !rxProject.info.canceled) {
+        setClaimState(true);
       }
       const tempCategory = formCategories.filter(
         (item) => item.value === rxProject.info.category
@@ -143,6 +215,9 @@ const Project = ({ t }) => {
       navigate("/launchpad");
     }
   }, [rxProject]);
+  useEffect(() => {
+    ownerButtonsController();
+  }, [data]);
   return (
     <>
       <Header page="launchpad" />
@@ -154,9 +229,29 @@ const Project = ({ t }) => {
             <HeaderLoader />
           )}
           <div className="xl:px-[30px] lg:px-[30px] px-[15px] relative pt-[25px] md:pt-[70px] text-[#fff]">
-            <p className="inter-bold  text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow mb-[50px]">
-              {rxProject.info.projectName}
-            </p>
+            <div className="flex  flex-wrap md:justify-between justify-center ">
+              {" "}
+              <p className="inter-bold  text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow md:mb-[50px]">
+                {rxProject.info.projectName}
+              </p>
+              {owner === address ? (
+                <div className="flex justify-center md:justify-between flex-wrap gap-5 my-5 xl:my-0">
+                  <div onClick={() => ownerButtonsController("nextStage")}>
+                    <Button filled={false} text={t("next_stage")} />
+                  </div>
+                  <div
+                    onClick={() => ownerButtonsController("getCollectedFunds")}
+                  >
+                    <Button filled={false} text={t("get_funds")} />
+                  </div>
+                  <div
+                    onClick={() => ownerButtonsController("distributeProfit")}
+                  >
+                    <Button filled={false} text={t("distribute_profit")} />
+                  </div>
+                </div>
+              ) : null}
+            </div>
             <div className="flex items-start justify-between mb-[70px] flex-wrap">
               <div className="flex flex-wrap justify-center gap-5">
                 <div className=" relative mr-0 md:mr-[50px]">
@@ -210,13 +305,24 @@ const Project = ({ t }) => {
                         <p className="inter-400">{t("white_paper")}</p>
                       </button>
                     </a>
-                    <div onClick={() => setInvestModalActive(projectState)}>
-                      <Button
-                        filled={true}
-                        text={t("launchpad_invest")}
-                        active={projectState}
-                      />
-                    </div>
+
+                    {rxProject.info.canceled ? (
+                      <div onClick={() => fundsController("refund")}>
+                        <Button filled={true} text={t("refund")} />
+                      </div>
+                    ) : claimState ? (
+                      <div onClick={() => fundsController("claim")}>
+                        <Button filled={true} text={t("claim")} />
+                      </div>
+                    ) : (
+                      <div onClick={() => setInvestModalActive(projectState)}>
+                        <Button
+                          filled={true}
+                          text={t("launchpad_invest")}
+                          active={projectState}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
