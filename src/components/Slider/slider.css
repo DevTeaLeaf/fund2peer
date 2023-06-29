@@ -1,0 +1,465 @@
+.section {
+  width: 100vw;
+  /*margin: 5rem auto;*/
+  max-width: 1440px;
+}
+
+/*@media screen and (min-width: 992px) {
+  .section {
+    width: 95vw;
+  }
+}*/
+/*
+=============== 
+Slider
+===============
+*/
+
+.section-center {
+  margin-top: 4rem;
+  width: 80vw;
+  height: 600px;
+  max-width: 800px;
+  text-align: center;
+  position: relative;
+  display: flex;
+}
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  transition: all 1s ease;
+  height: 494.34px;
+  display: flex;
+}
+.activeSlide {
+  opacity: 1;
+  transition: all 1s ease;
+  transform: translateX(0);
+}
+.lastSlide {
+  height: 311px;
+  opacity: 0.3;
+  transition: all 1s ease;
+  transform: translate(-35%, 50%);
+}
+.lastSlide .project-img {
+  width: 219px;
+  height: 311px;
+}
+.lastSlide .info {
+  left: 4px;
+  right: 0;
+  bottom: 25px;
+}
+.lastSlide .main-div {
+  width: 182px;
+  height: 34px;
+  margin-top: 10px;
+  left: 14px;
+}
+.lastSlide .main-1 {
+  width: 182px;
+  height: 34px;
+}
+
+.lastSlide .main-2 {
+  max-width: 182px;
+  height: 34px;
+  width: 65%;
+}
+.lastSlide .status {
+  left: 6.61px;
+  top: 10px;
+  cursor: auto;
+}
+.lastSlide .main-3 {
+  padding-top: 10px;
+  padding-left: 9px;
+  font-size: 10px;
+  line-height: 12px;
+  justify-content: left;
+}
+.lastSlide .main-3 p:last-child {
+  margin-left: 15px;
+}
+.lastSlide .minProjectName {
+  padding: 2.4px 5px;
+  width: 98px;
+
+  height: 21px;
+  margin-right: 10px;
+}
+.nextSlide {
+  height: 311px;
+  opacity: 0.1;
+  transition: all 1s ease;
+}
+.nextSlide :last-child {
+  animation-name: delete;
+  animation-duration: 2s;
+}
+.nextSlide .project-img {
+  width: 219px;
+  height: 311px;
+}
+.nextSlide .info {
+  left: 4px;
+  right: 0;
+  bottom: 25px;
+}
+.nextSlide .main-div {
+  width: 182px;
+  height: 34px;
+  margin-top: 10px;
+  left: 14px;
+}
+.nextSlide .main-1 {
+  width: 182px;
+  height: 34px;
+}
+
+.nextSlide .main-2 {
+  max-width: 182px;
+  height: 34px;
+  width: 65%;
+}
+.nextSlide .status {
+  left: 6.61px;
+  top: 10px;
+  cursor: auto;
+}
+.nextSlide .main-3 {
+  padding-top: 10px;
+  padding-left: 9px;
+  font-size: 10px;
+  line-height: 12px;
+  justify-content: left;
+}
+.nextSlide .main-3 p:last-child {
+  margin-left: 15px;
+}
+.nextSlide .minProjectName {
+  padding: 2.4px 5px;
+  width: 98px;
+
+  height: 21px;
+  margin-right: 10px;
+}
+
+.projectName {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  text-align: start;
+}
+.left-part {
+  width: 50%;
+}
+.right-part {
+  width: 50%;
+  transition: all 1s ease;
+}
+.left-part-div {
+  position: relative;
+  max-width: 349px;
+}
+.verified {
+  background: #89c6b9;
+}
+.not-verified {
+  background: #db9657;
+}
+.status {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  position: absolute;
+  left: 28.61px;
+  top: 16px;
+  padding: 8.4px 19.33px;
+  border: 1px solid #233a37;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.minProjectName {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+
+  color: #233a37;
+  padding: 8.69px 33.89px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+
+  border-radius: 5px;
+  width: 155.77px;
+
+  height: 33.38px;
+  margin-right: 30px;
+}
+.end {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  width: 43px;
+  margin-right: 10px;
+}
+.end-in {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+
+  padding: 11px 12px;
+  color: #ffffff;
+  background: #89c6b9;
+  border-radius: 10000px;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.end-days {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-div {
+  margin-top: 23.57px;
+  position: relative;
+}
+.main-1 {
+  width: 289.29px;
+  height: 54.04px;
+  background: rgba(217, 217, 217, 0.2);
+  box-shadow: inset 4px 0px 4px rgba(255, 255, 255, 0.25),
+    inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  position: absolute;
+}
+.main-2 {
+  max-width: 289.29px;
+  height: 54.04px;
+  background: #89c6b9;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  position: absolute;
+}
+.main-3 {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  padding-top: 16.17px;
+  padding-left: 13.92px;
+  padding-right: 13.92px;
+}
+.quote {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #ffffff;
+  max-width: 254px;
+  max-height: 265px;
+  margin-top: 46px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  margin-bottom: 33px;
+  animation-name: appearance;
+  animation-duration: 2s;
+}
+
+.arrows {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 40px;
+  animation-name: appearance;
+  animation-duration: 2s;
+}
+.ani-but {
+  animation-name: appearance;
+  animation-duration: 2s;
+}
+.left-arrow {
+  cursor: pointer;
+  margin-right: 15px;
+  background: rgba(217, 217, 217, 0.2);
+  padding: 11px 15.5px 11px 15px;
+  border-radius: 100%;
+}
+.right-arrow {
+  cursor: pointer;
+  transform: rotate(180deg);
+  background: rgba(217, 217, 217, 0.2);
+  padding: 11px 15.5px 11px 15px;
+  border-radius: 100%;
+}
+.nextSlide .right-part {
+  display: none;
+  opacity: 0;
+  transition: all 1s ease;
+}
+.nextSlide .end-in {
+  padding: 10px 6px;
+}
+.nextSlide .projectName {
+  display: none;
+}
+.lastSlide .right-part {
+  display: none;
+  opacity: 0;
+  transition: all 1s ease;
+}
+.lastSlide .projectName {
+  display: none;
+  opacity: 0;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.projectLeft {
+  left: 31.1px !important;
+}
+@media screen and (max-width: 1024px) {
+  .left-part {
+    width: 75%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .activeSlide.slide {
+    display: flex;
+    flex-direction: column;
+  }
+  .left-part {
+    width: 100%;
+  }
+  .right-part {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+  }
+  .section-center {
+    height: 1110px;
+  }
+  .arrows {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .section-center {
+    height: 1000px;
+  }
+  .minProjectName {
+    width: 105px;
+    margin-right: 20px;
+    font-size: 9px;
+    line-height: 11px;
+    padding: 5.59px 22.3px;
+    height: 22.18px;
+  }
+  .end {
+    font-size: 9px;
+    line-height: 11px;
+    width: 29px;
+    margin-right: 6.75px;
+  }
+  .end-in {
+    width: 33px;
+    height: 33px;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 9.24px 7.73px 7.55px 7.81px;
+  }
+  .left-part-div {
+    max-width: 235px;
+  }
+  .status {
+    padding: 5.09px 9.48px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+  .main-1 {
+    width: 195.36px;
+    height: 36.96px;
+  }
+  .main-2 {
+    max-width: 195.36px;
+    height: 36.96px;
+  }
+  .main-3 {
+    font-size: 10px;
+    line-height: 12px;
+  }
+  .info {
+    right: 20.87px !important;
+    bottom: 25.31px !important;
+  }
+  .activeSlide {
+    top: 70px;
+    left: 40px;
+  }
+  .lastSlide {
+    opacity: 0;
+  }
+  .section-center {
+    margin-top: -8rem;
+  }
+  .arrows {
+    margin-left: 75px;
+  }
+  .right-part {
+    align-items: start;
+  }
+  .projectLeft {
+    left: 53px !important;
+  }
+}
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes delete {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
