@@ -50,7 +50,10 @@
   "country": "Country",
   "time": "Time",
   "state": "State",
+<<<<<<< HEAD
   "industry":"Industry",
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
   "soft_cap": "Soft Cap",
   "hard_cap": "Hard Cap",
   "end_in": "End in",

@@ -4,7 +4,11 @@ import { useSigner, useContract } from "wagmi";
 import { withTranslation } from "react-i18next";
 
 import { Header, Footer, PresaleBox, Input } from "../../components";
+<<<<<<< HEAD
 import { presalesTabsData, formTokens, formInputs } from "../../constants";
+=======
+import { presalesTabsData, formTokens } from "../../constants";
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
 import { formatNumber, timeDifference, initProjectsData } from "../../utils";
 import { FilterLoader, InputLoader, PresaleLoader } from "../../loaders";
 import { arrow } from "../../assets/img";
@@ -88,11 +92,15 @@ const CurrentPresales = ({ t }) => {
           (project) => project.country === tabsFilters.countryFilter
         );
       }
+<<<<<<< HEAD
       if (tabsFilters.industryFilter.name != "current_filter") {
         projects = projects.filter(
           (project) => project.category === tabsFilters.industryFilter.value
         );
       }
+=======
+
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
       setFiltredProjects(projects);
     }
   };
@@ -101,9 +109,15 @@ const CurrentPresales = ({ t }) => {
   };
   const tabsController = (tabIndex) => {
     if (activeTabs[tabIndex]) {
+<<<<<<< HEAD
       setActiveTabs([false, false, false, false, false]);
     } else {
       let tempTabs = [false, false, false, false, false];
+=======
+      setActiveTabs([false, false, false, false]);
+    } else {
+      let tempTabs = [false, false, false, false];
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
       tempTabs[tabIndex] = true;
       setActiveTabs(tempTabs);
     }
@@ -134,12 +148,15 @@ const CurrentPresales = ({ t }) => {
           verifiedFilter: filter,
         });
         break;
+<<<<<<< HEAD
       case 4:
         setTabsFilters({
           ...tabsFilters,
           industryFilter: filter,
         });
         break;
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
       default:
         break;
     }
@@ -157,6 +174,7 @@ const CurrentPresales = ({ t }) => {
       .map(({ info }) => info.country)
       .filter((country, index, array) => array.indexOf(country) === index);
 
+<<<<<<< HEAD
     const industries = rxProjects.info.map(({ info }) => info.category);
 
     const industiresData = [];
@@ -174,6 +192,8 @@ const CurrentPresales = ({ t }) => {
       }
     });
 
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
     const tokenTab = [{ name: "current_filter" }, ...filtredTokens];
     const countryTab = ["current_filter", ...countries];
     const verifiedTab = ["current_filter", "verified", "not_verified"];
@@ -184,15 +204,21 @@ const CurrentPresales = ({ t }) => {
       "canceled",
       "finished",
     ];
+<<<<<<< HEAD
 
     const industryTab = [{ name: "current_filter" }, ...industiresData];
     console.log(industryTab);
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
     const tabs = {
       tokenTab: tokenTab,
       countryTab: countryTab,
       verifiedTab: verifiedTab,
       timeTab: timeTab,
+<<<<<<< HEAD
       industryTab: industryTab,
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
     };
     setTabs(tabs);
     setTabsFilters({
@@ -200,7 +226,10 @@ const CurrentPresales = ({ t }) => {
       countryFilter: countryTab[0],
       verifiedFilter: verifiedTab[0],
       timeFilter: timeTab[0],
+<<<<<<< HEAD
       industryFilter: industryTab[0],
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
     });
   };
   useEffect(() => {
@@ -527,6 +556,7 @@ const CurrentPresales = ({ t }) => {
                   ) : (
                     <FilterLoader />
                   )}
+<<<<<<< HEAD
                   {rxProjects.loaded ? (
                     <div>
                       <p className="inter-100 text-[14px] leading-[17px] ml-5 mb-[10px]">
@@ -585,6 +615,8 @@ const CurrentPresales = ({ t }) => {
                   ) : (
                     <FilterLoader />
                   )}
+=======
+>>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                 </div>
                 <div className="mt-[100px] flex items-center justify-center flex-wrap gap-[20px] mb-[100px]">
                   {filtredProjects ? (
