@@ -4,7 +4,7 @@ import { useSigner, useContract } from "wagmi";
 import { withTranslation } from "react-i18next";
 
 import { Header, Footer, PresaleBox, Input } from "../../components";
-import { presalesTabsData, formTokens } from "../../constants";
+import { presalesTabsData, formTokens, formInputs } from "../../constants";
 import { formatNumber, timeDifference, initProjectsData } from "../../utils";
 import { FilterLoader, InputLoader, PresaleLoader } from "../../loaders";
 import { arrow } from "../../assets/img";
@@ -88,7 +88,11 @@ const CurrentPresales = ({ t }) => {
           (project) => project.country === tabsFilters.countryFilter
         );
       }
-
+      if (tabsFilters.industryFilter.name != "current_filter") {
+        projects = projects.filter(
+          (project) => project.category === tabsFilters.industryFilter.value
+        );
+      }
       setFiltredProjects(projects);
     }
   };
@@ -97,9 +101,9 @@ const CurrentPresales = ({ t }) => {
   };
   const tabsController = (tabIndex) => {
     if (activeTabs[tabIndex]) {
-      setActiveTabs([false, false, false, false]);
+      setActiveTabs([false, false, false, false, false]);
     } else {
-      let tempTabs = [false, false, false, false];
+      let tempTabs = [false, false, false, false, false];
       tempTabs[tabIndex] = true;
       setActiveTabs(tempTabs);
     }
@@ -130,6 +134,12 @@ const CurrentPresales = ({ t }) => {
           verifiedFilter: filter,
         });
         break;
+      case 4:
+        setTabsFilters({
+          ...tabsFilters,
+          industryFilter: filter,
+        });
+        break;
       default:
         break;
     }
@@ -146,11 +156,23 @@ const CurrentPresales = ({ t }) => {
     const countries = rxProjects.info
       .map(({ info }) => info.country)
       .filter((country, index, array) => array.indexOf(country) === index);
-      
 
-    const industries=rxProjects.info
-    .map(({ info }) => info.category);
-    console.log(industries)
+    const industries = rxProjects.info.map(({ info }) => info.category);
+
+    const industiresData = [];
+
+    industries.forEach((index) => {
+      const { value, name } = formInputs.page1[1][index];
+      const element = { value, name };
+
+      if (
+        !industiresData.some(
+          (item) => item.value === element.value && item.name === element.name
+        )
+      ) {
+        industiresData.push(element);
+      }
+    });
 
     const tokenTab = [{ name: "current_filter" }, ...filtredTokens];
     const countryTab = ["current_filter", ...countries];
@@ -162,13 +184,15 @@ const CurrentPresales = ({ t }) => {
       "canceled",
       "finished",
     ];
-    const industryTab = []
+
+    const industryTab = [{ name: "current_filter" }, ...industiresData];
+    console.log(industryTab);
     const tabs = {
       tokenTab: tokenTab,
       countryTab: countryTab,
       verifiedTab: verifiedTab,
       timeTab: timeTab,
-      industryTab:industryTab
+      industryTab: industryTab,
     };
     setTabs(tabs);
     setTabsFilters({
@@ -176,7 +200,7 @@ const CurrentPresales = ({ t }) => {
       countryFilter: countryTab[0],
       verifiedFilter: verifiedTab[0],
       timeFilter: timeTab[0],
-      industryFilter:industryTab[0]
+      industryFilter: industryTab[0],
     });
   };
   useEffect(() => {
@@ -509,18 +533,18 @@ const CurrentPresales = ({ t }) => {
                         {t("industry")}
                       </p>
                       <div
-                        onClick={() => tabsController(3)}
+                        onClick={() => tabsController(4)}
                         className="rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer"
                       >
                         <div className="py-[10px] px-5 flex items-center">
                           <p className="mr-[15px] inter-400">
-                            {tabsFilters.verifiedFilter
-                              ? t(tabsFilters.verifiedFilter)
+                            {tabsFilters.industryFilter.name
+                              ? t(tabsFilters.industryFilter.name)
                               : null}
                           </p>
                           <img
                             className={
-                              activeTabs[3]
+                              activeTabs[4]
                                 ? "rotate-[180deg] transition-[0.5s] min-w-[9px]"
                                 : "transition-[0.5s] min-w-[9px]"
                             }
@@ -529,27 +553,27 @@ const CurrentPresales = ({ t }) => {
                           />
                         </div>
                       </div>
-                      {activeTabs[3] ? (
+                      {activeTabs[4] ? (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
                             {tabs
-                              ? tabs.verifiedTab.map((item, index) => {
+                              ? tabs.industryTab.map((item, index) => {
                                   return (
                                     <p
                                       onClick={() =>
                                         filterTabController(
-                                          3,
-                                          tabs.verifiedTab[index]
+                                          4,
+                                          tabs.industryTab[index]
                                         )
                                       }
                                       className={`${
-                                        item == tabsFilters.verifiedFilter
+                                        item == tabsFilters.industryFilter
                                           ? "text-[#89C6B9]"
                                           : ""
                                       } inter-normal`}
                                       key={index}
                                     >
-                                      {t(item)}
+                                      {t(item.name)}
                                     </p>
                                   );
                                 })
