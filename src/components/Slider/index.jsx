@@ -143,21 +143,16 @@ const Slider = ({ t }) => {
               <div className="right-part">
                 <p className="quote">{project.info.shortDesc}</p>
                 <div className="flex items-start flex-col ani-but">
-<<<<<<< HEAD
-                  <div  onClick={() => {
+                  <div
+                    onClick={() => {
                       setStoreProject(project);
-                    }} className="mb-5">
+                    }}
+                    className="mb-5"
+                  >
                     <Button
                       filled={false}
                       text={t("launchpad_explore")}
                       to="project"
-=======
-                  <div className="mb-5">
-                    <Button
-                      filled={false}
-                      text={t("launchpad_explore")}
-                      to="currentPresales"
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                     />
                   </div>
                   <div

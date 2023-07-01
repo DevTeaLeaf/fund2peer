@@ -6,11 +6,8 @@ import { useSelector } from "react-redux";
 
 import { projectTabsData, formCategories, formTokens } from "../../constants";
 import { SliderLoader, HeaderLoader } from "../../loaders";
-<<<<<<< HEAD
-import { formatNumber, timeDifference,  getLimit } from "../../utils";
-=======
-import { formatNumber, timeDifference, copyText, getLimit } from "../../utils";
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
+import { formatNumber, timeDifference, getLimit } from "../../utils";
+
 import {
   TokenABI,
   DataToBytesABI,
@@ -123,14 +120,10 @@ const Project = ({ t }) => {
     }
   };
   const topInvestorsController = () => {
-    const sortedInvestors = [...rxProject.info.investors].sort(
-      (a, b) => a.invested - b.invested
-<<<<<<< HEAD
-    ).reverse();
-    
-=======
-    );
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
+    const sortedInvestors = [...rxProject.info.investors]
+      .sort((a, b) => a.invested - b.invested)
+      .reverse();
+
     setTopInvestors(sortedInvestors.slice(0, 4));
   };
   const ownerButtonsController = async (button = false) => {
@@ -439,11 +432,7 @@ const Project = ({ t }) => {
             <div className="mt-[70px]">
               {projectTabsData[activeTabIndex].label === "overview" ? (
                 <div className="flex items-start justify-center flex-wrap gap-10 md:gap-5">
-<<<<<<< HEAD
                   <div className="flex flex-col gap-[25px] w-[302px]">
-=======
-                  <div className="flex flex-col gap-[25px] w-[302px] mt-0 md:mt-[42px]">
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                     <div className="flex items-center justify-between">
                       <p className="inter-300 text-[14px] leading-[17px]">
                         {t("project_name")}
@@ -521,52 +510,31 @@ const Project = ({ t }) => {
                     <h1 className="inter-600 text-[32px] leading-[39px] mb-[36px]">
                       {rxProject.info.projectName}
                     </h1>
-<<<<<<< HEAD
-                    <p className="inter-400">
-=======
-                    <p className="inter-300 text-[14px] leading-[17px]">
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
-                      {rxProject.info.fullDesc}
-                    </p>
+                    <p className="inter-400">{rxProject.info.fullDesc}</p>
                   </div>
                 </div>
               ) : projectTabsData[activeTabIndex].label === "team" ? (
                 <div>
                   {rxProject.info.team.map((teammate, index) => {
                     let social;
-<<<<<<< HEAD
                     let link;
                     switch (teammate.socialType) {
                       case "telegram":
                         social = <Telegram className="w-[14px] h-[14px]" />;
-                        link=`t.me/${teammate.socialLogin}`;
+                        link = `t.me/${teammate.socialLogin}`;
                         break;
                       case "twitter":
                         social = <Twitter className="w-[14px] h-[14px]" />;
-                        link=`twitter.com/${teammate.socialLogin}`;
+                        link = `twitter.com/${teammate.socialLogin}`;
                         break;
                       case "discord":
                         social = <Discord className="w-[14px] h-[14px]" />;
-                        link=`discord.com/invite/${teammate.socialLogin}`;
+                        link = `discord.com/invite/${teammate.socialLogin}`;
                         break;
                       case "facebook":
                         social = <Facebook className="w-[14px] h-[14px]" />;
-                        link=`www.facebook.com/${teammate.socialLogin}`;
-=======
+                        link = `www.facebook.com/${teammate.socialLogin}`;
 
-                    switch (teammate.socialType) {
-                      case "telegram":
-                        social = <Telegram className="w-[14px] h-[14px]" />;
-                        break;
-                      case "twitter":
-                        social = <Twitter className="w-[14px] h-[14px]" />;
-                        break;
-                      case "discord":
-                        social = <Discord className="w-[14px] h-[14px]" />;
-                        break;
-                      case "facebook":
-                        social = <Facebook className="w-[14px] h-[14px]" />;
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                         break;
                       default:
                         social = <Web className="w-[14px] h-[14px]" />;
@@ -587,26 +555,16 @@ const Project = ({ t }) => {
                           <h1 className="mt-4 uppercase inter-normal text-[14px] leading-[17px]">
                             {teammate.name}
                           </h1>
-<<<<<<< HEAD
                           <a
-                          href={`https://t.me/${teammate.socialLogin}`}
-                          target="_blank"
-                          className="flex items-center mt-1 cursor-pointer"
-=======
-                          <div
-                            onClick={() => copyText(teammate.socialLogin)}
+                            href={`https://t.me/${teammate.socialLogin}`}
+                            target="_blank"
                             className="flex items-center mt-1 cursor-pointer"
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                           >
                             {social}
                             <p className="inter-300 text-[11px] leading-[13px] ml-2">
                               {teammate.socialLogin}
                             </p>
-<<<<<<< HEAD
                           </a>
-=======
-                          </div>
->>>>>>> 2516acb05ff20d98c9193042f19f21e19d018b69
                         </div>
                       </div>
                     );
@@ -614,9 +572,12 @@ const Project = ({ t }) => {
                 </div>
               ) : projectTabsData[activeTabIndex].label === "roadmap" ? (
                 <div className="flex flex-wrap gap-6">
-                  {rxProject.info.roadmap.map((item) => {
+                  {rxProject.info.roadmap.map((item, index) => {
                     return (
-                      <div className="cursor-pointer w-full max-h-[1000px] bg-box rounded-[10px] hoverEffect">
+                      <div
+                        key={index}
+                        className="cursor-pointer w-full max-h-[1000px] bg-box rounded-[10px] hoverEffect"
+                      >
                         <div className="px-5 py-5 flex flex-col justify-between gap-4">
                           <div className="flex flex-col items-center md:flex-row md:items-start">
                             <p className="text-[#89C6B9] inter-bold text-[20px] leading-6 mr-3">

@@ -537,8 +537,8 @@ const CurrentPresales = ({ t }) => {
                       >
                         <div className="py-[10px] px-5 flex items-center">
                           <p className="mr-[15px] inter-400">
-                            {tabsFilters.industryFilter.name
-                              ? t(tabsFilters.industryFilter.name)
+                            {tabsFilters.industryFilter?.name
+                              ? t(tabsFilters.industryFilter?.name)
                               : null}
                           </p>
                           <img
