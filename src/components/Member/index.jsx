@@ -6,6 +6,7 @@ import {
   Telegram,
   Facebook,
   slimArrow,
+  dimensionWarning,
 } from "../../assets/img";
 import { withTranslation } from "react-i18next";
 
@@ -65,7 +66,7 @@ const Member = ({
       <p className="inter-normal mb-4">
         {t("member")} {index + 1}
       </p>
-      <div className="flex items-end gap-10 flex-wrap justify-center md:justify-between xl:justify-normal">
+      <div className="flex items-start gap-10 flex-wrap justify-center md:justify-between xl:justify-normal">
         <div className="max-w-[390px] xl:w-[30%]">
           <Input
             key={thisMemberInputs[0].id}
@@ -89,6 +90,12 @@ const Member = ({
             setInputs={setMemberInputs}
             controller={handleInputs}
           />
+          <div className="mt-3 flex items-center gap-4">
+            <img src={dimensionWarning} alt="dimension warning" />
+            <div className="inter-normal text-[14px] leading-[17px]">
+              {t("size")} 194x194
+            </div>
+          </div>
         </div>
         <div className=" flex items-end gap-3">
           <Input

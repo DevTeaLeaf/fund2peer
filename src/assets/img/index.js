@@ -26,6 +26,7 @@ import usdt from "./usdt.png";
 import usdc from "./usdc.png";
 import dai from "./dai.png";
 import close from "./close.png";
+import question from "./question.png";
 
 export {
   arrow,
@@ -56,4 +57,5 @@ export {
   usdc,
   dai,
   close,
+  question,
 };

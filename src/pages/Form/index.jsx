@@ -17,12 +17,14 @@ import {
   Web,
   plus,
   dimensionWarning,
+  question,
 } from "../../assets/img";
 import {
   formTokens,
   formInputs,
   formMembers,
   formSocialMedia,
+  formCountries,
 } from "../../constants";
 
 const Form = ({ t }) => {
@@ -40,7 +42,7 @@ const Form = ({ t }) => {
     formInputs.highlights
   );
   const [social, setSocial] = useState(formSocialMedia);
-
+  const [countries, setCountries] = useState(formCountries);
   const DTBContract = useContract({
     address: DATA_TO_BYTES,
     abi: DataToBytesABI,
@@ -93,7 +95,7 @@ const Form = ({ t }) => {
         id: Math.random(),
         value: "",
         input: "link",
-        social: "web",
+        group: "web",
       },
     ];
     setSocial(newSocial);
@@ -107,6 +109,12 @@ const Form = ({ t }) => {
     setTokens(updatedTokens);
   };
   const handleInputs = (itemId, value, inputs, setInputs) => {
+    if (itemId === 5) {
+      const filtredCountries = formCountries.filter((str) =>
+        str.includes(value)
+      );
+      setCountries(filtredCountries);
+    }
     const updatedInputs = inputs.map((item) =>
       item.id === itemId ? { ...item, value: value } : { ...item }
     );
@@ -133,12 +141,14 @@ const Form = ({ t }) => {
         );
         bytes.push(companyNameBytes);
       }
+      // toDO: active category examination
       const categoryValue = categories.filter((category) => category.active);
+
       const categoryBytes = await DTBContract.changeCategory(
         categoryValue[0].value
       );
       bytes.push(categoryBytes);
-
+      //
       if (formInputsP1[2].value != "") {
         const shortDescriptionBytes = await DTBContract.changeShortDescription(
           formInputsP1[2].value
@@ -152,6 +162,7 @@ const Form = ({ t }) => {
         );
         bytes.push(fullDescriptionBytes);
       }
+
       if (formInputsP1[4].value != "") {
         const videoBytes = await DTBContract.changeVideo(formInputsP1[4].value);
         bytes.push(videoBytes);
@@ -401,6 +412,58 @@ const Form = ({ t }) => {
                       </div>
                     </div>
                   );
+                } else if (index === 5) {
+                  generatedItem = (
+                    <div
+                      key={item.id}
+                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                    >
+                      <div className="px-[36px] py-[50px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
+                          <p className="mr-2">{t(item.name)}</p>
+                          <p className="text-[#89C6B9]">
+                            {item.obligatorily ? "*" : ""}
+                          </p>
+                        </div>
+                        <Input
+                          key={item.id}
+                          id={item.id}
+                          input={t(item.input)}
+                          value={item.value}
+                          type={item.type}
+                          controller={handleInputs}
+                          inputs={formInputsP1}
+                          setInputs={setFormInputsP1}
+                        />
+                        <div
+                          className={`mt-3 ${
+                            item.value === "" ? "hidden" : ""
+                          }`}
+                        >
+                          {countries.map((country, index) => {
+                            return (
+                              <div
+                                onClick={() =>
+                                  handleInputs(
+                                    5,
+                                    country,
+                                    formInputsP1,
+                                    setFormInputsP1
+                                  )
+                                }
+                                key={index}
+                                className={`cursor-pointer ${
+                                  country === item.value ? "text-[#89C6B9]" : ""
+                                }`}
+                              >
+                                {country}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
                 } else {
                   generatedItem = (
                     <div
@@ -408,11 +471,23 @@ const Form = ({ t }) => {
                       className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
                     >
                       <div className="px-[36px] py-[50px]">
-                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                        <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
                           <p className="mr-2">{t(item.name)}</p>
                           <p className="text-[#89C6B9]">
                             {item.obligatorily ? "*" : ""}
                           </p>
+                          {/*<img
+                            src={question}
+                            alt="question"
+                            className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                          />
+                          <div className="absolute bg-[#89C6B9] px-[15px] py-2 max-w-[600px] z-[10] left-[20%] rounded">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Officiis nisi amet ipsum dignissimos
+                            voluptates facilis, magnam qui veniam mollitia sunt
+                            nemo, fugit sequi exercitationem earum atque aliquam
+                            quos inventore quod!
+                  </div>*/}
                         </div>
                         <Input
                           key={item.id}
