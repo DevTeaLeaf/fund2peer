@@ -8,7 +8,15 @@ import { getLimit } from "../../utils";
 
 import { withTranslation } from "react-i18next";
 
-import { Header, Footer, Input, Button, Token, Member } from "../../components";
+import {
+  Header,
+  Footer,
+  Input,
+  Button,
+  Token,
+  Member,
+  Calendar,
+} from "../../components";
 import {
   Twitter,
   Discord,
@@ -141,14 +149,15 @@ const Form = ({ t }) => {
         );
         bytes.push(companyNameBytes);
       }
-      // toDO: active category examination
-      const categoryValue = categories.filter((category) => category.active);
 
-      const categoryBytes = await DTBContract.changeCategory(
-        categoryValue[0].value
-      );
-      bytes.push(categoryBytes);
-      //
+      const categoryValue = categories.filter((category) => category.active);
+      if (categoryValue[0]) {
+        const categoryBytes = await DTBContract.changeCategory(
+          categoryValue[0].value
+        );
+        bytes.push(categoryBytes);
+      }
+
       if (formInputsP1[2].value != "") {
         const shortDescriptionBytes = await DTBContract.changeShortDescription(
           formInputsP1[2].value
@@ -305,6 +314,8 @@ const Form = ({ t }) => {
         );
         bytes.push(investorsRewardBytes);
       }
+      console.log("vl1", formInputsP3[4].value);
+      console.log("vl2", formInputsP3[5].value);
       if (formInputsP3[4].value != "") {
         const startFundingBytes = await DTBContract.changeStart(
           Number(formInputsP3[4].value)
@@ -629,6 +640,29 @@ const Form = ({ t }) => {
               </div>
               {formInputsP3.map(
                 ({ id, value, name, input, type, obligatorily }) => {
+                  if (id === 25 || id === 26) {
+                    return (
+                      <div
+                        key={id}
+                        className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10 max-w-[350px]"
+                      >
+                        <div className="px-[36px] py-[50px]">
+                          <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                            <p className="mr-2">{t(name)}</p>
+                            <p className="text-[#89C6B9]">
+                              {obligatorily ? "*" : ""}
+                            </p>
+                          </div>
+                          <Calendar
+                            id={id}
+                            controller={handleInputs}
+                            inputs={formInputsP3}
+                            setInputs={setFormInputsP3}
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
                   return (
                     <div
                       key={id}

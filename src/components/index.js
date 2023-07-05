@@ -13,6 +13,7 @@ import Token from "./Token";
 import Member from "./Member";
 import YouTubePlayer from "./YouTubePlayer";
 import InvestModal from "./InvestModal";
+import Calendar from "./Calendar";
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   Member,
   YouTubePlayer,
   InvestModal,
+  Calendar,
 };

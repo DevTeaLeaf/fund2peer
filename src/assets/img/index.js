@@ -27,6 +27,10 @@ import usdc from "./usdc.png";
 import dai from "./dai.png";
 import close from "./close.png";
 import question from "./question.png";
+import homeBg from "./homeBg.png";
+import homeTk1 from "./homeTk1.png";
+import homeTk2 from "./homeTk2.png";
+import homeTk3 from "./homeTk3.png";
 
 export {
   arrow,
@@ -58,4 +62,8 @@ export {
   dai,
   close,
   question,
+  homeBg,
+  homeTk1,
+  homeTk2,
+  homeTk3,
 };

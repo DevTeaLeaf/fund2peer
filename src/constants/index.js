@@ -209,16 +209,12 @@ export const formInputs = {
       id: 25,
       value: "",
       name: "start_funding",
-      input: "numberUnix",
-      type: "number",
       obligatorily: true,
     },
     {
       id: 26,
       value: "",
       name: "end_funding",
-      input: "numberUnix",
-      type: "number",
       obligatorily: true,
     },
     {

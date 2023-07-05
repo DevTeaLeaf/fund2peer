@@ -48,6 +48,14 @@ body {
   transform: translateY(-15px);
   box-shadow: 40px 40px 10px rgba(0, 0, 0, 0.25);
 }
+@keyframes drop {
+  0% {
+    transform: translateY(-200%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 @keyframes levitate {
   0% {
     transform: translateY(0);
@@ -63,9 +71,16 @@ body {
   0% {
     transform: rotate(180deg);
   }
-
   100% {
     transform: rotate(0);
+  }
+}
+@keyframes infiniteRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 @keyframes slideInFromTop {
@@ -93,7 +108,20 @@ body {
 .rotate {
   animation: rotate 4s ease;
 }
-
+.infiniteRotate {
+  animation: infiniteRotate 40s linear infinite;
+}
+.drop {
+  animation: drop 2s ease;
+}
+.rotatedDrop {
+  animation: drop 2s ease, infiniteRotate 40s linear infinite;
+  animation-delay: 0s, 2s;
+}
+.levitatingDrop {
+  animation: drop 2s ease, levitate 5s infinite;
+  animation-delay: 0s, 2s;
+}
 /********************/
 /**********Shadows**********/
 .tab-shadow {
