@@ -14,6 +14,7 @@ import Member from "./Member";
 import YouTubePlayer from "./YouTubePlayer";
 import InvestModal from "./InvestModal";
 import Calendar from "./Calendar";
+import RoadmapItem from "./RoadmapItem";
 
 export {
   Button,
@@ -32,4 +33,5 @@ export {
   YouTubePlayer,
   InvestModal,
   Calendar,
+  RoadmapItem,
 };

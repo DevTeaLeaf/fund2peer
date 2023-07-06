@@ -147,19 +147,27 @@ export const formInputs = {
     {
       id: 13,
       value: "",
+      name: "roadmap",
+      input: "link",
+      type: "link",
+      obligatorily: true,
+    },
+    {
+      id: 14,
+      value: "",
       name: "business_plan",
       input: "link",
       type: "link",
     },
     {
-      id: 14,
+      id: 15,
       value: "",
       name: "documents",
       input: "link",
       type: "link",
     },
     {
-      id: 15,
+      id: 16,
       value: "",
       name: "header_img",
       input: "link",
@@ -167,7 +175,7 @@ export const formInputs = {
       dimension: "1440x500",
     },
     {
-      id: 16,
+      id: 17,
       value: "",
       name: "preview_img",
       input: "link",
@@ -255,6 +263,20 @@ export const formInputs = {
     },
   ],
 };
+export const formRoadmapSteps = [
+  {
+    id: Math.random(),
+    inputs: [
+      { id: Math.random(), value: "", input: "description", type: "text" },
+      {
+        id: Math.random(),
+        value: "",
+        input: "sum",
+        type: "number",
+      },
+    ],
+  },
+];
 export const formMembers = [
   {
     id: Math.random(),

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { ethers } from "ethers";
 import { useSigner, useContract } from "wagmi";
 
 import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
@@ -16,6 +17,7 @@ import {
   Token,
   Member,
   Calendar,
+  RoadmapItem,
 } from "../../components";
 import {
   Twitter,
@@ -33,6 +35,7 @@ import {
   formMembers,
   formSocialMedia,
   formCountries,
+  formRoadmapSteps,
 } from "../../constants";
 
 const Form = ({ t }) => {
@@ -44,8 +47,12 @@ const Form = ({ t }) => {
   const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
   const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
   const [formTeam, setFormTeam] = useState(formMembers);
+  const [formRoadmap, setFormRoadmap] = useState(formRoadmapSteps);
   const [categories, setCategories] = useState(formInputs.page1[1]);
   const [formTeamInputs, setFormTeamInputs] = useState([formMembers[0].inputs]);
+  const [formRoadmapInputs, setFormRoadmapInputs] = useState([
+    formRoadmapSteps[0].inputs,
+  ]);
   const [highlightsInputs, setHighlightsInputs] = useState(
     formInputs.highlights
   );
@@ -61,9 +68,39 @@ const Form = ({ t }) => {
     abi: LaunchpadDriverABI,
     signerOrProvider: data,
   });
-
+  const addToRoadmap = () => {
+    const newInputs = [
+      ...formRoadmapInputs,
+      [
+        { id: Math.random(), value: "", input: "description", type: "text" },
+        {
+          id: Math.random(),
+          value: "",
+          input: "sum",
+          type: "number",
+        },
+      ],
+    ];
+    const newRoadmap = [
+      ...formRoadmap,
+      {
+        id: Math.random(),
+        inputs: [
+          { id: Math.random(), value: "", input: "description", type: "text" },
+          {
+            id: Math.random(),
+            value: "",
+            input: "sum",
+            type: "number",
+          },
+        ],
+      },
+    ];
+    setFormRoadmap(newRoadmap);
+    setFormRoadmapInputs(newInputs);
+  };
   const addToTeam = () => {
-    let newInputs = [
+    const newInputs = [
       ...formTeamInputs,
       [
         { id: Math.random(), value: "", input: "name", type: "text" },
@@ -76,7 +113,7 @@ const Form = ({ t }) => {
         { id: Math.random(), value: "", input: "nickname", type: "text" },
       ],
     ];
-    let newTeam = [
+    const newTeam = [
       ...formTeam,
       {
         id: Math.random(),
@@ -140,7 +177,7 @@ const Form = ({ t }) => {
   };
   //web3 function
   const regProject = async () => {
-    let bytes = [];
+    const bytes = [];
     try {
       //P1
       if (formInputsP1[0].value != "") {
@@ -205,7 +242,6 @@ const Form = ({ t }) => {
         const highlightsBytes = await DTBContract.changeHighlights(highlights);
         bytes.push(highlightsBytes);
       }
-
       //P2
       //TEAM
       const teamNames = formTeam
@@ -247,7 +283,32 @@ const Form = ({ t }) => {
         );
         bytes.push(teamNetworksBytes);
       }
-      //
+      // ROADMAP
+      const roadmapDescriptions = formRoadmap
+        .map((item) => item.inputs[0].value)
+        .filter((description) => description != "");
+      const roadmapSums = formRoadmap
+        .map((item) => item.inputs[1].value)
+        .filter((sum) => sum != "");
+      if (roadmapDescriptions.length) {
+        for (let i = 0; i < roadmapDescriptions.length; i++) {
+          const res = await DTBContract.changeRoadmapDescription(
+            roadmapDescriptions[i],
+            i
+          );
+          bytes.push(res);
+        }
+      }
+      if (roadmapSums.length) {
+        for (let i = 0; i < roadmapSums.length; i++) {
+          const res = await DTBContract.changeRoadmapFunds(
+            ethers.utils.parseUnits(String(roadmapSums[i]), 18),
+            i
+          );
+          bytes.push(res);
+        }
+      }
+
       if (formInputsP2[0].value != "") {
         const whitepaperBytes = await DTBContract.changeWhitepaperLink(
           formInputsP2[0].value
@@ -260,27 +321,27 @@ const Form = ({ t }) => {
         );
         bytes.push(roadmapBytes);
       }
-      if (formInputsP2[2].value != "") {
+      if (formInputsP2[3].value != "") {
         const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
-          formInputsP2[2].value
+          formInputsP2[3].value
         );
         bytes.push(businessPlanBytes);
       }
-      if (formInputsP2[3].value != "") {
+      if (formInputsP2[4].value != "") {
         const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
-          formInputsP2[3].value
+          formInputsP2[4].value
         );
         bytes.push(additionalDocsBytes);
       }
-      if (formInputsP2[4].value != "") {
+      if (formInputsP2[5].value != "") {
         const headerImgBytes = await DTBContract.changeHeaderLink(
-          formInputsP2[4].value
+          formInputsP2[5].value
         );
         bytes.push(headerImgBytes);
       }
-      if (formInputsP2[5].value != "") {
+      if (formInputsP2[6].value != "") {
         const previewImgBytes = await DTBContract.changePreviewLink(
-          formInputsP2[5].value
+          formInputsP2[6].value
         );
         bytes.push(previewImgBytes);
       }
@@ -314,8 +375,6 @@ const Form = ({ t }) => {
         );
         bytes.push(investorsRewardBytes);
       }
-      console.log("vl1", formInputsP3[4].value);
-      console.log("vl2", formInputsP3[5].value);
       if (formInputsP3[4].value != "") {
         const startFundingBytes = await DTBContract.changeStart(
           Number(formInputsP3[4].value)
@@ -574,6 +633,40 @@ const Form = ({ t }) => {
 
               {formInputsP2.map(
                 ({ id, value, name, input, type, obligatorily, dimension }) => {
+                  if (id === 13) {
+                    return (
+                      <div
+                        key={id}
+                        className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]"
+                      >
+                        <div className="px-10 py-[60px]">
+                          <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                            {t("roadmap_steps")}
+                          </p>
+                          <div>
+                            {formRoadmap.map((item, index) => {
+                              return (
+                                <RoadmapItem
+                                  index={index}
+                                  key={item.id}
+                                  roadmapInputs={formRoadmapInputs}
+                                  setRoadmapInputs={setFormRoadmapInputs}
+                                  roadmap={formRoadmap}
+                                  setRoadmap={setFormRoadmap}
+                                />
+                              );
+                            })}
+                          </div>
+                          <img
+                            src={plus}
+                            alt="plus"
+                            className="mt-[70px] pt-[15px] pr-4 pb-4 pl-[17px] cursor-pointer border border-[#89C6B9] rounded-[10px]  mx-auto max-w-[52px]"
+                            onClick={addToRoadmap}
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
                   return (
                     <div
                       key={id}

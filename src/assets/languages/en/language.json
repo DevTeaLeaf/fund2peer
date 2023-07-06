@@ -68,6 +68,8 @@
   "in": " in",
   "overview": "Overview",
   "roadmap": "Roadmap",
+  "roadmap_steps": "Roadmap steps",
+  "step": "Step",
   "team": "Team",
   "investors": "Investors",
   "top_investors": "Top investors",
@@ -121,5 +123,6 @@
   "get_funds": "Get collected funds",
   "distribute_profit": "Distribute profit",
   "claim": "Claim",
-  "refund": "Refund"
+  "refund": "Refund",
+  "sum": "Sum ($)"
 }
