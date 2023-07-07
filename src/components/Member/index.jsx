@@ -52,7 +52,7 @@ const Member = ({
 
     const updatedTeam = [...team];
     updatedTeam[index].inputs = updatedInputs;
-    updatedTeam[index].network = social[0];
+    updatedTeam[index].network = social?.[0];
 
     setInputs(updatedArray);
     setThisMemberInputs(updatedInputs);
@@ -145,7 +145,7 @@ const Member = ({
                     socialModalController("telegram");
                   }}
                   className={`flex items-center gap-[25px] cursor-pointer nickname ${
-                    social[0] == "telegram" ? "active" : ""
+                    social?.[0] == "telegram" ? "active" : ""
                   }`}
                 >
                   <Telegram className="w-6 h-6 md:w-9 md:h-9 social" />
@@ -156,7 +156,7 @@ const Member = ({
                     socialModalController("twitter");
                   }}
                   className={`flex items-center gap-[25px] cursor-pointer nickname ${
-                    social[0] == "twitter" ? "active" : ""
+                    social?.[0] == "twitter" ? "active" : ""
                   }`}
                 >
                   <Twitter className="w-6 h-6 md:w-9 md:h-9 social" />
@@ -167,7 +167,7 @@ const Member = ({
                     socialModalController("discord");
                   }}
                   className={`flex items-center gap-[25px] cursor-pointer nickname ${
-                    social[0] == "discord" ? "active" : ""
+                    social?.[0] == "discord" ? "active" : ""
                   }`}
                 >
                   <Discord className="w-6 h-6 md:w-9 md:h-9 social" />
@@ -178,7 +178,7 @@ const Member = ({
                     socialModalController("facebook");
                   }}
                   className={`flex items-center gap-[25px] cursor-pointer nickname ${
-                    social[0] == "facebook" ? "active" : ""
+                    social?.[0] == "facebook" ? "active" : ""
                   }`}
                 >
                   <Facebook className="w-6 h-6 md:w-9 md:h-9 social" />

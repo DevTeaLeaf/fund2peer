@@ -130,7 +130,7 @@ const Form = ({ t }) => {
           },
           { id: Math.random(), value: "", input: "nickname", type: "text" },
         ],
-        network: false,
+        network: "",
       },
     ];
     setFormTeam(newTeam);

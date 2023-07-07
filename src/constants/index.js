@@ -344,7 +344,7 @@ export const formMembers = [
       },
       { id: Math.random(), value: "", input: "nickname", type: "text" },
     ],
-    network: false,
+    network: "",
   },
 ];
 export const formSocialMedia = [
