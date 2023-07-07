@@ -15,6 +15,8 @@ import YouTubePlayer from "./YouTubePlayer";
 import InvestModal from "./InvestModal";
 import Calendar from "./Calendar";
 import RoadmapItem from "./RoadmapItem";
+import QuestionModal from "./QuestionModal";
+import Textarea from "./Textarea";
 
 export {
   Button,
@@ -34,4 +36,6 @@ export {
   InvestModal,
   Calendar,
   RoadmapItem,
+  QuestionModal,
+  Textarea,
 };

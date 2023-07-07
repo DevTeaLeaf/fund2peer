@@ -102,6 +102,8 @@ export const formInputs = {
       input: "form_enter_name",
       type: "text",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     formCategories,
     {
@@ -110,6 +112,8 @@ export const formInputs = {
       name: "form_short_desc",
       input: "form_300",
       type: "text",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 3,
@@ -117,16 +121,36 @@ export const formInputs = {
       name: "form_full_desc",
       input: "form_1500",
       type: "text",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
-    { id: 4, value: "", name: "form_youtube", input: "link", type: "link" },
+    {
+      id: 4,
+      value: "",
+      name: "form_youtube",
+      input: "link",
+      type: "link",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
+    },
     {
       id: 5,
       value: "",
       name: "form_country",
       input: "country",
       type: "country",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
-    { id: 6, value: "", name: "form_website", input: "link", type: "link" },
+    {
+      id: 6,
+      value: "",
+      name: "form_website",
+      input: "link",
+      type: "link",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
+    },
   ],
   page2: [
     {
@@ -135,6 +159,8 @@ export const formInputs = {
       name: "white_paper",
       input: "link",
       type: "link",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 12,
@@ -143,6 +169,8 @@ export const formInputs = {
       input: "link",
       type: "link",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 13,
@@ -151,6 +179,8 @@ export const formInputs = {
       input: "link",
       type: "link",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 14,
@@ -158,6 +188,8 @@ export const formInputs = {
       name: "business_plan",
       input: "link",
       type: "link",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 15,
@@ -165,6 +197,8 @@ export const formInputs = {
       name: "documents",
       input: "link",
       type: "link",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 16,
@@ -173,6 +207,8 @@ export const formInputs = {
       input: "link",
       type: "link",
       dimension: "1440x500",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 17,
@@ -181,6 +217,8 @@ export const formInputs = {
       input: "link",
       type: "link",
       dimension: "350x500",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
   ],
   page3: [
@@ -190,6 +228,8 @@ export const formInputs = {
       name: "soft_cap",
       input: "number",
       type: "number",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 22,
@@ -197,6 +237,8 @@ export const formInputs = {
       name: "hard_cap",
       input: "number",
       type: "number",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 23,
@@ -204,6 +246,8 @@ export const formInputs = {
       name: "investors_reward",
       input: "numberPercent",
       type: "number",
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 24,
@@ -212,18 +256,24 @@ export const formInputs = {
       input: "numberDays",
       type: "number",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 25,
       value: "",
       name: "start_funding",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 26,
       value: "",
       name: "end_funding",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 27,
@@ -232,6 +282,8 @@ export const formInputs = {
       input: "bitcoin",
       type: "text",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
     {
       id: 28,
@@ -240,6 +292,8 @@ export const formInputs = {
       input: "btc",
       type: "text",
       obligatorily: true,
+      answer:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
   ],
   highlights: [

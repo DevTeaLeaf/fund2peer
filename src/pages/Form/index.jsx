@@ -2,22 +2,22 @@ import { useEffect, useState } from "react";
 
 import { ethers } from "ethers";
 import { useSigner, useContract } from "wagmi";
+import { withTranslation } from "react-i18next";
 
 import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
 import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "../../web3/constants";
 import { getLimit } from "../../utils";
 
-import { withTranslation } from "react-i18next";
-
 import {
   Header,
   Footer,
-  Input,
+  Textarea,
   Button,
   Token,
   Member,
   Calendar,
   RoadmapItem,
+  QuestionModal,
 } from "../../components";
 import {
   Twitter,
@@ -41,6 +41,7 @@ import {
 const Form = ({ t }) => {
   const { data } = useSigner();
 
+  const [modalQuestion, setModalQuestion] = useState(false);
   const [page, setPage] = useState("1");
   const [tokens, setTokens] = useState(formTokens);
   const [formInputsP1, setFormInputsP1] = useState(formInputs.page1);
@@ -58,6 +59,7 @@ const Form = ({ t }) => {
   );
   const [social, setSocial] = useState(formSocialMedia);
   const [countries, setCountries] = useState(formCountries);
+
   const DTBContract = useContract({
     address: DATA_TO_BYTES,
     abi: DataToBytesABI,
@@ -68,6 +70,7 @@ const Form = ({ t }) => {
     abi: LaunchpadDriverABI,
     signerOrProvider: data,
   });
+
   const addToRoadmap = () => {
     const newInputs = [
       ...formRoadmapInputs,
@@ -175,7 +178,7 @@ const Form = ({ t }) => {
     });
     setCategories(categoriesT);
   };
-  //web3 function
+  // web3 function
   const regProject = async () => {
     const bytes = [];
     try {
@@ -264,25 +267,27 @@ const Form = ({ t }) => {
         );
         bytes.push(teamNamesBytes);
       }
+
       if (teamAvatar.length > 0) {
         const teamAvatarBytes = await DTBContract.changePersonAvatarLink(
           teamAvatar
         );
         bytes.push(teamAvatarBytes);
       }
-
       if (teamLogins.length > 0) {
         const teamLoginsBytes = await DTBContract.changeSocialMediaPersonLogin(
           teamLogins
         );
         bytes.push(teamLoginsBytes);
       }
-      if (teamNetworks.length > 0) {
+
+      if (teamNetworks[0] && teamNetworks.length > 0) {
         const teamNetworksBytes = await DTBContract.changeSocialMediaPersonType(
           teamNetworks
         );
         bytes.push(teamNetworksBytes);
       }
+
       // ROADMAP
       const roadmapDescriptions = formRoadmap
         .map((item) => item.inputs[0].value)
@@ -290,6 +295,7 @@ const Form = ({ t }) => {
       const roadmapSums = formRoadmap
         .map((item) => item.inputs[1].value)
         .filter((sum) => sum != "");
+
       if (roadmapDescriptions.length) {
         for (let i = 0; i < roadmapDescriptions.length; i++) {
           const res = await DTBContract.changeRoadmapDescription(
@@ -400,6 +406,7 @@ const Form = ({ t }) => {
         );
         bytes.push(socialMediaLoginBytes);
       }
+
       const applicationFee = await LDContract.applicationFee();
 
       const time = Number(formInputsP3[3].value) * 60 * 60 * 24;
@@ -463,6 +470,12 @@ const Form = ({ t }) => {
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                           <p className="mr-2">{t("project_category")}</p>
                           <p className="text-[#89C6B9]">*</p>
+                          <img
+                            src={question}
+                            alt="question"
+                            className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                            onClick={() => setModalQuestion("lorem")}
+                          />
                         </div>
                         <div className="flex flex-col gap-5 inter-400">
                           {categories.map((category) => {
@@ -494,8 +507,14 @@ const Form = ({ t }) => {
                           <p className="text-[#89C6B9]">
                             {item.obligatorily ? "*" : ""}
                           </p>
+                          <img
+                            src={question}
+                            alt="question"
+                            className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                            onClick={() => setModalQuestion(item.answer)}
+                          />
                         </div>
-                        <Input
+                        <Textarea
                           key={item.id}
                           id={item.id}
                           input={t(item.input)}
@@ -546,20 +565,14 @@ const Form = ({ t }) => {
                           <p className="text-[#89C6B9]">
                             {item.obligatorily ? "*" : ""}
                           </p>
-                          {/*<img
+                          <img
                             src={question}
                             alt="question"
                             className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                            onClick={() => setModalQuestion(item.answer)}
                           />
-                          <div className="absolute bg-[#89C6B9] px-[15px] py-2 max-w-[600px] z-[10] left-[20%] rounded">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Officiis nisi amet ipsum dignissimos
-                            voluptates facilis, magnam qui veniam mollitia sunt
-                            nemo, fugit sequi exercitationem earum atque aliquam
-                            quos inventore quod!
-                  </div>*/}
                         </div>
-                        <Input
+                        <Textarea
                           key={item.id}
                           id={item.id}
                           input={t(item.input)}
@@ -573,18 +586,27 @@ const Form = ({ t }) => {
                     </div>
                   );
                 }
-
                 return generatedItem;
               })}
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
                 <div className="px-10 py-[60px]">
-                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                    {t("form_highlights")}
-                  </p>
+                  <div className="flex">
+                    {" "}
+                    <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                      {t("form_highlights")}
+                    </p>
+                    <img
+                      src={question}
+                      alt="question"
+                      className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                      onClick={() => setModalQuestion("lorem")}
+                    />
+                  </div>
+
                   <div className="flex flex-col gap-4">
                     {highlightsInputs.map(({ id, value, input, type }) => {
                       return (
-                        <Input
+                        <Textarea
                           key={id}
                           id={id}
                           input={t(input)}
@@ -604,9 +626,17 @@ const Form = ({ t }) => {
             <div>
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
                 <div className="px-10 py-[60px]">
-                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                    {t("your_team")}
-                  </p>
+                  <div className="flex">
+                    <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                      {t("your_team")}
+                    </p>
+                    <img
+                      src={question}
+                      alt="question"
+                      className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                      onClick={() => setModalQuestion("lorem")}
+                    />
+                  </div>
                   <div>
                     {formTeam.map((item, index) => {
                       return (
@@ -632,7 +662,16 @@ const Form = ({ t }) => {
               </div>
 
               {formInputsP2.map(
-                ({ id, value, name, input, type, obligatorily, dimension }) => {
+                ({
+                  id,
+                  value,
+                  name,
+                  input,
+                  type,
+                  obligatorily,
+                  dimension,
+                  answer,
+                }) => {
                   if (id === 13) {
                     return (
                       <div
@@ -640,9 +679,18 @@ const Form = ({ t }) => {
                         className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]"
                       >
                         <div className="px-10 py-[60px]">
-                          <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                            {t("roadmap_steps")}
-                          </p>
+                          <div className="flex">
+                            <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                              {t("roadmap_steps")}
+                            </p>
+                            <img
+                              src={question}
+                              alt="question"
+                              className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                              onClick={() => setModalQuestion("lorem")}
+                            />
+                          </div>
+
                           <div>
                             {formRoadmap.map((item, index) => {
                               return (
@@ -678,8 +726,14 @@ const Form = ({ t }) => {
                           <p className="text-[#89C6B9]">
                             {obligatorily ? "*" : ""}
                           </p>
+                          <img
+                            src={question}
+                            alt="question"
+                            className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                            onClick={() => setModalQuestion(answer)}
+                          />
                         </div>
-                        <Input
+                        <Textarea
                           key={id}
                           id={id}
                           input={t(input)}
@@ -712,9 +766,18 @@ const Form = ({ t }) => {
             <div>
               <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
                 <div className="px-10 py-[60px]">
-                  <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
-                    {t("choose_token")}:
-                  </p>
+                  <div className="flex">
+                    <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
+                      {t("choose_token")}:
+                    </p>
+                    <img
+                      src={question}
+                      alt="question"
+                      className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                      onClick={() => setModalQuestion("lorem")}
+                    />
+                  </div>
+
                   <div className="flex items-center gap-7 flex-wrap">
                     {tokens.map(({ id, name, img, active }) => {
                       return (
@@ -732,7 +795,7 @@ const Form = ({ t }) => {
                 </div>
               </div>
               {formInputsP3.map(
-                ({ id, value, name, input, type, obligatorily }) => {
+                ({ id, value, name, input, type, obligatorily, answer }) => {
                   if (id === 25 || id === 26) {
                     return (
                       <div
@@ -745,6 +808,12 @@ const Form = ({ t }) => {
                             <p className="text-[#89C6B9]">
                               {obligatorily ? "*" : ""}
                             </p>
+                            <img
+                              src={question}
+                              alt="question"
+                              className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                              onClick={() => setModalQuestion("lorem")}
+                            />
                           </div>
                           <Calendar
                             id={id}
@@ -767,8 +836,14 @@ const Form = ({ t }) => {
                           <p className="text-[#89C6B9]">
                             {obligatorily ? "*" : ""}
                           </p>
+                          <img
+                            src={question}
+                            alt="question"
+                            className="cursor-pointer ml-3 max-w-[22px] max-h-[22px]"
+                            onClick={() => setModalQuestion(answer)}
+                          />
                         </div>
-                        <Input
+                        <Textarea
                           key={id}
                           id={id}
                           input={t(input)}
@@ -806,7 +881,7 @@ const Form = ({ t }) => {
                           ) : (
                             <Web className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
                           )}
-                          <Input
+                          <Textarea
                             key={id}
                             id={id}
                             input={t(input)}
@@ -862,6 +937,14 @@ const Form = ({ t }) => {
         </div>
       </div>
       <Footer />
+      {modalQuestion ? (
+        <QuestionModal
+          question={modalQuestion}
+          setModalActive={setModalQuestion}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
