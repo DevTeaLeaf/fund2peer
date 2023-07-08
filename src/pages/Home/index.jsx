@@ -9,7 +9,7 @@ const Home = ({ t }) => {
   return (
     <>
       <Header page="home" />
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto overflow-x-hidden">
         <div className="xl:px-[80px] lg:px-[30px] px-[15px] flex items-center relative pt-[65px] text-[#fff]">
           <div className="flex items-start mb-[500px] relative">
             <div className="flex items-start justify-between flex-col">
