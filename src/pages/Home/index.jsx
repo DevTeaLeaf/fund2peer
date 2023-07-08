@@ -2,8 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
-import { Header, Footer, SocialModal, Button, ReadBox } from "../../components";
-import { homeBg, homeTk1, homeTk2, homeTk3 } from "../../assets/img";
+import {
+  Header,
+  Footer,
+  SocialModal,
+  Button,
+  ReadBox,
+  StatisticsBox,
+} from "../../components";
+import {
+  homeBg,
+  homeTk1,
+  homeTk2,
+  homeTk3,
+  info,
+  blocks,
+  client,
+  switchImg,
+  inImg,
+  out,
+} from "../../assets/img";
 import { servicies } from "../../constants";
 
 const Home = ({ t }) => {
@@ -50,7 +68,7 @@ const Home = ({ t }) => {
           </div>
         </div>
         <div className="xl:px-[80px] lg:px-[30px] px-[15px] text-[#fff] mt-[-400px] sm:mt-[-300px]">
-          <div className="mt-[100px] mb-5">
+          <div className="mt-[100px]">
             <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[90px] nav-shadow">
               {t("our_services")}
             </p>
@@ -60,6 +78,24 @@ const Home = ({ t }) => {
                   <ReadBox key={index} name={name} description={description} />
                 );
               })}
+            </div>
+          </div>
+          <div className="mt-[100px] ">
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 mb-[90px] nav-shadow">
+              Features
+            </p>
+            <div className="flex items-center justify-around flex-wrap gap-8 mb-[100px] md:mb-0">
+              <StatisticsBox text={"Our clients"} img={client} info="97" />
+              <StatisticsBox text={"DEX Rev"} img={info} info="111$" />
+              <StatisticsBox text={"P2P Rev"} img={switchImg} info="97" />
+
+              <StatisticsBox text={"All Projects"} img={blocks} info="111$" />
+              <StatisticsBox
+                text={"Invested in XReturn"}
+                img={inImg}
+                info="111$"
+              />
+              <StatisticsBox text={"Earn with XReturn"} img={out} info="111$" />
             </div>
           </div>
         </div>

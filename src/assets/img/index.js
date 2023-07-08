@@ -31,6 +31,10 @@ import homeBg from "./homeBg.png";
 import homeTk1 from "./homeTk1.png";
 import homeTk2 from "./homeTk2.png";
 import homeTk3 from "./homeTk3.png";
+import client from "./client.png";
+import switchImg from "./switch.png";
+import inImg from "./in.png";
+import out from "./out.png";
 
 export {
   arrow,
@@ -66,4 +70,8 @@ export {
   homeTk1,
   homeTk2,
   homeTk3,
+  client,
+  switchImg,
+  inImg,
+  out,
 };
