@@ -246,6 +246,9 @@ body {
     #13141f 100%
   );
 }
+.bg-read {
+  background: linear-gradient(135deg, #1c1d2d 0%, #13141f 100%);
+}
 .search {
   border-bottom: 1px solid #8d8e96;
   outline: none;
