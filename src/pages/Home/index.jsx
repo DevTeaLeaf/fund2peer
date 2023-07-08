@@ -28,23 +28,23 @@ const Home = ({ t }) => {
                 <Button text={"Trade now"} />
               </div>
             </div>
-            <div className="absolute w-[1000px] h-[1000px] left-[100%] top-[-70%] z-[-1] rotatedDrop">
+            <div className="absolute h-[800px] w-[800px] sm:w-[1000px] sm:h-[1000px] top-[-70%] z-[-1] rotatedDrop  left-[-60%] sm:left-[25%] lg:left-[100%]">
               <img src={homeBg} alt="Background" />
             </div>
             <img
               src={homeTk1}
               alt="Token"
-              className="absolute left-[110%] levitatingDrop"
+              className="absolute left-[-20%] sm:left-[110%] levitatingDrop z-[-2]"
             />
             <img
               src={homeTk2}
               alt="Token"
-              className="absolute top-[100%] left-[85%] levitatingDrop"
+              className="absolute top-[70%] left-[60%] sm:top-[100%] sm:left-[85%] levitatingDrop z-[-2]"
             />
             <img
               src={homeTk3}
               alt="Token"
-              className="absolute top-[140%] left-[250%] levitatingDrop"
+              className="absolute top-[100%] sm:top-[125%] sm:left-[150%] lg:top-[140%] lg:left-[250%] levitatingDrop z-[-2]"
             />
           </div>
         </div>
