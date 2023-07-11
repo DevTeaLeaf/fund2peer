@@ -311,6 +311,16 @@ body {
 .invalidColor:focus {
   border-color: #ee6a63;
 }
+.roadmapThumb {
+  height: 6px;
+  background: #89c6b9;
+  border-radius: 9px;
+}
+.roadmapTrack {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+}
 /********************/
 /**********Media**********/
 @media screen and (max-width: 767px) {

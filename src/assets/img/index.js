@@ -35,6 +35,9 @@ import client from "./client.png";
 import switchImg from "./switch.png";
 import inImg from "./in.png";
 import out from "./out.png";
+import doImg from "./do.png";
+import done from "./done.png";
+import progress from "./progress.png";
 
 export {
   arrow,
@@ -74,4 +77,7 @@ export {
   switchImg,
   inImg,
   out,
+  doImg,
+  done,
+  progress,
 };

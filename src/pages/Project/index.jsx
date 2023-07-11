@@ -169,15 +169,22 @@ const Project = ({ t }) => {
   useEffect(() => {
     const setTabPosition = () => {
       const currentTab = tabsRef.current[activeTabIndex];
-      setTabUnderlineLeft(currentTab?.offsetLeft ?? 0);
-      setTabUnderlineWidth(currentTab?.clientWidth ?? 0);
+      if (currentTab) {
+        setTabUnderlineLeft(currentTab.offsetLeft);
+        setTabUnderlineWidth(currentTab.clientWidth);
+      }
     };
 
-    setTabPosition();
+    setTimeout(() => {
+      setTabPosition();
+    }, 0);
+
     window.addEventListener("resize", setTabPosition);
 
-    return () => window.removeEventListener("resize", setTabPosition);
-  }, [activeTabIndex]);
+    return () => {
+      window.removeEventListener("resize", setTabPosition);
+    };
+  }, [activeTabIndex, tabsRef]);
   useEffect(() => {
     if (rxProjects.loaded) {
       const now = Math.floor(Date.now() / 1000);
@@ -219,6 +226,7 @@ const Project = ({ t }) => {
   }, [rxProject]);
   useEffect(() => {
     ownerButtonsController();
+    setActiveTabIndex(0);
   }, [data]);
   return (
     <>

@@ -1,4 +1,5 @@
 import { wbtc, weth, wmatic, usdt, usdc, dai } from "../assets/img";
+
 // HOME
 
 export const servicies = [
@@ -21,6 +22,329 @@ export const servicies = [
     name: "XReturn",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
+  },
+];
+
+export const roadmap = [
+  {
+    year: 2022,
+    quartals: [
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "progress",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "do",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    year: 2023,
+    quartals: [
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description:
+              "Rethinking the development of the project of a project lorem for 123",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "progress",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "do",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    year: 2024,
+    quartals: [
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+      {
+        targets: [
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "done",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "progress",
+            description: "Rethinking the development of the project",
+          },
+          {
+            state: "do",
+            description: "Rethinking the development of the project",
+          },
+        ],
+      },
+    ],
   },
 ];
 
