@@ -464,7 +464,7 @@ const Form = ({ t }) => {
                   generatedItem = (
                     <div
                       key={item[0].name}
-                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                      className="bg-[#1C1D2D] rounded-[10px] mb-10"
                     >
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -499,7 +499,7 @@ const Form = ({ t }) => {
                   generatedItem = (
                     <div
                       key={item.id}
-                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                      className="bg-[#1C1D2D] rounded-[10px] mb-10"
                     >
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
@@ -524,11 +524,7 @@ const Form = ({ t }) => {
                           inputs={formInputsP1}
                           setInputs={setFormInputsP1}
                         />
-                        <div
-                          className={`mt-3 ${
-                            item.value === "" ? "hidden" : ""
-                          }`}
-                        >
+                        <div className="mt-3">
                           {countries.map((country, index) => {
                             return (
                               <div
@@ -557,7 +553,7 @@ const Form = ({ t }) => {
                   generatedItem = (
                     <div
                       key={item.id}
-                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
+                      className="bg-[#1C1D2D] rounded-[10px] mb-10"
                     >
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
@@ -588,7 +584,7 @@ const Form = ({ t }) => {
                 }
                 return generatedItem;
               })}
-              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
+              <div className="bg-[#1C1D2D] rounded-[10px] mb-[60px]">
                 <div className="px-10 py-[60px]">
                   <div className="flex">
                     {" "}
@@ -624,7 +620,7 @@ const Form = ({ t }) => {
             </div>
           ) : page === "2" ? (
             <div>
-              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
+              <div className="bg-[#1C1D2D] rounded-[10px] mb-[60px]">
                 <div className="px-10 py-[60px]">
                   <div className="flex">
                     <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -676,7 +672,7 @@ const Form = ({ t }) => {
                     return (
                       <div
                         key={id}
-                        className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]"
+                        className="bg-[#1C1D2D] rounded-[10px] mb-[60px]"
                       >
                         <div className="px-10 py-[60px]">
                           <div className="flex">
@@ -716,10 +712,7 @@ const Form = ({ t }) => {
                     );
                   }
                   return (
-                    <div
-                      key={id}
-                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
-                    >
+                    <div key={id} className="bg-[#1C1D2D] rounded-[10px] mb-10">
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                           <p className="mr-2">{t(name)}</p>
@@ -764,7 +757,7 @@ const Form = ({ t }) => {
             </div>
           ) : (
             <div>
-              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px]">
+              <div className="bg-[#1C1D2D] rounded-[10px] mb-[60px]">
                 <div className="px-10 py-[60px]">
                   <div className="flex">
                     <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -800,7 +793,7 @@ const Form = ({ t }) => {
                     return (
                       <div
                         key={id}
-                        className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10 max-w-[350px]"
+                        className="bg-[#1C1D2D] rounded-[10px] mb-10 max-w-[350px]"
                       >
                         <div className="px-[36px] py-[50px]">
                           <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
@@ -826,10 +819,7 @@ const Form = ({ t }) => {
                     );
                   }
                   return (
-                    <div
-                      key={id}
-                      className="bg-[#1C1D2D] rounded-[10px] inputHover mb-10"
-                    >
+                    <div key={id} className="bg-[#1C1D2D] rounded-[10px] mb-10">
                       <div className="px-[36px] py-[50px]">
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                           <p className="mr-2">{t(name)}</p>
@@ -858,7 +848,7 @@ const Form = ({ t }) => {
                   );
                 }
               )}
-              <div className="bg-[#1C1D2D] rounded-[10px] inputHover mb-[60px] max-w-[464px]">
+              <div className="bg-[#1C1D2D] rounded-[10px] mb-[60px] max-w-[464px]">
                 <div className="px-10 py-[60px]">
                   <p className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                     {t("keep_touch")}

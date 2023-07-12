@@ -25,7 +25,9 @@ const useValidation = (value, validations) => {
           setValidText(true);
           break;
         case "validLink":
-          /^(http|https):\/\/[^\s/$.?#].[^\s]*$/.test(value) || value === ""
+          /^(http(s)?:\/\/)?([^\s\/?\.#]+\.[^\s\/?$]+)(\/[^\s]*)?$/.test(
+            value
+          ) || value === ""
             ? setValidLink(true)
             : setValidLink(false);
           break;
