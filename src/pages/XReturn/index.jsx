@@ -1,6 +1,6 @@
-import { Header, Footer, SocialModal } from "../../components";
-
 import { withTranslation } from "react-i18next";
+
+import { Header, Footer, SocialModal } from "#components";
 
 const XReturn = ({ t }) => {
   return (

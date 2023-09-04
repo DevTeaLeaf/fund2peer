@@ -1,26 +1,26 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { logo, arrow } from "../../assets/img";
-
-import "./header.css";
-
-import LanguagesModal from "../LanguagesModal";
-import { ScrollToTop } from "../";
-import i18n from "../../translate/i18n";
-import { withTranslation } from "react-i18next";
 
 import { useWeb3Modal } from "@web3modal/react";
-import { useAccount, useContract, useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
+
+import { withTranslation } from "react-i18next";
+import i18n from "#translate/i18n";
+import LanguagesModal from "../LanguagesModal";
+
+import { ScrollToTop } from "../";
+
+import { logo, arrow } from "#assets/img";
+import "./header.css";
 
 const Header = ({ page }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
   const account = useAccount();
-  const contract = useContract();
-  const signer = useSigner();
+  const { data } = useSigner();
 
-  const { isOpen, open, close, setDefaultChain } = useWeb3Modal();
+  const { open } = useWeb3Modal();
 
   return (
     <header className="flex sticky top-0 inter-400 z-50">

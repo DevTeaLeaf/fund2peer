@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import "./slider.css";
 
-import { timeDifference } from "../../utils";
+import { timeDifference } from "#utils";
 
 import { withTranslation } from "react-i18next";
 
-import { sliderArrow } from "../../assets/img";
+import { sliderArrow } from "#assets/img";
 
-import { formatNumber } from "../../utils";
+import { formatNumber } from "#utils";
 import { useSelector, useDispatch } from "react-redux";
-import { setProjectAction } from "../../store";
+import { setProjectAction } from "#store";
 
 import Button from "../Button";
 

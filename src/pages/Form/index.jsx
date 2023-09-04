@@ -4,9 +4,9 @@ import { ethers } from "ethers";
 import { useSigner, useContract } from "wagmi";
 import { withTranslation } from "react-i18next";
 
-import { DataToBytesABI, LaunchpadDriverABI } from "../../web3/abi";
-import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "../../web3/constants";
-import { getLimit } from "../../utils";
+import { DataToBytesABI, LaunchpadDriverABI } from "#web3/abi";
+import { DATA_TO_BYTES, GAS, LAUNCHPAD_DRIVER } from "#web3/constants";
+import { getLimit } from "#utils";
 
 import {
   Header,
@@ -18,7 +18,7 @@ import {
   Calendar,
   RoadmapItem,
   QuestionModal,
-} from "../../components";
+} from "#components";
 import {
   Twitter,
   Discord,
@@ -28,37 +28,39 @@ import {
   plus,
   dimensionWarning,
   question,
-} from "../../assets/img";
+} from "#assets/img";
 import {
-  formTokens,
-  formInputs,
-  formMembers,
-  formSocialMedia,
-  formCountries,
-  formRoadmapSteps,
-} from "../../constants";
+  FORM_TOKENS,
+  FORM_INPUTS,
+  FORM_MEMBERS,
+  FORM_SOCIAL_MEDIA,
+  FORM_COUNTRIES,
+  FORM_ROADMAP_STEPS,
+} from "#constants";
 
 const Form = ({ t }) => {
   const { data } = useSigner();
 
   const [modalQuestion, setModalQuestion] = useState(false);
   const [page, setPage] = useState("1");
-  const [tokens, setTokens] = useState(formTokens);
-  const [formInputsP1, setFormInputsP1] = useState(formInputs.page1);
-  const [formInputsP2, setFormInputsP2] = useState(formInputs.page2);
-  const [formInputsP3, setFormInputsP3] = useState(formInputs.page3);
-  const [formTeam, setFormTeam] = useState(formMembers);
-  const [formRoadmap, setFormRoadmap] = useState(formRoadmapSteps);
-  const [categories, setCategories] = useState(formInputs.page1[1]);
-  const [formTeamInputs, setFormTeamInputs] = useState([formMembers[0].inputs]);
+  const [tokens, setTokens] = useState(FORM_TOKENS);
+  const [formInputsP1, setFormInputsP1] = useState(FORM_INPUTS.page1);
+  const [formInputsP2, setFormInputsP2] = useState(FORM_INPUTS.page2);
+  const [formInputsP3, setFormInputsP3] = useState(FORM_INPUTS.page3);
+  const [formTeam, setFormTeam] = useState(FORM_MEMBERS);
+  const [formRoadmap, setFormRoadmap] = useState(FORM_ROADMAP_STEPS);
+  const [categories, setCategories] = useState(FORM_INPUTS.page1[1]);
+  const [formTeamInputs, setFormTeamInputs] = useState([
+    FORM_MEMBERS[0].inputs,
+  ]);
   const [formRoadmapInputs, setFormRoadmapInputs] = useState([
-    formRoadmapSteps[0].inputs,
+    FORM_ROADMAP_STEPS[0].inputs,
   ]);
   const [highlightsInputs, setHighlightsInputs] = useState(
-    formInputs.highlights
+    FORM_INPUTS.highlights
   );
-  const [social, setSocial] = useState(formSocialMedia);
-  const [countries, setCountries] = useState(formCountries);
+  const [social, setSocial] = useState(FORM_SOCIAL_MEDIA);
+  const [countries, setCountries] = useState(FORM_COUNTRIES);
 
   const DTBContract = useContract({
     address: DATA_TO_BYTES,
@@ -158,7 +160,7 @@ const Form = ({ t }) => {
   };
   const handleInputs = (itemId, value, inputs, setInputs) => {
     if (itemId === 5) {
-      const filtredCountries = formCountries.filter((str) =>
+      const filtredCountries = FORM_COUNTRIES.filter((str) =>
         str.includes(value)
       );
       setCountries(filtredCountries);
@@ -183,7 +185,7 @@ const Form = ({ t }) => {
     const bytes = [];
     try {
       //P1
-      if (formInputsP1[0].value != "") {
+      if (formInputsP1[0].value) {
         const companyNameBytes = await DTBContract.changeCompanyName(
           formInputsP1[0].value
         );
@@ -198,32 +200,32 @@ const Form = ({ t }) => {
         bytes.push(categoryBytes);
       }
 
-      if (formInputsP1[2].value != "") {
+      if (formInputsP1[2].value) {
         const shortDescriptionBytes = await DTBContract.changeShortDescription(
           formInputsP1[2].value
         );
         bytes.push(shortDescriptionBytes);
       }
 
-      if (formInputsP1[3].value != "") {
+      if (formInputsP1[3].value) {
         const fullDescriptionBytes = await DTBContract.changeFullDescriprion(
           formInputsP1[3].value
         );
         bytes.push(fullDescriptionBytes);
       }
 
-      if (formInputsP1[4].value != "") {
+      if (formInputsP1[4].value) {
         const videoBytes = await DTBContract.changeVideo(formInputsP1[4].value);
         bytes.push(videoBytes);
       }
 
-      if (formInputsP1[5].value != "") {
+      if (formInputsP1[5].value) {
         const countryBytes = await DTBContract.changeCountry(
           formInputsP1[5].value
         );
         bytes.push(countryBytes);
       }
-      if (formInputsP1[6].value != "") {
+      if (formInputsP1[6].value) {
         const websiteBytes = await DTBContract.changeWebsite(
           formInputsP1[6].value
         );
@@ -231,16 +233,16 @@ const Form = ({ t }) => {
       }
 
       if (
-        highlightsInputs[0].value != "" ||
-        highlightsInputs[1].value != "" ||
-        highlightsInputs[2].value != ""
+        highlightsInputs[0].value ||
+        highlightsInputs[1].value ||
+        highlightsInputs[2].value
       ) {
         let highlights = [
           highlightsInputs[0].value,
           highlightsInputs[1].value,
           highlightsInputs[2].value,
         ];
-        highlights = highlights.filter((highlight) => highlight != "");
+        highlights = highlights.filter((highlight) => highlight);
 
         const highlightsBytes = await DTBContract.changeHighlights(highlights);
         bytes.push(highlightsBytes);
@@ -249,17 +251,17 @@ const Form = ({ t }) => {
       //TEAM
       const teamNames = formTeam
         .map((team) => team.inputs[0].value)
-        .filter((name) => name != "");
+        .filter((name) => name);
       const teamAvatar = formTeam
         .map((team) => team.inputs[1].value)
-        .filter((avatar) => avatar != "");
+        .filter((avatar) => avatar);
 
       const teamLogins = formTeam
         .map((team) => team.inputs[2].value)
-        .filter((login) => login != "");
+        .filter((login) => login);
       const teamNetworks = formTeam
         .map((team) => team.network)
-        .filter((network) => network != "");
+        .filter((network) => network);
 
       if (teamNames.length > 0) {
         const teamNamesBytes = await DTBContract.changeSocialMediaPersonName(
@@ -291,10 +293,10 @@ const Form = ({ t }) => {
       // ROADMAP
       const roadmapDescriptions = formRoadmap
         .map((item) => item.inputs[0].value)
-        .filter((description) => description != "");
+        .filter((description) => description);
       const roadmapSums = formRoadmap
         .map((item) => item.inputs[1].value)
-        .filter((sum) => sum != "");
+        .filter((sum) => sum);
 
       if (roadmapDescriptions.length) {
         for (let i = 0; i < roadmapDescriptions.length; i++) {
@@ -315,37 +317,37 @@ const Form = ({ t }) => {
         }
       }
 
-      if (formInputsP2[0].value != "") {
+      if (formInputsP2[0].value) {
         const whitepaperBytes = await DTBContract.changeWhitepaperLink(
           formInputsP2[0].value
         );
         bytes.push(whitepaperBytes);
       }
-      if (formInputsP2[1].value != "") {
+      if (formInputsP2[1].value) {
         const roadmapBytes = await DTBContract.changeRoadmapLink(
           formInputsP2[1].value
         );
         bytes.push(roadmapBytes);
       }
-      if (formInputsP2[3].value != "") {
+      if (formInputsP2[3].value) {
         const businessPlanBytes = await DTBContract.changeBusinessPlanLink(
           formInputsP2[3].value
         );
         bytes.push(businessPlanBytes);
       }
-      if (formInputsP2[4].value != "") {
+      if (formInputsP2[4].value) {
         const additionalDocsBytes = await DTBContract.changeAdditionalDocsLink(
           formInputsP2[4].value
         );
         bytes.push(additionalDocsBytes);
       }
-      if (formInputsP2[5].value != "") {
+      if (formInputsP2[5].value) {
         const headerImgBytes = await DTBContract.changeHeaderLink(
           formInputsP2[5].value
         );
         bytes.push(headerImgBytes);
       }
-      if (formInputsP2[6].value != "") {
+      if (formInputsP2[6].value) {
         const previewImgBytes = await DTBContract.changePreviewLink(
           formInputsP2[6].value
         );
@@ -355,39 +357,39 @@ const Form = ({ t }) => {
       const token = tokens.filter((token) => token.active);
       const socialMediaNames = social
         .map((social) => social.value)
-        .filter((name) => name != "");
+        .filter((name) => name);
       const socialMediaTypes = social
-        .filter((item) => item.value !== "")
+        .filter((item) => item.value)
         .map((item) => item.group);
 
       const tokenBytes = await DTBContract.changeToken(token[0].address);
       bytes.push(tokenBytes);
 
-      if (formInputsP3[0].value != "") {
+      if (formInputsP3[0].value) {
         const softCapBytes = await DTBContract.changeSoftCap(
           Number(formInputsP3[0].value)
         );
         bytes.push(softCapBytes);
       }
-      if (formInputsP3[1].value != "") {
+      if (formInputsP3[1].value) {
         const hardCapBytes = await DTBContract.changeHardCap(
           Number(formInputsP3[1].value)
         );
         bytes.push(hardCapBytes);
       }
-      if (formInputsP3[2].value != "") {
+      if (formInputsP3[2].value) {
         const investorsRewardBytes = await DTBContract.changeReward(
           Number(formInputsP3[2].value) * 100
         );
         bytes.push(investorsRewardBytes);
       }
-      if (formInputsP3[4].value != "") {
+      if (formInputsP3[4].value) {
         const startFundingBytes = await DTBContract.changeStart(
           Number(formInputsP3[4].value)
         );
         bytes.push(startFundingBytes);
       }
-      if (formInputsP3[5].value != "") {
+      if (formInputsP3[5].value) {
         const endFundingBytes = await DTBContract.changeEnd(
           Number(formInputsP3[5].value)
         );
@@ -482,7 +484,7 @@ const Form = ({ t }) => {
                             return (
                               <p
                                 className={`cursor-pointer ${
-                                  category.active ? "text-[#89C6B9]" : ""
+                                  category.active && "text-[#89C6B9]"
                                 }`}
                                 onClick={() => changeCategories(category.value)}
                                 key={category.value}
@@ -505,7 +507,7 @@ const Form = ({ t }) => {
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
                           <p className="mr-2">{t(item.name)}</p>
                           <p className="text-[#89C6B9]">
-                            {item.obligatorily ? "*" : ""}
+                            {item.obligatorily && "*"}
                           </p>
                           <img
                             src={question}
@@ -538,7 +540,7 @@ const Form = ({ t }) => {
                                 }
                                 key={index}
                                 className={`cursor-pointer ${
-                                  country === item.value ? "text-[#89C6B9]" : ""
+                                  country === item.value && "text-[#89C6B9]"
                                 }`}
                               >
                                 {country}
@@ -559,7 +561,7 @@ const Form = ({ t }) => {
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px] relative">
                           <p className="mr-2">{t(item.name)}</p>
                           <p className="text-[#89C6B9]">
-                            {item.obligatorily ? "*" : ""}
+                            {item.obligatorily && "*"}
                           </p>
                           <img
                             src={question}
@@ -717,7 +719,7 @@ const Form = ({ t }) => {
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                           <p className="mr-2">{t(name)}</p>
                           <p className="text-[#89C6B9]">
-                            {obligatorily ? "*" : ""}
+                            {obligatorily && "*"}
                           </p>
                           <img
                             src={question}
@@ -736,7 +738,7 @@ const Form = ({ t }) => {
                           inputs={formInputsP2}
                           setInputs={setFormInputsP2}
                         />
-                        {dimension ? (
+                        {dimension && (
                           <div className="mt-5 flex items-center gap-4">
                             <img
                               src={dimensionWarning}
@@ -746,8 +748,6 @@ const Form = ({ t }) => {
                               {t("size")} {dimension}
                             </div>
                           </div>
-                        ) : (
-                          ""
                         )}
                       </div>
                     </div>
@@ -799,7 +799,7 @@ const Form = ({ t }) => {
                           <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                             <p className="mr-2">{t(name)}</p>
                             <p className="text-[#89C6B9]">
-                              {obligatorily ? "*" : ""}
+                              {obligatorily && "*"}
                             </p>
                             <img
                               src={question}
@@ -824,7 +824,7 @@ const Form = ({ t }) => {
                         <div className="inter-400 text-[24px] leading-[29px] flex mb-[22px]">
                           <p className="mr-2">{t(name)}</p>
                           <p className="text-[#89C6B9]">
-                            {obligatorily ? "*" : ""}
+                            {obligatorily && "*"}
                           </p>
                           <img
                             src={question}
@@ -927,13 +927,11 @@ const Form = ({ t }) => {
         </div>
       </div>
       <Footer />
-      {modalQuestion ? (
+      {modalQuestion && (
         <QuestionModal
           question={modalQuestion}
           setModalActive={setModalQuestion}
         />
-      ) : (
-        ""
       )}
     </>
   );

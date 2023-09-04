@@ -1,8 +1,10 @@
-import { withTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setProjectAction } from "../../store";
-import { favorite } from "../../assets/img";
+import { Link } from "react-router-dom";
+
+import { withTranslation } from "react-i18next";
+
+import { setProjectAction } from "#store";
+import { favorite } from "#assets/img";
 
 const PresaleBox = ({
   projectLogo,

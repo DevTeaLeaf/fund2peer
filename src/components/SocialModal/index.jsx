@@ -1,4 +1,4 @@
-import { Twitter, Discord, Telegram, Facebook } from "../../assets/img";
+import { Twitter, Discord, Telegram, Facebook } from "#assets/img";
 
 const SocialModal = () => {
   return (

@@ -1,5 +1,5 @@
-import i18n from "../../translate/i18n";
 import { withTranslation } from "react-i18next";
+import i18n from "#translate/i18n";
 
 const LanguagesModal = ({ active, setActive }) => {
   const changeLanguage = (lng) => {

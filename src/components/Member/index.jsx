@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { withTranslation } from "react-i18next";
+
 import Input from "../Input";
 import {
   Twitter,
@@ -7,8 +9,7 @@ import {
   Facebook,
   slimArrow,
   dimensionWarning,
-} from "../../assets/img";
-import { withTranslation } from "react-i18next";
+} from "#assets/img";
 
 const Member = ({
   memberInputs,

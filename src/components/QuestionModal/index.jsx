@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import { close } from "../../assets/img";
+import { close } from "#assets/img";
 
 const QuestionModal = ({ question, setModalActive }) => {
   const modalRef = useRef(null);

@@ -1,7 +1,7 @@
-import { Header, Footer, SocialModal } from "../../components";
 import { Link } from "react-router-dom";
-
 import { withTranslation } from "react-i18next";
+
+import { Header, Footer, SocialModal } from "#components";
 const FAQ = ({ t }) => {
   return (
     <>

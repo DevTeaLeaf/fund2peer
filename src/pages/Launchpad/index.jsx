@@ -1,4 +1,15 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useSigner, useContract } from "wagmi";
+
+import { withTranslation } from "react-i18next";
+
+import { initProjectsData } from "#utils";
+import { setProjectsAction } from "#store";
+
+import { LaunchpadDriverABI } from "#web3/abi";
+import { LAUNCHPAD_DRIVER } from "#web3/constants";
 
 import {
   Header,
@@ -7,27 +18,11 @@ import {
   StatisticsBox,
   SocialModal,
   Slider,
-} from "../../components";
-import {
-  blocks,
-  info,
-  rocket,
-  launchpadBg,
-  launchpadToken,
-} from "../../assets/img";
-import { SliderLoader } from "../../loaders";
+} from "#components";
 
-import { useSigner, useContract } from "wagmi";
+import { SliderLoader } from "#loaders";
 
-import { LaunchpadDriverABI } from "../../web3/abi";
-import { LAUNCHPAD_DRIVER } from "../../web3/constants";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { initProjectsData } from "../../utils";
-
-import { withTranslation } from "react-i18next";
-import { setProjectsAction } from "../../store";
+import { blocks, info, rocket, launchpadBg, launchpadToken } from "#assets/img";
 
 const Launchpad = ({ t }) => {
   const dispatch = useDispatch();

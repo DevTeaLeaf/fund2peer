@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { useInput } from "../../utils";
+
 import { withTranslation } from "react-i18next";
+
+import { useInput } from "#utils";
 
 const Input = ({
   id,

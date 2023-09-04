@@ -4,17 +4,17 @@ import { withTranslation } from "react-i18next";
 import { useSigner, useContract, useAccount } from "wagmi";
 import { useSelector } from "react-redux";
 
-import { projectTabsData, formCategories, formTokens } from "../../constants";
-import { SliderLoader, HeaderLoader } from "../../loaders";
-import { formatNumber, timeDifference, getLimit } from "../../utils";
+import { PROJECT_TABS_DATA, FORM_CATEGORIES, FORM_TOKENS } from "#constants";
+import { SliderLoader, HeaderLoader } from "#loaders";
+import { formatNumber, timeDifference, getLimit } from "#utils";
 
 import {
   TokenABI,
   DataToBytesABI,
   LaunchProjectInfoABI,
   LaunchpadLogicABI,
-} from "../../web3/abi";
-import { DATA_TO_BYTES, GAS } from "../../web3/constants";
+} from "#web3/abi";
+import { DATA_TO_BYTES, GAS } from "#web3/constants";
 import {
   slider,
   Twitter,
@@ -23,7 +23,7 @@ import {
   Facebook,
   Web,
   youtube,
-} from "../../assets/img";
+} from "#assets/img";
 import {
   Header,
   Footer,
@@ -32,13 +32,15 @@ import {
   Slider,
   YouTubePlayer,
   InvestModal,
-} from "../../components";
+} from "#components";
 
 const Project = ({ t }) => {
   const { data } = useSigner();
   const { address } = useAccount();
+
   const rxProjects = useSelector((state) => state.projects);
   const rxProject = useSelector((state) => state.project.info);
+
   const navigate = useNavigate();
   // tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -197,10 +199,10 @@ const Project = ({ t }) => {
       if (now > rxProject.info.endFunding && !rxProject.info.canceled) {
         setClaimState(true);
       }
-      const tempCategory = formCategories.filter(
+      const tempCategory = FORM_CATEGORIES.filter(
         (item) => item.value === rxProject.info.category
       );
-      const tempToken = formTokens.filter(
+      const tempToken = FORM_TOKENS.filter(
         (token) => token.address === rxProject.info.token
       );
       timeController();
@@ -231,7 +233,7 @@ const Project = ({ t }) => {
   return (
     <>
       <Header page="launchpad" />
-      {projectLoaded ? (
+      {projectLoaded && (
         <div className="max-w-[1440px] mx-auto overflow-hidden md:overflow-visible">
           {rxProject ? (
             <img src={rxProject.info.headerLink} alt="projectBg" />
@@ -244,7 +246,7 @@ const Project = ({ t }) => {
               <p className="inter-bold  text-[32px] leading-9 md:text-[48px] md:leading-[58px] nav-shadow md:mb-[50px]">
                 {rxProject.info.projectName}
               </p>
-              {owner === address ? (
+              {owner === address && (
                 <div className="flex justify-center md:justify-between flex-wrap gap-5 my-5 xl:my-0">
                   <div onClick={() => ownerButtonsController("nextStage")}>
                     <Button filled={false} text={t("next_stage")} />
@@ -260,7 +262,7 @@ const Project = ({ t }) => {
                     <Button filled={false} text={t("distribute_profit")} />
                   </div>
                 </div>
-              ) : null}
+              )}
             </div>
             <div className="flex items-start justify-between mb-[70px] flex-wrap">
               <div className="flex flex-wrap justify-center gap-5">
@@ -415,7 +417,7 @@ const Project = ({ t }) => {
             </div>
             <div className="relative">
               <div className="flex items-center justify-center gap-[20px] md:gap-[80px] border-b border-[#000] border-opacity-25">
-                {projectTabsData.map((tab, idx) => {
+                {PROJECT_TABS_DATA.map((tab, idx) => {
                   return (
                     <button
                       key={idx}
@@ -438,7 +440,7 @@ const Project = ({ t }) => {
               />
             </div>
             <div className="mt-[70px]">
-              {projectTabsData[activeTabIndex].label === "overview" ? (
+              {PROJECT_TABS_DATA[activeTabIndex].label === "overview" ? (
                 <div className="flex items-start justify-center flex-wrap gap-10 md:gap-5">
                   <div className="flex flex-col gap-[25px] w-[302px]">
                     <div className="flex items-center justify-between">
@@ -521,7 +523,7 @@ const Project = ({ t }) => {
                     <p className="inter-400">{rxProject.info.fullDesc}</p>
                   </div>
                 </div>
-              ) : projectTabsData[activeTabIndex].label === "team" ? (
+              ) : PROJECT_TABS_DATA[activeTabIndex].label === "team" ? (
                 <div>
                   {rxProject.info.team.map((teammate, index) => {
                     let social;
@@ -577,7 +579,7 @@ const Project = ({ t }) => {
                     );
                   })}
                 </div>
-              ) : projectTabsData[activeTabIndex].label === "roadmap" ? (
+              ) : PROJECT_TABS_DATA[activeTabIndex].label === "roadmap" ? (
                 <div className="flex flex-wrap gap-6">
                   {rxProject.info.roadmap.map((item, index) => {
                     return (
@@ -613,26 +615,26 @@ const Project = ({ t }) => {
                     );
                   })}
                 </div>
-              ) : projectTabsData[activeTabIndex].label === "investors" ? (
-                <div className="flex items-center justify-center md:justify-between flex-wrap gap-5">
-                  {rxProject.info.investors.map(
-                    ({ investor, invested }, index) => {
-                      const Tinvested = formatNumber(
-                        Number(invested) / 10 ** 18
-                      );
-                      return (
-                        <InvestorBox
-                          key={index}
-                          address={investor}
-                          img={token.img}
-                          amount={Tinvested}
-                        />
-                      );
-                    }
-                  )}
-                </div>
               ) : (
-                ""
+                PROJECT_TABS_DATA[activeTabIndex].label === "investors" && (
+                  <div className="flex items-center justify-center md:justify-between flex-wrap gap-5">
+                    {rxProject.info.investors.map(
+                      ({ investor, invested }, index) => {
+                        const Tinvested = formatNumber(
+                          Number(invested) / 10 ** 18
+                        );
+                        return (
+                          <InvestorBox
+                            key={index}
+                            address={investor}
+                            img={token.img}
+                            amount={Tinvested}
+                          />
+                        );
+                      }
+                    )}
+                  </div>
+                )
               )}
             </div>
             <div className="mt-[100px]">
@@ -662,9 +664,9 @@ const Project = ({ t }) => {
             </div>
           </div>
         </div>
-      ) : null}
+      )}
       <Footer />
-      {investModalActive ? (
+      {investModalActive && (
         <InvestModal
           setModalActive={setInvestModalActive}
           token={token.name}
@@ -673,8 +675,6 @@ const Project = ({ t }) => {
           bytesContract={DTBContract}
           infoContract={LPIContract}
         />
-      ) : (
-        ""
       )}
     </>
   );

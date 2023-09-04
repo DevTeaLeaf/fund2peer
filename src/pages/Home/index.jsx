@@ -12,7 +12,7 @@ import {
   StatisticsBox,
   FAQ,
   Donut,
-} from "../../components";
+} from "#components";
 import {
   homeBg,
   homeTk1,
@@ -28,16 +28,16 @@ import {
   done,
   progress,
   tokenomicsBg,
-} from "../../assets/img";
-import { servicies, roadmap, homeFAQ } from "../../constants";
+} from "#assets/img";
+import { SERVICIES, ROADMAP, HOME_FAQ } from "#constants";
 
 const Home = ({ t }) => {
   const [activeYear, setActiveYear] = useState(2022);
-  const [activeRoadmap, setActiveRoadmap] = useState(roadmap[0]);
+  const [activeRoadmap, setActiveRoadmap] = useState(ROADMAP[0]);
 
   // ROADMAP
   const yearHandler = (year) => {
-    const newRoadmap = roadmap.filter((step) => step.year === year);
+    const newRoadmap = ROADMAP.filter((step) => step.year === year);
     setActiveRoadmap(newRoadmap[0]);
     setActiveYear(year);
   };
@@ -89,7 +89,7 @@ const Home = ({ t }) => {
               {t("our_services")}
             </p>
             <div className="flex items-center gap-4 flex-wrap justify-center md:justify-between">
-              {servicies.map(({ name, description }, index) => {
+              {SERVICIES.map(({ name, description }, index) => {
                 return (
                   <ReadBox key={index} name={name} description={description} />
                 );
@@ -119,15 +119,14 @@ const Home = ({ t }) => {
               <p className="inter-bold text-[36px] leading-[44px] md:inter-700 nav-shadow">
                 Roadmap
               </p>
-              {roadmap.map(({ year }) => {
+              {ROADMAP.map(({ year }) => {
                 return (
                   <p
                     key={year}
                     onClick={() => yearHandler(year)}
                     className={`text-[#89C6B9] inter-normal text-[22px] leading-[120%] cursor-pointer px-4 py-[10px] ${
-                      year === activeYear
-                        ? "rounded-[10px] border border-[#89C6B9]"
-                        : ""
+                      year === activeYear &&
+                      "rounded-[10px] border border-[#89C6B9]"
                     }`}
                   >
                     {year}
@@ -297,7 +296,7 @@ const Home = ({ t }) => {
             <p className="inter-bold text-[36px] leading-[44px] md:inter-700 nav-shadow mb-[60px]">
               FAQ
             </p>
-            <FAQ data={homeFAQ} />
+            <FAQ data={HOME_FAQ} />
           </div>
         </div>
         <SocialModal />

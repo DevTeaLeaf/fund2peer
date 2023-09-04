@@ -1,7 +1,7 @@
-import { wbtc, weth, wmatic, usdt, usdc, dai } from "../assets/img";
+import { wbtc, weth, wmatic, usdt, usdc, dai } from "#assets/img";
 
 // HOME
-export const servicies = [
+export const SERVICIES = [
   {
     name: "DEX",
     description:
@@ -23,7 +23,7 @@ export const servicies = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
   },
 ];
-export const roadmap = [
+export const ROADMAP = [
   {
     year: 2022,
     quartals: [
@@ -345,7 +345,7 @@ export const roadmap = [
     ],
   },
 ];
-export const homeFAQ = [
+export const HOME_FAQ = [
   {
     question: "To be or not to be a lorem or a merol?",
     answer:
@@ -383,7 +383,7 @@ export const homeFAQ = [
   },
 ];
 // FORM
-export const formCategories = [
+export const FORM_CATEGORIES = [
   {
     value: 0,
     name: "agriculture",
@@ -410,7 +410,7 @@ export const formCategories = [
     active: false,
   },
 ];
-export const presalesTabsData = [
+export const PRESALES_TABS_DATA = [
   {
     label: "all_launchpads",
   },
@@ -418,7 +418,7 @@ export const presalesTabsData = [
     label: "my_favorites",
   },
 ];
-export const projectTabsData = [
+export const PROJECT_TABS_DATA = [
   {
     label: "overview",
   },
@@ -432,7 +432,7 @@ export const projectTabsData = [
     label: "investors",
   },
 ];
-export const formTokens = [
+export const FORM_TOKENS = [
   {
     id: 1,
     name: "WBTC",
@@ -476,7 +476,7 @@ export const formTokens = [
     active: false,
   },
 ];
-export const formInputs = {
+export const FORM_INPUTS = {
   page1: [
     {
       id: 1,
@@ -488,7 +488,7 @@ export const formInputs = {
       answer:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quo unde libero voluptate tempora alias quis sint cumque quidem, totam est non, veniam ipsa quisquam possimus reiciendis voluptatum in nesciunt.",
     },
-    formCategories,
+    FORM_CATEGORIES,
     {
       id: 2,
       value: "",
@@ -700,7 +700,7 @@ export const formInputs = {
     },
   ],
 };
-export const formRoadmapSteps = [
+export const FORM_ROADMAP_STEPS = [
   {
     id: Math.random(),
     inputs: [
@@ -714,7 +714,7 @@ export const formRoadmapSteps = [
     ],
   },
 ];
-export const formMembers = [
+export const FORM_MEMBERS = [
   {
     id: Math.random(),
     inputs: [
@@ -730,7 +730,7 @@ export const formMembers = [
     network: "",
   },
 ];
-export const formSocialMedia = [
+export const FORM_SOCIAL_MEDIA = [
   {
     id: 1,
     value: "",
@@ -756,7 +756,7 @@ export const formSocialMedia = [
     group: "facebook",
   },
 ];
-export const formCountries = [
+export const FORM_COUNTRIES = [
   "Afghanistan",
   "Albania",
   "Algeria",

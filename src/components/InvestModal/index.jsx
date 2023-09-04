@@ -3,12 +3,13 @@ import { withTranslation } from "react-i18next";
 import { ethers } from "ethers";
 import { useSigner } from "wagmi";
 
-import { GAS } from "../../web3/constants";
-import { close } from "../../assets/img";
-import { decrypt, getGasPrice, getLimit } from "../../utils";
-
 import Button from "../Button";
 import Input from "../Input";
+
+import { GAS } from "#web3/constants";
+import { decrypt, getGasPrice, getLimit } from "#utils";
+
+import { close } from "#assets/img";
 
 const InvestModal = ({
   t,

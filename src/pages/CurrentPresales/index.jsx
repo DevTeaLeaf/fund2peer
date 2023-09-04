@@ -3,19 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSigner, useContract } from "wagmi";
 import { withTranslation } from "react-i18next";
 
-import { Header, Footer, PresaleBox, Input } from "../../components";
+import { Header, Footer, PresaleBox, Input } from "#components";
 
-import { presalesTabsData, formTokens, formInputs } from "../../constants";
-import { formatNumber, timeDifference, initProjectsData } from "../../utils";
-import { FilterLoader, InputLoader, PresaleLoader } from "../../loaders";
-import { arrow } from "../../assets/img";
-import { LaunchpadDriverABI } from "../../web3/abi";
-import { LAUNCHPAD_DRIVER } from "../../web3/constants";
-import { setProjectsAction } from "../../store";
+import { PRESALES_TABS_DATA, FORM_TOKENS, FORM_INPUTS } from "#constants";
+import { formatNumber, timeDifference, initProjectsData } from "#utils";
+import { FilterLoader, InputLoader, PresaleLoader } from "#loaders";
+
+import { LaunchpadDriverABI } from "#web3/abi";
+import { LAUNCHPAD_DRIVER } from "#web3/constants";
+
+import { setProjectsAction } from "#store";
+
+import { arrow } from "#assets/img";
 
 const CurrentPresales = ({ t }) => {
-  const rxProjects = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
+  const rxProjects = useSelector((state) => state.projects);
   const [filtredProjects, setFiltredProjects] = useState(false);
   //tabs
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -45,7 +49,7 @@ const CurrentPresales = ({ t }) => {
     const now = Math.floor(Date.now() / 1000);
 
     if (projects) {
-      if (inputValue != "") {
+      if (inputValue) {
         projects = projects.filter((project) =>
           project.projectName.toLowerCase().includes(inputValue.toLowerCase())
         );
@@ -150,9 +154,9 @@ const CurrentPresales = ({ t }) => {
     const tokens = rxProjects.info
       .map(({ info }) => info.token)
       .filter((token, index, array) => array.indexOf(token) === index);
-    const filtredTokens = formTokens
-      .filter((token) => tokens.includes(token.address))
-      .map((token) => ({ name: token.name, address: token.address }));
+    const filtredTokens = FORM_TOKENS.filter((token) =>
+      tokens.includes(token.address)
+    ).map((token) => ({ name: token.name, address: token.address }));
 
     const countries = rxProjects.info
       .map(({ info }) => info.country)
@@ -163,7 +167,7 @@ const CurrentPresales = ({ t }) => {
     const industiresData = [];
 
     industries.forEach((index) => {
-      const { value, name } = formInputs.page1[1][index];
+      const { value, name } = FORM_INPUTS.page1[1][index];
       const element = { value, name };
 
       if (
@@ -242,7 +246,7 @@ const CurrentPresales = ({ t }) => {
           </p>
           <div className="relative">
             <div className="flex items-center justify-center gap-[80px]">
-              {presalesTabsData.map((tab, idx) => {
+              {PRESALES_TABS_DATA.map((tab, idx) => {
                 return (
                   <button
                     key={idx}
@@ -265,7 +269,7 @@ const CurrentPresales = ({ t }) => {
             />
           </div>
           <div className="mt-[70px]">
-            {presalesTabsData[activeTabIndex].label === "all_launchpads" ? (
+            {PRESALES_TABS_DATA[activeTabIndex].label === "all_launchpads" ? (
               <div>
                 <div className="flex  justify-between items-end flex-wrap gap-5">
                   <div className="w-[30%] min-w-[300px]">
@@ -293,12 +297,9 @@ const CurrentPresales = ({ t }) => {
                         >
                           <p className="mr-[15px] inter-400">
                             {tabsFilters.tokenFilter &&
-                            tabsFilters.tokenFilter.name == "current_filter"
-                              ? t(tabsFilters.tokenFilter.name)
-                              : tabsFilters.tokenFilter &&
-                                tabsFilters.tokenFilter.name != "current_filter"
-                              ? tabsFilters.tokenFilter.name
-                              : null}
+                              (tabsFilters.tokenFilter.name === "current_filter"
+                                ? t(tabsFilters.tokenFilter.name)
+                                : tabsFilters.tokenFilter.name)}
                           </p>
                           <img
                             className={
@@ -310,37 +311,36 @@ const CurrentPresales = ({ t }) => {
                             alt="open"
                           />
                         </div>
-                        {activeTabs[0] ? (
+                        {activeTabs[0] && (
                           <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                             <div className="px-5 py-3 flex items-start flex-col gap-3">
-                              {tabs
-                                ? tabs.tokenTab.map((item, index) => {
-                                    return (
-                                      <p
-                                        onClick={() =>
-                                          filterTabController(
-                                            0,
-                                            tabs.tokenTab[index]
-                                          )
-                                        }
-                                        className={`${
-                                          item.name ==
-                                          tabsFilters.tokenFilter.name
-                                            ? "text-[#89C6B9]"
-                                            : ""
-                                        } inter-normal`}
-                                        key={index}
-                                      >
-                                        {item.name == "current_filter"
-                                          ? t(item.name)
-                                          : item.name}
-                                      </p>
-                                    );
-                                  })
-                                : null}
+                              {tabs &&
+                                tabs.tokenTab.map((item, index) => {
+                                  return (
+                                    <p
+                                      onClick={() =>
+                                        filterTabController(
+                                          0,
+                                          tabs.tokenTab[index]
+                                        )
+                                      }
+                                      className={`${
+                                        item.name ==
+                                        tabsFilters.tokenFilter.name
+                                          ? "text-[#89C6B9]"
+                                          : ""
+                                      } inter-normal`}
+                                      key={index}
+                                    >
+                                      {item.name == "current_filter"
+                                        ? t(item.name)
+                                        : item.name}
+                                    </p>
+                                  );
+                                })}
                             </div>
                           </div>
-                        ) : null}
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -357,9 +357,8 @@ const CurrentPresales = ({ t }) => {
                           className="py-[10px] px-5 flex items-center"
                         >
                           <p className="mr-[15px] inter-400">
-                            {tabsFilters.timeFilter
-                              ? t(tabsFilters.timeFilter)
-                              : null}
+                            {tabsFilters.timeFilter &&
+                              t(tabsFilters.timeFilter)}
                           </p>
                           <img
                             className={
@@ -372,34 +371,33 @@ const CurrentPresales = ({ t }) => {
                           />
                         </div>
                       </div>
-                      {activeTabs[1] ? (
+                      {activeTabs[1] && (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
-                            {tabs
-                              ? tabs.timeTab.map((item, index) => {
-                                  return (
-                                    <p
-                                      onClick={() =>
-                                        filterTabController(
-                                          1,
-                                          tabs.timeTab[index]
-                                        )
-                                      }
-                                      className={`${
-                                        item == tabsFilters.timeFilter
-                                          ? "text-[#89C6B9]"
-                                          : ""
-                                      } inter-normal`}
-                                      key={index}
-                                    >
-                                      {t(item)}
-                                    </p>
-                                  );
-                                })
-                              : null}
+                            {tabs &&
+                              tabs.timeTab.map((item, index) => {
+                                return (
+                                  <p
+                                    onClick={() =>
+                                      filterTabController(
+                                        1,
+                                        tabs.timeTab[index]
+                                      )
+                                    }
+                                    className={`${
+                                      item == tabsFilters.timeFilter
+                                        ? "text-[#89C6B9]"
+                                        : ""
+                                    } inter-normal`}
+                                    key={index}
+                                  >
+                                    {t(item)}
+                                  </p>
+                                );
+                              })}
                           </div>
                         </div>
-                      ) : null}
+                      )}
                     </div>
                   ) : (
                     <FilterLoader />
@@ -416,12 +414,9 @@ const CurrentPresales = ({ t }) => {
                         <div className="py-[10px] px-5 flex items-center">
                           <p className="mr-[15px] inter-400">
                             {tabsFilters.countryFilter &&
-                            tabsFilters.countryFilter == "current_filter"
-                              ? t(tabsFilters.countryFilter)
-                              : tabsFilters.countryFilter &&
-                                tabsFilters.countryFilter != "current_filter"
-                              ? tabsFilters.countryFilter
-                              : null}
+                              (tabsFilters.countryFilter === "current_filter"
+                                ? t(tabsFilters.countryFilter)
+                                : tabsFilters.countryFilter)}
                           </p>
                           <img
                             className={
@@ -434,36 +429,33 @@ const CurrentPresales = ({ t }) => {
                           />
                         </div>
                       </div>
-                      {activeTabs[2] ? (
+                      {activeTabs[2] && (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
-                            {tabs
-                              ? tabs.countryTab.map((item, index) => {
-                                  return (
-                                    <p
-                                      onClick={() =>
-                                        filterTabController(
-                                          2,
-                                          tabs.countryTab[index]
-                                        )
-                                      }
-                                      className={`${
-                                        item == tabsFilters.countryFilter
-                                          ? "text-[#89C6B9]"
-                                          : ""
-                                      } inter-normal`}
-                                      key={index}
-                                    >
-                                      {item == "current_filter"
-                                        ? t(item)
-                                        : item}
-                                    </p>
-                                  );
-                                })
-                              : null}
+                            {tabs &&
+                              tabs.countryTab.map((item, index) => {
+                                return (
+                                  <p
+                                    onClick={() =>
+                                      filterTabController(
+                                        2,
+                                        tabs.countryTab[index]
+                                      )
+                                    }
+                                    className={`${
+                                      item == tabsFilters.countryFilter
+                                        ? "text-[#89C6B9]"
+                                        : ""
+                                    } inter-normal`}
+                                    key={index}
+                                  >
+                                    {item == "current_filter" ? t(item) : item}
+                                  </p>
+                                );
+                              })}
                           </div>
                         </div>
-                      ) : null}
+                      )}
                     </div>
                   ) : (
                     <FilterLoader />
@@ -479,9 +471,8 @@ const CurrentPresales = ({ t }) => {
                       >
                         <div className="py-[10px] px-5 flex items-center">
                           <p className="mr-[15px] inter-400">
-                            {tabsFilters.verifiedFilter
-                              ? t(tabsFilters.verifiedFilter)
-                              : null}
+                            {tabsFilters.verifiedFilter &&
+                              t(tabsFilters.verifiedFilter)}
                           </p>
                           <img
                             className={
@@ -494,34 +485,33 @@ const CurrentPresales = ({ t }) => {
                           />
                         </div>
                       </div>
-                      {activeTabs[3] ? (
+                      {activeTabs[3] && (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
-                            {tabs
-                              ? tabs.verifiedTab.map((item, index) => {
-                                  return (
-                                    <p
-                                      onClick={() =>
-                                        filterTabController(
-                                          3,
-                                          tabs.verifiedTab[index]
-                                        )
-                                      }
-                                      className={`${
-                                        item == tabsFilters.verifiedFilter
-                                          ? "text-[#89C6B9]"
-                                          : ""
-                                      } inter-normal`}
-                                      key={index}
-                                    >
-                                      {t(item)}
-                                    </p>
-                                  );
-                                })
-                              : null}
+                            {tabs &&
+                              tabs.verifiedTab.map((item, index) => {
+                                return (
+                                  <p
+                                    onClick={() =>
+                                      filterTabController(
+                                        3,
+                                        tabs.verifiedTab[index]
+                                      )
+                                    }
+                                    className={`${
+                                      item == tabsFilters.verifiedFilter
+                                        ? "text-[#89C6B9]"
+                                        : ""
+                                    } inter-normal`}
+                                    key={index}
+                                  >
+                                    {t(item)}
+                                  </p>
+                                );
+                              })}
                           </div>
                         </div>
-                      ) : null}
+                      )}
                     </div>
                   ) : (
                     <FilterLoader />
@@ -537,9 +527,8 @@ const CurrentPresales = ({ t }) => {
                       >
                         <div className="py-[10px] px-5 flex items-center">
                           <p className="mr-[15px] inter-400">
-                            {tabsFilters.industryFilter?.name
-                              ? t(tabsFilters.industryFilter?.name)
-                              : null}
+                            {tabsFilters.industryFilter?.name &&
+                              t(tabsFilters.industryFilter?.name)}
                           </p>
                           <img
                             className={
@@ -552,34 +541,33 @@ const CurrentPresales = ({ t }) => {
                           />
                         </div>
                       </div>
-                      {activeTabs[4] ? (
+                      {activeTabs[4] && (
                         <div className="absolute rounded-[10px] border-[1px] border-[#89C6B9] cursor-pointer mt-3 bg-[#13141f] z-[1000] fromTop">
                           <div className="px-5 py-3 flex items-start flex-col gap-3">
-                            {tabs
-                              ? tabs.industryTab.map((item, index) => {
-                                  return (
-                                    <p
-                                      onClick={() =>
-                                        filterTabController(
-                                          4,
-                                          tabs.industryTab[index]
-                                        )
-                                      }
-                                      className={`${
-                                        item == tabsFilters.industryFilter
-                                          ? "text-[#89C6B9]"
-                                          : ""
-                                      } inter-normal`}
-                                      key={index}
-                                    >
-                                      {t(item.name)}
-                                    </p>
-                                  );
-                                })
-                              : null}
+                            {tabs &&
+                              tabs.industryTab.map((item, index) => {
+                                return (
+                                  <p
+                                    onClick={() =>
+                                      filterTabController(
+                                        4,
+                                        tabs.industryTab[index]
+                                      )
+                                    }
+                                    className={`${
+                                      item == tabsFilters.industryFilter
+                                        ? "text-[#89C6B9]"
+                                        : ""
+                                    } inter-normal`}
+                                    key={index}
+                                  >
+                                    {t(item.name)}
+                                  </p>
+                                );
+                              })}
                           </div>
                         </div>
-                      ) : null}
+                      )}
                     </div>
                   ) : (
                     <FilterLoader />
@@ -588,7 +576,7 @@ const CurrentPresales = ({ t }) => {
                 <div className="mt-[100px] flex items-center justify-center flex-wrap gap-[20px] mb-[100px]">
                   {filtredProjects ? (
                     filtredProjects.map((project, index) => {
-                      const token = formTokens.filter(
+                      const token = FORM_TOKENS.filter(
                         (token) => token.address === project.token
                       );
                       const raise = String(

@@ -1,4 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+
+import { Web3Modal } from "@web3modal/react";
+import { WagmiConfig } from "wagmi";
+import { useWeb3ModalTheme } from "@web3modal/react";
+
 import Home from "./pages/Home";
 import DEX from "./pages/DEX";
 import Assets from "./pages/Assets";
@@ -11,13 +16,7 @@ import Project from "./pages/Project";
 import Form from "./pages/Form";
 
 import { ScrollToTop } from "./components";
-
-import { Web3Modal } from "@web3modal/react";
-import { WagmiConfig } from "wagmi";
-import { useWeb3ModalTheme } from "@web3modal/react";
-
 import { projectId } from "./web3/constants";
-
 import { wagmiClient, ethereumClient } from "./web3/connector";
 
 const App = () => {

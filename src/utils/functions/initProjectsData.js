@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 import decrypt from "./decrypt";
-import { LaunchProjectInfoABI } from "../../web3/abi";
+import { LaunchProjectInfoABI } from "#web3/abi";
 
 const initProjectsData = async (LDContract, data) => {
   let projectsCount = await decrypt(await LDContract.id());
