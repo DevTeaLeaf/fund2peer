@@ -17,11 +17,13 @@ import Input from "./Input";
 import Textarea from "./Textarea";
 import Token from "./Token";
 import Member from "./Member";
+import FAQ from "./FAQ";
 
 import InvestorBox from "./InvestorBox";
 import PresaleBox from "./PresaleBox";
 import StatisticsBox from "./StatisticsBox";
 import ReadBox from "./ReadBox";
+import Donut from "./Donut";
 
 export {
   Button,
@@ -44,4 +46,6 @@ export {
   QuestionModal,
   Textarea,
   ReadBox,
+  FAQ,
+  Donut,
 };

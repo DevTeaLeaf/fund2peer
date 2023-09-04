@@ -542,7 +542,6 @@ const Project = ({ t }) => {
                       case "facebook":
                         social = <Facebook className="w-[14px] h-[14px]" />;
                         link = `www.facebook.com/${teammate.socialLogin}`;
-
                         break;
                       default:
                         social = <Web className="w-[14px] h-[14px]" />;

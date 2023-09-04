@@ -38,6 +38,7 @@ import out from "./out.png";
 import doImg from "./do.png";
 import done from "./done.png";
 import progress from "./progress.png";
+import tokenomicsBg from "./tokenomicsBg.png";
 
 export {
   arrow,
@@ -80,4 +81,5 @@ export {
   doImg,
   done,
   progress,
+  tokenomicsBg,
 };

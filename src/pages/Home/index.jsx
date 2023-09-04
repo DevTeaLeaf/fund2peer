@@ -10,6 +10,8 @@ import {
   Button,
   ReadBox,
   StatisticsBox,
+  FAQ,
+  Donut,
 } from "../../components";
 import {
   homeBg,
@@ -25,8 +27,9 @@ import {
   doImg,
   done,
   progress,
+  tokenomicsBg,
 } from "../../assets/img";
-import { servicies, roadmap } from "../../constants";
+import { servicies, roadmap, homeFAQ } from "../../constants";
 
 const Home = ({ t }) => {
   const [activeYear, setActiveYear] = useState(2022);
@@ -132,7 +135,6 @@ const Home = ({ t }) => {
                 );
               })}
             </div>
-
             <Scrollbars
               renderView={() => (
                 <div className="flex items-start justify-between w-full overflow-x-hidden whitespace-nowrap gap-[10rem]" />
@@ -184,6 +186,118 @@ const Home = ({ t }) => {
                 );
               })}
             </Scrollbars>
+          </div>
+          <div>
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 nav-shadow mb-[60px]">
+              Tokenomics
+            </p>
+            <div className="tokenomicsBg relative">
+              <img
+                className="absolute z-[-1] lg:block hidden"
+                src={tokenomicsBg}
+                alt="bg"
+              />
+              <div className="flex items-center justify-center flex-col md:flex-row gap-10 md:gap-[90px] lg:gap-[170px] py-[60px] px-[100px]">
+                <div className="relative">
+                  <div className="absolute uppercase flex items-center justify-center flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-3">
+                    <p className="text-[18px] leading-[26px] inter-normal">
+                      All time
+                    </p>
+                    <p className="text-[18px] leading-[26px] inter-normal mt-1">
+                      Total expenses
+                    </p>
+                    <h3 className="text-[#89C6B9] text-[34px] leading-[48px] mt-3">
+                      1 000 000
+                    </h3>
+                  </div>
+                  <Donut label="total" />
+                </div>
+
+                <div className="flex items-center gap-[100px]">
+                  <div className="flex flex-col items-center gap-[2rem]">
+                    <div>
+                      <Donut label="liquidity" />
+                      <div className="flex flex-col gap-2 mt-[-2rem]">
+                        <h3 className="inter-400">40%</h3>
+                        <p className="inter-300 text-[15px] leading-[14px] text-[#DB576F]">
+                          Liquidity
+                        </p>
+                        <p className="inter-normal text-[12px] leading-3 opacity-60">
+                          400 000
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <Donut label="public" />
+                      <div className="flex flex-col gap-2 mt-[-2rem]">
+                        <h3 className="inter-400">25%</h3>
+                        <p className="inter-300 text-[15px] leading-[14px] text-[#89DB57]">
+                          Public sale
+                        </p>
+                        <p className="inter-normal text-[12px] leading-3 opacity-60">
+                          250 000
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center gap-[2rem]">
+                    <div>
+                      <Donut label="team" />
+                      <div className="flex flex-col gap-2 mt-[-2rem]">
+                        <h3 className="inter-400">15%</h3>
+                        <p className="inter-300 text-[15px] leading-[14px] text-[#4E7B84]">
+                          Team
+                        </p>
+                        <p className="inter-normal text-[12px] leading-3 opacity-60">
+                          150 000
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <Donut label="marketing" />
+                      <div className="flex flex-col gap-2 mt-[-2rem]">
+                        <h3 className="inter-400">20%</h3>
+                        <p className="inter-300 text-[15px] leading-[14px] text-[#DB6F57]">
+                          Marketing
+                        </p>
+                        <p className="inter-normal text-[12px] leading-3 opacity-60">
+                          200 000
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-[100px]">
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 nav-shadow mb-[60px]">
+              Team
+            </p>
+            <div className="relative flex flex-col items-center">
+              <div className="w-[194px] h-[194px] rounded-full bg-[#fff]"></div>
+              <div className="bg-[#13141F] w-[140px] h-[68px] border border-[#89C6B9] rounded-[10px] flex flex-col items-center mt-[-20px]">
+                <h1 className="mt-4 uppercase inter-normal text-[14px] leading-[17px]">
+                  Sion
+                </h1>
+                <a
+                  href="123"
+                  target="_blank"
+                  className="flex items-center mt-1 cursor-pointer"
+                >
+                  Telegram
+                  <p className="inter-300 text-[11px] leading-[13px] ml-2">
+                    Tg
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-[100px]">
+            <p className="inter-bold text-[36px] leading-[44px] md:inter-700 nav-shadow mb-[60px]">
+              FAQ
+            </p>
+            <FAQ data={homeFAQ} />
           </div>
         </div>
         <SocialModal />

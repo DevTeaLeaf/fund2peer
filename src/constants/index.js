@@ -1,7 +1,6 @@
 import { wbtc, weth, wmatic, usdt, usdc, dai } from "../assets/img";
 
 // HOME
-
 export const servicies = [
   {
     name: "DEX",
@@ -24,7 +23,6 @@ export const servicies = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, ",
   },
 ];
-
 export const roadmap = [
   {
     year: 2022,
@@ -347,9 +345,44 @@ export const roadmap = [
     ],
   },
 ];
-
+export const homeFAQ = [
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+  {
+    question: "To be or not to be a lorem or a merol?",
+    answer:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sapiente tenetur? Doloribus non nihil atque illo consectetur minus molestias, iure placeat expedita sapiente, aliquam eaque ullam, ipsam officia suscipit labore.",
+  },
+];
 // FORM
-
 export const formCategories = [
   {
     value: 0,
