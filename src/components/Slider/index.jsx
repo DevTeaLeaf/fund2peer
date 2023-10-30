@@ -35,13 +35,15 @@ const Slider = ({ t }) => {
   }, [currentIndex, projects]);
 
   useEffect(() => {
-    const now = Math.floor(Date.now() / 1000);
-    const filtredProjects = rxProjects.info.filter(
-      (project) =>
-        now < project.info.startFunding ||
-        (now > project.info.startFunding && now < project.info.endFunding)
-    );
-    setProjects(filtredProjects);
+    // here is filtredProjects
+    // const now = Math.floor(Date.now() / 1000);
+    // const filtredProjects = rxProjects.info.filter(
+    //   (project) =>
+    //     now < project.info.startFunding ||
+    //     (now > project.info.startFunding && now < project.info.endFunding)
+    // );
+    // setProjects(filtredProjects);
+    setProjects(rxProjects.info);
   }, [rxProjects]);
   return (
     <section className="section">

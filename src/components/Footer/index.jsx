@@ -77,7 +77,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="footerP text-center py-5 footerB">Fund2Peer©2023</div>
+        <div className="footerP text-center mt-[70px] py-5 footerB">
+          Fund2Peer©2023
+        </div>
       </div>
     </>
   );

@@ -59,7 +59,6 @@ const CurrentPresales = ({ t }) => {
           (project) => project.token === tabsFilters.tokenFilter.address
         );
       }
-
       if (tabsFilters.timeFilter != "current_filter") {
         switch (tabsFilters.timeFilter) {
           case "active":

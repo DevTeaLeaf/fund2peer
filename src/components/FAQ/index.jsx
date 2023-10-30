@@ -8,7 +8,7 @@ const Item = ({ question, answer, isOpen, toggleOpen }) => {
       }`}
       onClick={toggleOpen}
     >
-      <div className="py-[30px] pl-9">
+      <div className="py-[30px] px-9">
         <div className={"inter-normal text-[18px] md:text-[24px]"}>
           {question}
         </div>

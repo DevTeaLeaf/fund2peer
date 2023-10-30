@@ -11,6 +11,7 @@ import { getLimit } from "#utils";
 import {
   Header,
   Footer,
+  Input,
   Textarea,
   Button,
   Token,
@@ -526,7 +527,11 @@ const Form = ({ t }) => {
                           inputs={formInputsP1}
                           setInputs={setFormInputsP1}
                         />
-                        <div className="mt-3">
+                        <div
+                          className={`mt-3 ${
+                            item.value === "" ? "hidden" : ""
+                          }`}
+                        >
                           {countries.map((country, index) => {
                             return (
                               <div
@@ -871,7 +876,7 @@ const Form = ({ t }) => {
                           ) : (
                             <Web className="w-[28px] h-[28px] md:w-[36px] md:h-[36px]" />
                           )}
-                          <Textarea
+                          <Input
                             key={id}
                             id={id}
                             input={t(input)}
